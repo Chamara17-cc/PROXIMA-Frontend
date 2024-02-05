@@ -10,11 +10,11 @@
         "childrens": [
             {
                 "title": "User Accounts",
-                "path": "/login"
+                "path": "/userlist"
             },
             {
                 "title": "Add New User",
-                "path": "/register"
+                "path": "/usercreation"
             },
             {
                 "title": "Deactivate User",
@@ -29,15 +29,15 @@
         "childrens": [
             {
                 "title": "Project List",
-                "path": "/profile"
+                "path": "/projectlist"
             },
             {
                 "title": "New Projects",
-                "path":"/"
+                "path":"/projectcreation"
             },
             {
                 "title": "Task Assign",
-                "path": "/logout"
+                "path": "/taskcreation"
             }
         ]
     },
@@ -47,7 +47,7 @@
         "childrens": [
             {
                 "title": "New budget",
-                "path": "/new budget"
+                "path": "/budget"
             },
             {
                 "title": "Invoice",
@@ -65,15 +65,15 @@
         "childrens": [
             {
                 "title": "Client list",
-                "path": "/client lis"
+                "path": "/clientlist"
             },
             {
                 "title": "Payments",
-                "path": "/invoice"   
+                "path": "/payments"   
             },
             {
                 "title": "Send mail",
-                "path": "/rate"   
+                "path": "/sendemail"   
             }
         ]
     }
