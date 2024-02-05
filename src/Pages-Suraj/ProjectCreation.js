@@ -15,6 +15,9 @@ export default function ProjectCreation() {
         <div className="Content">
             <h1>Project Creation</h1><br/>
             <ProjectCreationForm/>
+            <div>
+              
+            </div>
             
         </div>
         
