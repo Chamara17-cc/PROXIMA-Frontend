@@ -1,0 +1,80 @@
+
+[
+    {
+        "title": "Dashboard",
+        "icon": "bi-gear-fill",
+        "path" :"/"
+    },
+      {  "title": "User",
+         "icon": "bi-person-fill",
+        "childrens": [
+            {
+                "title": "User Accounts",
+                "path": "/userlist"
+            },
+            {
+                "title": "Add New User",
+                "path": "/usercreation"
+            },
+            {
+                "title": "Deactivate User",
+                "path": "/forgot-password"
+            }
+            
+        ]
+    },
+    {
+        "title": "Projects",
+        "icon": "bi bi-stack",
+        "childrens": [
+            {
+                "title": "Project List",
+                "path": "/projectlist"
+            },
+            {
+                "title": "New Projects",
+                "path":"/projectcreation"
+            },
+            {
+                "title": "Task Assign",
+                "path": "/taskcreation"
+            }
+        ]
+    },
+    {
+        "title": "Finance",
+        "icon": "bi bi-bank2",
+        "childrens": [
+            {
+                "title": "New budget",
+                "path": "/budget"
+            },
+            {
+                "title": "Invoice",
+                "path": "/invoice"   
+            },
+            {
+                "title": "Hourly rate",
+                "path": "/rate"   
+            }
+        ]
+    },
+    {
+        "title": "Client",
+        "icon": "bi bi-person-lines-fill",
+        "childrens": [
+            {
+                "title": "Client list",
+                "path": "/clientlist"
+            },
+            {
+                "title": "Payments",
+                "path": "/payments"   
+            },
+            {
+                "title": "Send mail",
+                "path": "/sendemail"   
+            }
+        ]
+    }
+]
