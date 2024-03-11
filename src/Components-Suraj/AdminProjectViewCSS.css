@@ -1,0 +1,19 @@
+/* ProjectDetailView.css */
+
+.project-detail {
+    padding: 20px;
+    
+    border-radius: 5px;
+    margin: 20px;
+    background-color: #18213f;
+  }
+  
+  .project-detail h2 {
+    color: #333;
+  }
+  
+  .project-detail p {
+    margin-bottom: 10px;
+    color: #d1d3da;
+  }
+                                                                                                                                                       

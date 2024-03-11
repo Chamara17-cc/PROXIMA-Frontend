@@ -11,6 +11,8 @@ import Payments from "./Pages-Hemal/Payments";
 import Budgetplan from "./Pages-Chamara/Budgetplan";
 import Invoice from "./Pages-Chamara/Invoice";
 import SendEmail from "./Pages-Hemal/SendEmail";
+import AdminProjectViewPage from "./Pages-Suraj/AdminPojectViewPage";
+import AddDevelopersPage from "./Pages-Suraj/AddDevelopersPage";
 
 
 
@@ -31,7 +33,12 @@ function App() {
         <Route path="/sendemail" element ={<SendEmail/>}></Route>
         <Route path="/budget" element ={<Budgetplan/>}></Route>
         <Route path="/invoice" element ={<Invoice/>}></Route>
+        <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
+        <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
+        <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         
+
+
       </Routes>
       </BrowserRouter>
       
