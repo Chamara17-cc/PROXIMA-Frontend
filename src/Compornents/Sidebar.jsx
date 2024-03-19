@@ -9,7 +9,7 @@ export default function Sidebar(){
         <div className="sidebar">
           <hr />
           <span className="workspace">
-           <font size="7" align="center">P</font><font>roxima workspace</font>
+           <font size="7" align="center">P</font><font>Proxima workspace</font>
            <hr></hr>
           </span>
           { items.map((item, index) => <SidebarItem key={index} item={item} />) }
