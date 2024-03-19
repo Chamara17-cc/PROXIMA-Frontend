@@ -13,6 +13,9 @@ import Invoice from "./Pages-Chamara/Invoice";
 import SendEmail from "./Pages-Hemal/SendEmail";
 import BudgetEstimationForm from "./Pages-Chamara/BudgetEstimationForm";
 
+import LoginForm from "./Pages-Thusharga/LoginForm";
+import UserCreation1 from "./Pages-Thusharga/UserCreation1";
+import UserCreation2 from "./Pages-Thusharga/UserCreation2";
 
 
 
@@ -37,6 +40,12 @@ function App() {
         
         
       </Routes>
+        <Routes>
+          <Route path="/loginForm" element={<LoginForm/>}></Route>
+          <Route path="/userCreation" element={<UserCreation1/>}></Route>
+          <Route path="/userCreation/2" element={<UserCreation2/>}></Route>
+          
+        </Routes>
       </BrowserRouter>
       
     </div>
