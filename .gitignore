@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+package-lock.json
+src/Components-Chamara/Budgetreport.jsx
+src/Compornents/Searchbar.jsx
+src/Compornents/Topbar.jsx
+src/Pages-Chamara/RateUpdatePage.jsx
+src/Pages-Thusharga/UserCreation2.jsx
