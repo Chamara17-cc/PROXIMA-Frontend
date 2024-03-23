@@ -2,22 +2,20 @@ import React from 'react'
 import Topbar from "../Compornents/Topbar";
 import Sidebar from "../Compornents/Sidebar";
 import '../Pages/PageStructure.css'
-//import Projectlist from '../Components-Suraj/List';
-import ProjectListComponent from '../Components-Suraj/ProjectListComponent';
+import AddDevelopersCom from '../Components-Suraj/AddDevelopersCom';
 
-
-function ProjectList() {
+export default function AddDevelopersPage() {
   return (
     <div>
-      <div className="FullPage">
+        <div className="FullPage">
         
         <Topbar />
         <Sidebar />
         <div className="Content">
-            <h1>Project List</h1><br/>
+            <h1>Add Developers</h1><br/>
             {/*---- content --------*/}
             
-            <ProjectListComponent />
+           <AddDevelopersCom/>
             
 
             <div>
@@ -27,8 +25,7 @@ function ProjectList() {
         </div>
         
       </div>
+      
     </div>
   )
 }
-
-export default ProjectList

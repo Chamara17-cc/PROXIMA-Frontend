@@ -1,53 +1,64 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+
+
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import InputGroup from "react-bootstrap/InputGroup";
-import Datepicker from "./Datepicker";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./datepickerStyle.css";
 
 import "./FormStyle.css";
-import { Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
+import moment from 'moment';
+
+
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
+
 
 export default function ProjectCreationForm() {
-  const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
 
-    setValidated(true);
+  const navigate = useNavigate();
 
-    const data = {
-      ProjectId: projectId,
-      ProjectName: projectName,
-      ProjectDescription: description,
-    };
-
-    // const url = "";
-    // axios
-    //   .post(url, data)
-    //   .then((result) => alert("data inserted"))
-    //   .catch((error) => {
-    //     alert(error);
-    //   });
-  };
-
-  const [projectId, setProjectId] = useState("");
+  //const [projectId, setProjectId] = useState("");
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
+  const [objectives, setObjectives] = useState("");
+  //const [projectManagerName, setProjectManagerName] = useState("");
+  const [projectTeamName, setProjectTeamName] = useState("");
+  const [projectManagerID, setProjectManagerID] = useState("");
+  //const [clientName, setClientName] = useState("");
+  const [clientID, setClientID] = useState("");
+  const [timeDuration, setTimeDuration] = useState("");
+  const [timeline, setTimeline] = useState("");
+  const [budgetAllocation, setBudgetAllocation] = useState("");
+  const [technologies, setTechnologies] = useState("");
+  
 
-  const handleIdChange = (value) => {
-    setProjectId(value);
-  };
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedDueDate, setSelectedDueDate] = useState(null);
 
-  const handleNameChange = (value) => {
+  
+  // const handlePIdChange = (value) => {
+  //   setProjectId(value);
+  // };
+
+  
+
+
+  const handlePNameChange = (value) => {
     setProjectName(value);
   };
 
@@ -55,100 +66,278 @@ export default function ProjectCreationForm() {
     setDescription(value);
   };
 
+  const handleObjectiveChange = (value) => {
+    setObjectives(value);
+  };
+
+  // const handlePManagerNameChange = (value) => {
+  //   setProjectManagerName(value);
+  // };
+
+  const handleTeamNameChange = (value) => {
+    setProjectTeamName(value);
+  };
+
+  const handlePManagerIDChange = (value) => {
+    setProjectManagerID(value);
+  };
+
+  // const handleClientNameChange = (value) => {
+  //   setClientName(value);
+  // };
+
+  const handleClientIDChange = (value) => {
+    setClientID(value);
+  };
+
+  const handleDurationChange = (value) => {
+    setTimeDuration(value);
+  };
+
+  const handleTimelineChange = (value) => {
+    setTimeline(value);
+  };
+
+  const handleBudgetChange = (value) => {
+    setBudgetAllocation(value);
+  };
+
+  const handleTechnologyChange = (value) => {
+    setTechnologies(value);
+  };
+
+  const handleStartDateChange = (value) => {
+    setSelectedStartDate(value);
+
+  };
+
+  const handleDueDateChange = (value) => {
+    setSelectedDueDate(value);
+  }
+
+  const [validated, setValidated] = useState(false);
+
+//   const handleSubmit = (event) => {
+//     const form = event.currentTarget;
+//     if(form.checkValidity() === false) {
+//       event.preventDefault();
+//       event.stopPropagation();
+      
+//     }
+    
+    
+//     setValidated(true);
+
+    
+
+//     const data = {
+//       //ProjectId: projectId,
+//       ProjectName: projectName,
+//       ProjectDescription: description,
+//       Technologies: technologies,
+//       BudgetEstimation: budgetAllocation,
+//       StartDate: selectedStartDate,
+//       DueDate: selectedDueDate,
+//       Duration: timeDuration,
+//       Objectives: objectives,
+
+//       //ProjectStatus:
+//       TeamName: projectTeamName,
+//       ProjectManagerId: projectManagerID,
+//       //TaskCount
+//       ClientId: clientID,
+//       TimeLine: timeline
+//       //AdminId
+//     };
+
+//     const url = "https://localhost:44319/api/CreateProject";
+
+//     axios.post(url,data).then((e) =>{
+//       alert("data inserted");
+//       console.log(data);
+//     }
+    
+//     ).catch((error)=>{
+//         console.log(data);
+//         alert(error);
+
+//       })
+// }
+    
+const handleAddDevelopers = () => {
+  navigate('/AddDevelopersPage');
+}
+    
+  
+const handleSubmit = (event) => {
+
+  const selectedStartDateObj = selectedStartDate ? moment(selectedStartDate, 'MM/DD/YYYY hh:mm A').toISOString() : null;
+  const selectedDueDateObj = selectedDueDate ? moment(selectedDueDate, 'MM/DD/YYYY hh:mm A').toISOString() : null;
+  
+  console.log(selectedStartDateObj);
+
+  const form = event.currentTarget;
+  if (form.checkValidity() === false) {
+    event.preventDefault();
+    event.stopPropagation();
+    alert("Input the required fields");
+  } else {
+    event.preventDefault(); // Prevent default form submission
+    // Form is valid, proceed with data submission
+    const data = {
+      
+      //ProjectId: projectId,
+      ProjectName: projectName,
+      ProjectDescription: description,
+      Technologies: technologies,
+      BudgetEstimation: budgetAllocation,
+      StartDate: selectedStartDateObj,
+      DueDate: selectedDueDateObj,
+      Duration: timeDuration,
+      Objectives: objectives,
+
+      //ProjectStatus:
+      TeamName: projectTeamName,
+      ProjectManagerId: projectManagerID,
+      //TaskCount
+      ClientId: clientID,
+      TimeLine: timeline
+      //AdminId
+    };
+
+    
+
+    const url = "https://localhost:44319/api/CreateProject";
+
+    axios.post(url, data)
+      .then((response) => {
+        alert("Data inserted successfully");
+        console.log(response.data);
+
+        //---after successful submission
+        
+        setValidated(false);
+        
+
+      })
+      .catch((error) => {
+        
+        alert("Error occurred : " + error);
+      });
+  }
+
+  setValidated(true); // Always set validated to true after attempting validation
+  
+
+};
+
+
+
   return (
     <>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
-
-         {/* ------Project Initalization part----- has a validation */}
+        {/* ------Project Initalization part----- has a validation */}
 
         <div className="Section">
           <h3 className="SectionHeading">Project Initialization</h3>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Project ID</Form.Label>
-              <InputGroup hasValidation>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Enter ProjectId"
-                  id="projectId"
-                  onChange={(e) => handleIdChange(e.target.value)}
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please enter last name.
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridPassword">
-              <Form.Label>Project Name</Form.Label>
+            
+            <Form.Group as={Col}>
+              <Form.Label htmlFor="projectName">Project Name:</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   required
                   type="text"
                   placeholder="ProjectName"
                   id="projectName"
-                  onChange={(e) => handleNameChange(e.target.value)}
+                  onChange={(e) => handlePNameChange(e.target.value)}
                 />
 
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  Please enter last name.
+                  Please enter project name.
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
           </Row>
 
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Project Description</Form.Label>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="description">Project Description:</Form.Label>
             <Form.Control
+              
               placeholder="Enter project description"
               id="description"
               onChange={(e) => handleDescriptionChange(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formGridAddress2">
-            <Form.Label>Project Objectives</Form.Label>
+          <Form.Group className="mb-3">
+            <Form.Label>Project Objectives:</Form.Label>
             <Form.Control
+              
               placeholder="Enter project objectives"
               id="objectives"
+              onChange={(e) => handleObjectiveChange(e.target.value)}
             />
+          </Form.Group>
+          {/*----------------------File upload part----------------------- */}
+          <Form.Group as={Col} className="mb-3">
+            <Form.Label>Upload:</Form.Label>
+            <Form.Control  type="file" size="sm" style={{ width: "250px" }} />
           </Form.Group>
         </div>
 
-         {/* -----------Develpment team info---------- has a validation */}
+        {/* -----------Develpment team info---------- has a validation */}
 
         <div className="Section">
           <h3 className="SectionHeading">Development Team Information</h3>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Project Manager Name</Form.Label>
-              <InputGroup hasValidation>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Enter project manager name"
-                  id="projectManagerId"
-                  onChange={(e) => handleIdChange(e.target.value)}
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please project manager name.
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridPassword">
-              <Form.Label>Project Manager ID</Form.Label>
+            <Form.Group as={Col}>
+              <Form.Label>Project Manager Name:</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   required
                   type="text"
                   placeholder="Enter project manager name"
                   id="projectManagerName"
-                  onChange={(e) => handleNameChange(e.target.value)}
+                  //onChange={(e) => handlePManagerNameChange(e.target.value)}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Please project manager name.
+                </Form.Control.Feedback>
+              </InputGroup>
+              <br />
+              <Form.Group as={Col}>
+                <Form.Label>Project Team Name:</Form.Label>
+                <InputGroup hasValidation>
+                  <Form.Control
+                    type="text"
+                    required
+                    placeholder="Enter project team name"
+                    id="projectTeamName"
+                    onChange={(e) => handleTeamNameChange(e.target.value)}
+                  />
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Please enter team name.
+                </Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
+              <br />
+
+              <Button onClick={handleAddDevelopers}>Add Developers</Button>
+            </Form.Group>
+
+            <Form.Group as={Col}>
+              <Form.Label>Project Manager ID</Form.Label>
+              <InputGroup hasValidation>
+                <Form.Control
+                  required
+                  type="number"
+                  placeholder="Enter project manager ID"
+                  id="projectManagerID"
+                  onChange={(e) => handlePManagerIDChange(e.target.value)}
                 />
 
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -160,13 +349,12 @@ export default function ProjectCreationForm() {
           </Row>
         </div>
 
-
-         {/* -----------Client info---------- has a validation */}
+        {/* -----------Client info---------- has a validation */}
 
         <div className="Section">
           <h3 className="SectionHeading">Client Information</h3>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col}>
               <Form.Label>Client Name</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
@@ -174,7 +362,7 @@ export default function ProjectCreationForm() {
                   type="text"
                   placeholder="Enter client name"
                   id="clientName"
-                  onChange={(e) => handleIdChange(e.target.value)}
+                 // onChange={(e) => handleClientNameChange(e.target.value)}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
@@ -183,15 +371,15 @@ export default function ProjectCreationForm() {
               </InputGroup>
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridPassword">
+            <Form.Group as={Col}>
               <Form.Label>Client ID</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   required
-                  type="text"
+                  type="number"
                   placeholder="Enter client ID"
                   id="clientID"
-                  onChange={(e) => handleNameChange(e.target.value)}
+                  onChange={(e) => handleClientIDChange(e.target.value)}
                 />
 
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -203,47 +391,174 @@ export default function ProjectCreationForm() {
           </Row>
         </div>
 
-
-
-         {/* --------------Dates--------- */}
+        {/* --------------Dates--------- */}
 
         <div className="Section">
           <h2 className="SectionHeading">Project Planing</h2>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCity">
+            <Form.Group as={Col}>
               <Form.Label>Start Date</Form.Label>
-              <Datepicker />
+              <DatePicker
+                
+                type="date"
+                className="datepicker"
+                selected={selectedStartDate}
+                onChange={()=>handleStartDateChange(selectedStartDate)}
+                dateFormat="YYYY-MM-DD HH:MM:SS[.mmm...]"
+                //0001-01-01 00:00:00.0000000
+                // You can customize the date format and other options
+              />
+
+
+
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col}>
               <Form.Label>Due Date</Form.Label>
-              <Datepicker />
-            </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Time Estimation</Form.Label>
               <InputGroup>
                 <Form.Control
-                  type="text"
+                  
+                  type="datetime-local"
+                  selected={selectedDueDate}
+                  dateFormat="YYYY-MM-DD HH:MM:SS[.mmm...]"
+                  onChange={handleDueDateChange}
+                />
+
+                
+              </InputGroup>
+
+
+
+              {/* <DatePicker
+                type="date"
+                
+                className="datepicker"
+                selected={selectedDueDate}
+                onChange={handleDueDateChange}
+                dateFormat="YYYY-MM-DD"
+                // You can customize the date format and other options
+              /> */}
+
+{/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer
+        components={['DateTimePicker', 'DateTimePicker', 'DateTimePicker']}
+      >
+        
+        <DateTimePicker name="startDateTime" onChange={handleDueDateChange} dateFormat=""/>
+      </DemoContainer>
+    </LocalizationProvider> */}
+
+
+
+
+
+
+            </Form.Group>
+
+            <Form.Group as={Col}>
+              <Form.Label>Time Estimation</Form.Label>
+              <InputGroup hasValidation>
+                <Form.Control
+                  required
+                  type="number"
                   placeholder="Enter time estimation"
                   id="timeDuration"
-                  onChange={(e) => handleIdChange(e.target.value)}
+                  onChange={(e) => handleDurationChange(e.target.value)}
                 />
-              </InputGroup>
-            </Form.Group>
-           
 
+<Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Please enter time duration.
+                </Form.Control.Feedback>
+
+              </InputGroup>
+
+             
+            </Form.Group>
+          </Row>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Project Time Line</Form.Label>
+            <Form.Control
+            
+              type="text"
+              placeholder=""
+              id="timeline"
+              onChange={(e) => handleTimelineChange(e.target.value)}
+            />
+          </Form.Group>
+
+          {/*----------------------File upload part----------------------- */}
+          <Form.Group as={Col} className="mb-3">
+            <Form.Label>Upload</Form.Label>
+            <Form.Control  type="file" size="sm" style={{ width: "250px" }} />
+          </Form.Group>
+        </div>
+
+        <div className="Section">
+          <Form.Group className="mb-3">
+            <Form.Label>Budget Allocation</Form.Label>
+            <Form.Control
+            type="text"
+            
+              placeholder="Enter budget allocation"
+              id="budgetAllocation"
+              onChange={(e) => handleBudgetChange(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Technologies</Form.Label>
+            <Form.Control
+              type="text"
+              
+              placeholder="Enter technologies"
+              id="technologies"
+              onChange={(e) => handleTechnologyChange(e.target.value)}
+            />
+          </Form.Group>
+
+          {/*----------------------File upload part----------------------- */}
+          <Form.Group as={Col} className="mb-3">
+            <Form.Label>Upload</Form.Label>
+            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
+          </Form.Group>
+        </div>
+
+        {/* -------------------------Legal and complaince------------ */}
+        <div className="Section">
+          <Row className="mb-3">
+            <h3 className="SectionHeading">Legal & Complaince</h3>
+            {/*----------------------File upload part----------------------- */}
+            <Form.Group as={Col} controlId="formFileSm" className="mb-3">
+              <Form.Label>Client Sign-off</Form.Label>
+              <Form.Control type="file" size="sm" style={{ width: "250px" }} />
+            </Form.Group>
+
+            {/*----------------------File upload part----------------------- */}
+            <Form.Group as={Col} controlId="formFileSm" className="mb-3">
+              <Form.Label>Contractual Agreement</Form.Label>
+              <Form.Control type="file" size="sm" style={{ width: "250px" }} />
+            </Form.Group>
           </Row>
         </div>
 
-        <Form.Group as={Col} controlId="formGridZip">
-          <Form.Label>Duration</Form.Label>
-          <Form.Control />
-        </Form.Group>
+        {/* -------------------------Resource upload------------ */}
+        <div className="Section">
+          {/*----------------------File upload part----------------------- */}
+          <Form.Group controlId="formFileMultiple" className="mb-3">
+            <Form.Label>Other Resources</Form.Label>
+            <Form.Control
+            
+              type="file"
+              multiple
+              style={{ width: "250px" }}
+            />{" "}
+            {/* Multiple file upload */}
+          </Form.Group>
+        </div>
 
-        <Form.Group className="mb-3" id="formGridCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
+        
 
         <Button type="submit">Submit form</Button>
       </Form>

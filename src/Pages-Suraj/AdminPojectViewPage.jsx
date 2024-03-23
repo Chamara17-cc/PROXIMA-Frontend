@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 import Topbar from "../Compornents/Topbar";
 import Sidebar from "../Compornents/Sidebar";
 import '../Pages/PageStructure.css'
-//import Projectlist from '../Components-Suraj/List';
-import ProjectListComponent from '../Components-Suraj/ProjectListComponent';
+import AdminProjectView from "../Components-Suraj/AdminProjectView";
 
 
-function ProjectList() {
+export default function AdminProjectViewPage() {
   return (
     <div>
       <div className="FullPage">
@@ -14,21 +13,16 @@ function ProjectList() {
         <Topbar />
         <Sidebar />
         <div className="Content">
-            <h1>Project List</h1><br/>
-            {/*---- content --------*/}
+            <h1>Project Details</h1><br/>
             
-            <ProjectListComponent />
-            
-
             <div>
-              
+              <AdminProjectView/>
+             
             </div>
             
         </div>
         
       </div>
     </div>
-  )
+  );
 }
-
-export default ProjectList
