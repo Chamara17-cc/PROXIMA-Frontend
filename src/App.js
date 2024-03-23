@@ -12,7 +12,13 @@ import Budgetplan from "./Pages-Chamara/Budgetplan";
 import Invoice from "./Pages-Chamara/Invoice";
 import SendEmail from "./Pages-Hemal/SendEmail";
 
-
+import DashboardDeveloper from "./Pages-Baumika/DashboardDeveloper";
+import ProjectDeveloper from "./Pages-Baumika/ProjectDeveloper";
+import TaskDeveloper from "./Pages-Baumika/TaskDeveloper";
+import ProgressDeveloper from "./Pages-Baumika/ProgressDeveloper";
+import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDeveloper";
+import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
+import TaskRecord from "./Pages-Baumika/TaskRecord";
 
 function App() {
   return (
@@ -31,6 +37,15 @@ function App() {
         <Route path="/sendemail" element ={<SendEmail/>}></Route>
         <Route path="/budget" element ={<Budgetplan/>}></Route>
         <Route path="/invoice" element ={<Invoice/>}></Route>
+
+{/* //Newly added routes for the Developer Dashboard */}
+        <Route path="/DeveloperDashboard" element={<DashboardDeveloper/>}></Route>
+        <Route path="/DeveloperProject" element={<ProjectDeveloper/>}></Route>
+        <Route path="/DeveloperTask" element={<TaskDeveloper/>}></Route>
+        <Route path="/DeveloperProgress" element={<ProgressDeveloper/>}></Route>
+        <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
+        <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
+        <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
         
       </Routes>
       </BrowserRouter>

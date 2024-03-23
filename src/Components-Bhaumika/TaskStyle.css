@@ -1,0 +1,54 @@
+.Task{
+    background-color: white;
+    color: black;
+    height:540px;
+    width: 1150px;
+    margin-right: 50px;
+    border-radius: 15px;
+
+}
+
+.Description{
+    padding-top: 50px;
+    padding-left: 50px;
+
+}
+
+.DueDate{
+    margin-top: 60px;
+    margin-left: 500px;
+    padding-top: 10px;
+    padding-left: 20px;
+    background-color: #B39DDB;
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    color: #311B92;
+
+}
+
+.Button{
+    margin-top: 50px;
+    margin-left: 50px;
+    padding-top: 10px;
+    padding-left: 50px;
+    background-color: #565E7B;
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    color: white;
+   
+}
+
+/* .Tik{
+    margin-top: 0px;
+    margin-left: 50px;
+    padding-top: 0px;
+    padding-left: 0px;
+    background-color: #565E7B;
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    color: white;
+
+} */

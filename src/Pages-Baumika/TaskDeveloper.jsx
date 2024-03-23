@@ -1,23 +1,21 @@
 import React from 'react'
 import Topbar from '../Compornents/Topbar';
 import DeveloperSidebar from '../Components-Bhaumika/DeveloperSidebar';
-import Header from '../Components-Bhaumika/Header'
-import Content from '../Components-Bhaumika/Content'
+import TaskHeader from '../Components-Bhaumika/TaskHeader';
+import Tasklist from '../Components-Bhaumika/Tasklist';
 
-function DashboardDeveloper() {
+function TaskDeveloper() {
   return (
     <div>
-    <div className='DeveloperDashboard'>
+    <div className='DeveloperTask'>
     
       <Topbar />
       <DeveloperSidebar/>
 
       <div className="Content">
-    <Header/>
-    <Content/>
-  
-
-
+      <TaskHeader/>
+      <Tasklist/>
+   
         </div>
     
     
@@ -27,4 +25,4 @@ function DashboardDeveloper() {
   )
 }
 
-export default DashboardDeveloper
+export default TaskDeveloper
