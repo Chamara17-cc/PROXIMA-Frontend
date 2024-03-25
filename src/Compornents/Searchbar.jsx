@@ -18,7 +18,6 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="searchbar"><i className="bi bi-search"></i><input type="text" placeholder='Search' />
     <div style={{ position: "relative" }}>
         <input 
           type="text" 
@@ -38,6 +37,6 @@ export default function SearchBar() {
         <FontAwesomeIcon icon={faSearch} />
       </button>
     </div>
-    </div>
+    
   );
 }
