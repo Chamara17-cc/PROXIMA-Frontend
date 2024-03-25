@@ -15,10 +15,6 @@
             {
                 "title": "Add New User",
                 "path": "/usercreation"
-            },
-            {
-                "title": "Deactivate User",
-                "path": "/forgot-password"
             }
             
         ]
@@ -34,10 +30,6 @@
             {
                 "title": "New Projects",
                 "path":"/projectcreation"
-            },
-            {
-                "title": "Task Assign",
-                "path": "/taskcreation"
             }
         ]
     },
@@ -51,11 +43,8 @@
             },
             {
                 "title": "Invoice",
-                "path": "/invoice"   
-            },
-            {
-                "title": "Hourly rate",
-                "path": "/rate"   
+                "path": "/incoice" 
+                
             }
         ]
     },

@@ -1,0 +1,50 @@
+.Pagename{
+    font-size: 30px;
+    font-weight: 600;
+    
+}
+.Projectlist{
+   
+    width: 250px;
+    height: 35px;
+    border-radius: 10px;
+   margin-top: 20px;
+}
+
+.Other{
+    width: 35%;
+}
+.Total{
+    margin-left: 35%;
+    width: 20%;
+    height: 30px;
+}
+.print-btn{
+    position:absolute;
+    margin-left: 10%;
+    margin-top: 5px;
+   
+}
+.submit-btn{
+    position: relative;
+    margin-left: 80%;
+    margin-top: 5px;
+}
+.Datepicker{
+   position: inherit;
+   margin-top: 15px;
+  
+}
+
+
+.datepicker{
+    background-color: aliceblue;
+    border-radius: 10px;
+}
+.pdfform{
+    position: relative;
+    margin-top: 55px;
+}
+.budgetpdf{
+    margin-top: 50px;
+}
