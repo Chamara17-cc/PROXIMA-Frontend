@@ -9,10 +9,6 @@ import DashboardAdmin from "./Pages-Thusharga/DashboardAdmin";
 // import ClientList from "./Pages-Hemal/ClientList";
 // import Payments from "./Pages-Hemal/Payments";
 import Budgetplan from "./Pages-Chamara/Budgetplan";
-<<<<<<< Updated upstream
-import Invoice from "./Pages-Chamara/Invoice";
-import SendEmail from "./Pages-Hemal/SendEmail";
-=======
 // import Invoice from "./Pages-Chamara/Invoice";
 // import SendEmail from "./Pages-Hemal/SendEmail";
 import BudgetEstimationForm from "./Pages-Chamara/BudgetEstimationForm";
@@ -21,7 +17,6 @@ import LoginForm from "./Pages-Thusharga/LoginForm";
 import UserCreation1 from "./Pages-Thusharga/UserCreation1";
 import UserCreation2 from "./Pages-Thusharga/UserCreation2";
 
->>>>>>> Stashed changes
 
 import DashboardDeveloper from "./Pages-Baumika/DashboardDeveloper";
 import ProjectDeveloper from "./Pages-Baumika/ProjectDeveloper";
@@ -48,7 +43,6 @@ function App() {
         <Route path="/sendemail" element ={<SendEmail/>}></Route>
         <Route path="/invoice" element ={<Invoice/>}></Route> */}
         <Route path="/budget" element ={<Budgetplan/>}></Route>
-<<<<<<< Updated upstream
         <Route path="/invoice" element ={<Invoice/>}></Route>
 
 {/* //Newly added routes for the Developer Dashboard */}
@@ -59,12 +53,10 @@ function App() {
         <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
         <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
         <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
-=======
         <Route path="/budgetestform"  element={<BudgetEstimationForm/>}></Route>
         <Route path="/loginForm" element={<LoginForm/>}></Route>
         <Route path="/userCreation" element={<UserCreation1/>}></Route>
         <Route path="/userCreation/2" element={<UserCreation2/>}></Route>
->>>>>>> Stashed changes
         
       </Routes>
       </BrowserRouter>
