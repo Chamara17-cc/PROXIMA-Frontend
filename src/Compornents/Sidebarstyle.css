@@ -10,7 +10,7 @@ html, body{
 body{
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
-  color: #1d267b;
+  color: #fff;
 }
 
 .main{
@@ -22,7 +22,7 @@ body{
   margin-top:  46px;
   width: 260px;
   flex-shrink: 0;
-  background-color: #172143;
+  background-color: #565E7B;
   height: 95%;
   overflow: auto;
   position: fixed;

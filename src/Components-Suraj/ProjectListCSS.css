@@ -1,0 +1,32 @@
+.ProjectList {
+    width: 95%;
+    border-collapse: collapse;
+    border:1px solid #ddd  ;
+  }
+  
+  .ProjectList th,
+  .ProjectList td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Light gray border bottom */
+  }
+  
+  .ProjectList th {
+    background-color: #0a1127; /* Light gray background */
+    color: #b6b9c5; /* Dark gray text color */
+    font-weight: bold; /* Bold font weight */
+  }
+
+  .ProjectList td{
+    color: #a6abbe;
+    padding-left: 40px;
+  }
+  
+  .ProjectList tbody tr:nth-child(even) {
+    background-color: #18213f; /* Lighter gray background for even rows */
+  }
+  
+  .ProjectList tbody tr:hover {
+    background-color: #0a1127; /* Hover background color */
+  }
+  
