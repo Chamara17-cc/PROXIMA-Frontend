@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from 'react'
 import axios from 'axios';
-import "./BudgetreportStyle.css";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -10,22 +9,10 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-//import BudgetEstForm from './BudgetEstForm'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import jsPDF from "jspdf";
+import { useState,useEffect } from 'react';
 
-
-export default function ProjectCreationForm() {
-
- 
-
-  const [projectData, setProjectData] = useState([]);
+function BudgetFormEdit() {
+    const [projectData, setProjectData] = useState([]);
   const [selectedProject, setselectedProject]= useState();
   const [description , setDescription] = useState('');
   const [selectionprosessCost , setSelectionProcessCost] = useState('');
@@ -37,52 +24,6 @@ export default function ProjectCreationForm() {
   const [licenseCost , setLicenseCost] = useState('');
   const [totalValue ,   setTotalValue] = useState('');
   const [date ,setDate] = useState('')
-
-  /*const [budgetData, setBudgetData] = useState({
-    selectionprosessCost: '',
-    serversCost: '',
-    hardwareCost: '',
-    connectionCost: '',
-    developerCost: '',
-    otherExpenses: '',
-    licenseCost: '',
-    totalValue: '',
-    date: dayjs().toISOString().split('T')[0]
-  });*/
-//Table
-function ccyFormat(num) {    //budget form
-  return `${num.toFixed(2)}`;
-}
-
-function priceRow(qty, unit) {
-  return qty * unit;
-}
-
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, price };
-}
-
-const total = (items) => {
-  return items.map(({ qty, unit }) => priceRow(qty, unit)).reduce((sum, i) => sum + i, 0);
-};
-
-
-  const rows = [
-    createRow('Selection Process Cost', 1, parseFloat(selectionprosessCost||0 )),
-    createRow('License Cost', 1, parseFloat(licenseCost || 0)),
-    createRow('Servers Cost', 1, parseFloat(serversCost || 0)),
-    createRow('Hardware Cost', 1, parseFloat(hardwareCost || 0)),
-    createRow('Connection Cost', 1, parseFloat(connectionCost || 0)),
-    createRow('Developer Cost', 1, parseFloat(developerCost || 0)),
-    createRow('Other Expenses', 1, parseFloat(otherExpenses || 0))
-  ];
-
-  const invoiceTotal = total(rows);
-//End
-
-
-
   const handleProjectChange = (event) => {
     setselectedProject(event.target.value);
   }
@@ -179,15 +120,9 @@ const total = (items) => {
     });
 
   }
-
   return (
     <div>
-     
-      <div className="Pagename">
-        <p>Budget Estimation Report : {selectedProject}</p>
-      </div>
-      
-      <Form>
+        <Form>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>
@@ -300,39 +235,8 @@ const total = (items) => {
            
         
       </Form>
-      <div>
-      <div className="budgetpdf">  {/*Budget Pdf form*/ }
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left" colSpan={3}>
-                {description}
-              </TableCell>
-              <TableCell align="left">Date: {date}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Expense</TableCell>
-              <TableCell>Amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.desc}>
-                <TableCell>{row.desc}</TableCell>
-                <TableCell align="left">{ccyFormat(row.price)}</TableCell>
-              </TableRow>
-            ))}
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
     </div>
-      </div>
-     
-    </div>
-  );
+  )
 }
+
+export default BudgetFormEdit
