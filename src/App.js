@@ -28,6 +28,7 @@ import ProgressDeveloper from "./Pages-Baumika/ProgressDeveloper";
 import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDeveloper";
 import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
 import TaskRecord from "./Pages-Baumika/TaskRecord";
+import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
 
 
 
@@ -53,6 +54,7 @@ function App() {
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
+        <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
 
          {/*<Route path="/loginForm" element={<LoginForm/>}></Route>*/}
           <Route path="/userCreation" element={<UserCreation1/>}></Route>

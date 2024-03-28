@@ -10,10 +10,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState,useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function BudgetFormEdit() {
-    const [projectData, setProjectData] = useState([]);
-  const [selectedProject, setselectedProject]= useState();
   const [description , setDescription] = useState('');
   const [selectionprosessCost , setSelectionProcessCost] = useState('');
   const [serversCost , setServersCost] = useState('');
@@ -24,9 +23,6 @@ function BudgetFormEdit() {
   const [licenseCost , setLicenseCost] = useState('');
   const [totalValue ,   setTotalValue] = useState('');
   const [date ,setDate] = useState('')
-  const handleProjectChange = (event) => {
-    setselectedProject(event.target.value);
-  }
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -65,9 +61,7 @@ function BudgetFormEdit() {
   const currentDate = new Date().toISOString().split('T')[0];
 
   
-  useEffect(() => {
-    fetchData();
-  },[]);
+
 
   useEffect(() => {
     const budgetdata=[
@@ -84,17 +78,6 @@ function BudgetFormEdit() {
     setTotalValue(total);
 }, [connectionCost, developerCost, hardwareCost, licenseCost, otherExpenses, selectionprosessCost, serversCost]);
 
-
-
-  const fetchData = async ()=>{                    //get project names
-   try{
-    const response= await  axios.get ('https://localhost:44377/api/Budget');
-    setProjectData(response.data);//Add data
-   }
-   catch (error) {
-    console.error('Error fetching data:', error);
-  }
-};
 
   
   const handleSubmit = () => {
@@ -123,21 +106,7 @@ function BudgetFormEdit() {
   return (
     <div>
         <Form>
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>
-              
-                  <select id="SelectProject" className="Projectlist" value={selectedProject} onChange={handleProjectChange}>
-                  <option value="Select project first">Select project here... </option>
-                  {projectData.map((budget,index)=>(
-                   <option key={index} value={budget.projectName}>{budget.projectName}</option>
-                  ))}   
-                   </select>
-              
-            </Form.Label>
-          </Form.Group>
-        </Row>
-
+        
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridCity">
             <Form.Label>Budget Description</Form.Label>
@@ -205,26 +174,15 @@ function BudgetFormEdit() {
           </Form.Group>
          
         </Row>
-        
-       
-        {/*<Row className="pdfform"><BudgetEstForm selectedProject={selectedProject} 
-        selectionprosessCost={selectionprosessCost}  
-        licenseCost={licenseCost}
-        serversCost={serversCost}
-        hardwareCost={hardwareCost}
-        connectionCost={connectionCost}
-        developerCost={developerCost}
-        otherExpenses={otherExpenses}
-        date={date}
-        /></Row>*/}
 
                   <Row>
-        
+        <Link to={'/budget'}> 
         <Form.Group className="print-btn" controlId="formGridAddress1">
           <Button variant="primary" type="submit" id="Print" >
-            Print
+            Report
           </Button>
-        </Form.Group>
+        </Form.Group></Link>
+        
 
         <Form.Group className="submit-btn" controlId="formGridAddress1">
         <Button variant="primary" type="button" id="usubmit" onClick={handleSubmit}>
