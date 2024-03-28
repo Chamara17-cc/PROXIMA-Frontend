@@ -1,0 +1,37 @@
+
+[
+    {
+        "title": "Dashboard",
+        "icon": "bi-gear-fill",
+        "path" :"/DeveloperDashboard"
+    },
+      
+    {
+        "title": "Project",
+        "icon": "bi bi-stack",
+        "path" :"/DeveloperProject"
+    },
+    {
+        "title": "Task",
+        "icon": "bi bi-bank2",
+        "path" :"/DeveloperTask"
+    },
+    {
+        "title": "Progress",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/DeveloperProgress"
+    },
+    {
+        "title": "ProjectDescription",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/ProjectDescriptionDeveloper"
+    },{
+        "title": "TaskDescription",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/taskDescriptionDeveloper"
+    },{
+        "title": "TaskRecord",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/taskRecord"
+    }
+]
