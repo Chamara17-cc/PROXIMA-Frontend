@@ -65,5 +65,10 @@
                 "path": "/sendemail"   
             }
         ]
+    },  {
+        "title": "DeveloperDashboard",
+        "icon": "bi-gear-fill",
+        "path" :"/DeveloperDashboard"
     }
 ]
+

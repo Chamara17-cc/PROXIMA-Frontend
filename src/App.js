@@ -20,6 +20,16 @@ import UserCreation1 from "./Pages-Thusharga/UserCreation1";
 import UserCreation2 from "./Pages-Thusharga/UserCreation2";
 
 
+//newly added Pages 
+import DashboardDeveloper from "./Pages-Baumika/DashboardDeveloper";
+import ProjectDeveloper from "./Pages-Baumika/ProjectDeveloper";
+import TaskDeveloper from "./Pages-Baumika/TaskDeveloper";
+import ProgressDeveloper from "./Pages-Baumika/ProgressDeveloper";
+import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDeveloper";
+import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
+import TaskRecord from "./Pages-Baumika/TaskRecord";
+
+
 
 function App() {
   return (
@@ -49,6 +59,16 @@ function App() {
           <Route path="/userCreation/2" element={<UserCreation2/>}></Route> 
 
         {/* <Route path="/budgetestform"  element={<BudgetEstimationForm/>}></Route> */}
+
+
+       {/* newly added routes  */}
+        <Route path="/DeveloperDashboard" element={<DashboardDeveloper/>}></Route>
+        <Route path="/DeveloperProject" element={<ProjectDeveloper/>}></Route>
+        <Route path="/DeveloperTask" element={<TaskDeveloper/>}></Route>
+        <Route path="/DeveloperProgress" element={<ProgressDeveloper/>}></Route>
+        <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
+        <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
+        <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
         
         
 
