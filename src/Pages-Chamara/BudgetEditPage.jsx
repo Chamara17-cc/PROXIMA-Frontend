@@ -5,12 +5,14 @@ import Topbar from '../Compornents/Topbar'
 
 function BudgetEditPage() {
   return (
+    
     <div><div className='Budgetedit'>
+
     <Sidebar/>
     <Topbar/>
     <div className="Content">
     <div className="editpage">
-      <BudgetFormEdit/>
+    <BudgetFormEdit/>
     </div>
     </div>
   </div></div>
