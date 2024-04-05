@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import './Profile.css'
+import { useNavigate } from "react-router-dom";
 
 export default function TopBar() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(null); // Assuming you have the user's profile photo stored in state
+  const navigate = useNavigate();
 
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
@@ -14,11 +16,11 @@ export default function TopBar() {
   };
 
   const handleChangePassword = () => {
-    // Handle change password action
+    navigate('/resetpassword');
   };
 
   const handleLogout = () => {
-    // Handle logout action
+    navigate('/loginform');
   };
 
   return (
