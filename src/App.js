@@ -8,7 +8,7 @@ import ProjectList from "./Pages-Suraj/ProjectList";
 import TaskCreation from "./Pages-Suraj/TaskCreation";
 // import ClientList from "./Pages-Hemal/ClientList";
 // import Payments from "./Pages-Hemal/Payments";
-// import Budgetplan from "./Pages-Chamara/Budgetplan";
+ import Budgetplan from "./Pages-Chamara/Budgetplan";
 // import Invoice from "./Pages-Chamara/Invoice";
 // import SendEmail from "./Pages-Hemal/SendEmail";
 import AdminProjectViewPage from "./Pages-Suraj/AdminPojectViewPage";
@@ -16,8 +16,19 @@ import AddDevelopersPage from "./Pages-Suraj/AddDevelopersPage";
 // import BudgetEstimationForm from "./Pages-Chamara/BudgetEstimationForm";
 
 // import LoginForm from "./Pages-Thusharga/LoginForm";
-// import UserCreation1 from "./Pages-Thusharga/UserCreation1";
-// import UserCreation2 from "./Pages-Thusharga/UserCreation2";
+import UserCreation1 from "./Pages-Thusharga/UserCreation1";
+import UserCreation2 from "./Pages-Thusharga/UserCreation2";
+
+
+//newly added Pages 
+import DashboardDeveloper from "./Pages-Baumika/DashboardDeveloper";
+import ProjectDeveloper from "./Pages-Baumika/ProjectDeveloper";
+import TaskDeveloper from "./Pages-Baumika/TaskDeveloper";
+import ProgressDeveloper from "./Pages-Baumika/ProgressDeveloper";
+import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDeveloper";
+import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
+import TaskRecord from "./Pages-Baumika/TaskRecord";
+import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
 
 
 
@@ -36,18 +47,30 @@ function App() {
         {/* <Route path="/clientlist" element ={<ClientList/>}></Route>
         <Route path="/payments" element ={<Payments/>}></Route>
         <Route path="/sendemail" element ={<SendEmail/>}></Route>
-        <Route path="/budget" element ={<Budgetplan/>}></Route>
+        
         <Route path="/invoice" element ={<Invoice/>}></Route> */}
+        <Route path="/budget" element ={<Budgetplan/>}></Route>
         <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
+        <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
 
-        {/* <Route path="/loginForm" element={<LoginForm/>}></Route>
+         {/*<Route path="/loginForm" element={<LoginForm/>}></Route>*/}
           <Route path="/userCreation" element={<UserCreation1/>}></Route>
-          <Route path="/userCreation/2" element={<UserCreation2/>}></Route> */}
+          <Route path="/userCreation/2" element={<UserCreation2/>}></Route> 
 
         {/* <Route path="/budgetestform"  element={<BudgetEstimationForm/>}></Route> */}
+
+
+       {/* newly added routes  */}
+        <Route path="/DeveloperDashboard" element={<DashboardDeveloper/>}></Route>
+        <Route path="/DeveloperProject" element={<ProjectDeveloper/>}></Route>
+        <Route path="/DeveloperTask" element={<TaskDeveloper/>}></Route>
+        <Route path="/DeveloperProgress" element={<ProgressDeveloper/>}></Route>
+        <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
+        <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
+        <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
         
         
 
