@@ -10,7 +10,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation,Link } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+
 
 function BudgetFormEdit() {
   const [description , setDescription] = useState('');
@@ -23,6 +25,10 @@ function BudgetFormEdit() {
   const [licenseCost , setLicenseCost] = useState('');
   const [totalValue ,   setTotalValue] = useState('');
   const [date ,setDate] = useState('')
+  
+  const location = useLocation();
+  const projectId = location.state.projectId ;
+  
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -55,9 +61,7 @@ function BudgetFormEdit() {
   const handleOtherExpensesChange = (event) => {
     setOtherExpenses(event.target.value);
   }
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-  }
+
   const currentDate = new Date().toISOString().split('T')[0];
 
   
@@ -80,29 +84,30 @@ function BudgetFormEdit() {
 
 
   
-  const handleSubmit = () => {
-    const budgetdata = {
-     
-      Objectives: description,
-      SelectionprocessCost: selectionprosessCost,
-      LicenseCost: licenseCost,
-      ServersCost: serversCost,
-      HardwareCost: hardwareCost,
-      ConnectionCost: connectionCost,
-      DeveloperCost: developerCost,
-      OtherExpenses: otherExpenses,
-      TotalCost:totalValue,
-      Date :date
-    };
+const handleSubmit = async () => {
+  const budgetdata = {
+    Objectives: description,
+    SelectionprocessCost: selectionprosessCost,
+    LicenseCost: licenseCost,
+    ServersCost: serversCost,
+    HardwareCost: hardwareCost,
+    ConnectionCost: connectionCost,
+    DeveloperCost: developerCost,
+    OtherExpenses: otherExpenses,
+    TotalCost: totalValue,
+    Date: date
+  };
 
-    const url = 'https://localhost:44377/api/Budget';
-    axios.post(url, budgetdata).then((result) =>
-      alert('data inserted')
-    ).catch((error) =>{
-      alert(error);
-    });
+  const url = `https://localhost:44377/api/Budget/Projects/${projectId}`;
 
+  try {
+    const response = await axios.post(url, budgetdata);
+    alert('Data inserted');
+  } catch (error) {
+    alert(error);
   }
+};
+
   return (
     <div>
         <Form>
@@ -154,17 +159,21 @@ function BudgetFormEdit() {
             <Form.Control placeholder="Enter budget Other Expenses" onChange={handleOtherExpensesChange} />
           </Form.Group>
         </Row>
-        <Row className="Datepicker"           onChange={handleDateChange}>
-        <LocalizationProvider  dateAdapter={AdapterDayjs} >
-      <DemoContainer components={['DatePicker']}>
-        <DatePicker className="datepicker"
-          defaultValue={dayjs('2022-04-17')}
-          views={['year', 'month', 'day']}
-          max={currentDate}
-        />
-      </DemoContainer>
-    </LocalizationProvider>
-        </Row>
+        <Row className="Datepicker">
+        
+              < TextField
+             autoFocus
+             margin="dense"
+             id="last_updated"
+             type="date"
+             fullWidth
+             value={date}
+             onChange={(e) => setDate(e.target.value)}
+             style={{ backgroundColor: "white", width: "200px" }} // Adjust the width as needed
+             />
+
+
+         </Row>
        
 
         <Row className="Total" >

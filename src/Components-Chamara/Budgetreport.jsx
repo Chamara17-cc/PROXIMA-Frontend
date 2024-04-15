@@ -19,69 +19,53 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import jsPDF from "jspdf";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function ProjectCreationForm() {
 
- 
-
-  const [projectData, setProjectData] = useState([]);
-  const [selectedProject, setselectedProject]= useState();
-  const [budgetdata,setBudgetData]=useState([]);
-
+  const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState("");
+  const [budgetData, setBudgetData] = useState([]);
   
-
-function priceRow(qty, unit) {
-  return qty * unit;
-}
-
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, price };
-}
-
-
-const handleProjectChange = async(event) => {
-  const selectedProjectId = event.target.value;
-  setselectedProject(selectedProjectId);
-  try{
-    const bresponse= await axios.get(`https://localhost:44377/api/Budget/${selectedProjectId}`);// replace with original link
-    setBudgetData(bresponse.data);
-  }catch(error){
-    console.log("Error while fetching data",error);
-  }
-  
-};
-const rows = [
-  createRow('Selection Process Cost', 1, parseFloat(budgetdata.SelectionprosessCost||0 )),
-  createRow('License Cost', 1, parseFloat(budgetdata.LicenseCost || 0)),
-  createRow('Servers Cost', 1, parseFloat(budgetdata.ServersCost || 0)),
-  createRow('Hardware Cost', 1, parseFloat(budgetdata.HardwareCost || 0)),
-  createRow('Connection Cost', 1, parseFloat(budgetdata.ConnectionCost || 0)),
-  createRow('Developer Cost', 1, parseFloat(budgetdata.DeveloperCost || 0)),
-  createRow('Other Expenses', 1, parseFloat(budgetdata.OtherExpenses || 0)),
-  createRow('Total', 1, parseFloat(budgetdata.Total || 0))
-];
-  
+  const navigate= useNavigate();
   useEffect(() => {
-    fetchData();
-  },[]);
+    fetchProjects();
+  }, []);
 
+  useEffect(() => {
+    if (selectedProject) {
+      fetchBudgetData(selectedProject);
+    }
+  }, [selectedProject]);
 
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get(`https://localhost:44377/api/Budget`);
+      console.log("Projects:", response.data); // Debugging: log fetched projects
+      setProjects(response.data);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
 
-  const fetchData = async ()=>{                    //get project names
-   try{
-    const response= await  axios.get ('https://localhost:44377/api/Budget');
-    setProjectData(response.data);//Add data
-   }
-   catch (error) {
-    console.error('Error fetching data:', error);
+  const fetchBudgetData = async (projectid) => {
+    try {
+      const response = await axios.get(`https://localhost:44377/api/Budget/Projects/${projectid}`);
+      console.log("Budget data:", response.data); // Debugging: log fetched budget data
+      setBudgetData(response.data);
+    } catch (error) {
+      console.error("Error fetching budget data:", error);
+    }
+  };
+
+  const handleProjectChange = (event) => {
+    setSelectedProject(event.target.value);
+  };
+
+  const gotoEditpage = (projectid)=>{
+    navigate('/budgetformedit', { state:  {projectId  : selectedProject  }});
   }
-};
-
-
-
 
   return (
     <div>
@@ -95,13 +79,12 @@ const rows = [
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>
               
-                  <select id="SelectProject" className="Projectlist" value={selectedProject} onChange={handleProjectChange}>
-                  <option value="Select project first">Select project here... </option>
-                  {projectData.map((budget,index)=>(
-                   <option key={index} value={budget.projectName}>{budget.projectName}</option>
-                  ))}   
-                   </select>
-              
+            <select id="SelectProject" className="Projectlist" value={selectedProject} onChange={handleProjectChange}>
+                        <option value="">Select project here...</option>
+                        {projects.map(project => (
+                       <option key={project.projectId} value={project.projectId}>{project.projectName}</option>
+                       ))}
+                        </select>
             </Form.Label>
           </Form.Group>
         </Row>
@@ -111,32 +94,63 @@ const rows = [
         
       </Form>
       <div>
+      {Object.keys(budgetData).length > 0 && (
       <div className="budgetpdf">  {/*Budget Pdf form*/ }
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left" colSpan={3}>
-                {budgetdata.description}
-              </TableCell>
-              <TableCell align="left">Date: {budgetdata.date}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Expense</TableCell>
-              <TableCell colSpan={4}>Amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.desc}>
-                <TableCell>{row.desc}</TableCell>
-                <TableCell align="left" colSpan={4}>{row.price}</TableCell>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left" colSpan={3}>
+                  {budgetData.description}
+                </TableCell>
+                <TableCell align="left">Date: {budgetData.date}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+              <TableRow>
+                <TableCell>Expense</TableCell>
+                <TableCell colSpan={4}>Amount</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {budgetData.map((item,index) => (
+                <><TableRow key={index}>
+                  <TableCell>Selection Process Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.selectionprocessCost}</TableCell>
+                </TableRow><TableRow key={index}>
+                    <TableCell>License Cost</TableCell>
+                    <TableCell align="left" colSpan={4}>{item.licenseCost}</TableCell>
+                  </TableRow>
+                  <TableRow key={index}>
+                  <TableCell>Server Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.serversCost}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Hardware Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.hardwareCost}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Connection Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.connectionCost}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Developer Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.developerCost}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Other Expenses</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.otherExpenses}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Total Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.totalCost}</TableCell>
+                </TableRow>
+                </>
+                
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    )}
     <div className="btn12">
     <Row>
         
@@ -145,14 +159,12 @@ const rows = [
             Print
           </Button>
         </Form.Group>
-        <Link to={`/budgetformedit`}>
+        
         <Form.Group className="submit-btn" controlId="formGridAddress1">
-        <Button variant="primary" type="button" id="usubmit" >
+        <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
           Edit
         </Button>
         </Form.Group>
-       
-        </Link>
         </Row>
         
            
