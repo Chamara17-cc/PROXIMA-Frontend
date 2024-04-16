@@ -16,8 +16,8 @@ import AddDevelopersPage from "./Pages-Suraj/AddDevelopersPage";
 // import BudgetEstimationForm from "./Pages-Chamara/BudgetEstimationForm";
 
 // import LoginForm from "./Pages-Thusharga/LoginForm";
-import UserCreation1 from "./Pages-Thusharga/UserCreation1";
-import UserCreation2 from "./Pages-Thusharga/UserCreation2";
+import Usercreation1 from "./Pages-Thusharga/UserCreation1";
+import Usercreation2 from "./Pages-Thusharga/UserCreation2";
 
 
 //newly added Pages 
