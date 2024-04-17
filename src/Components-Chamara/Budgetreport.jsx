@@ -19,166 +19,52 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import jsPDF from "jspdf";
+import { useNavigate } from "react-router-dom";
 
 
 export default function ProjectCreationForm() {
 
- 
+  const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState("");
+  const [budgetData, setBudgetData] = useState([]);
+  
+  const navigate= useNavigate();
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
-  const [projectData, setProjectData] = useState([]);
-  const [selectedProject, setselectedProject]= useState();
-  const [description , setDescription] = useState('');
-  const [selectionprosessCost , setSelectionProcessCost] = useState('');
-  const [serversCost , setServersCost] = useState('');
-  const [hardwareCost, setHardwareCost] = useState('');
-  const [connectionCost , setConnectionCost] = useState('');
-  const [developerCost , setDeveloperCost] = useState('');
-  const [otherExpenses , setOtherExpenses] = useState('');
-  const [licenseCost , setLicenseCost] = useState('');
-  const [totalValue ,   setTotalValue] = useState('');
-  const [date ,setDate] = useState('')
+  useEffect(() => {
+    if (selectedProject) {
+      fetchBudgetData(selectedProject);
+    }
+  }, [selectedProject]);
 
-  /*const [budgetData, setBudgetData] = useState({
-    selectionprosessCost: '',
-    serversCost: '',
-    hardwareCost: '',
-    connectionCost: '',
-    developerCost: '',
-    otherExpenses: '',
-    licenseCost: '',
-    totalValue: '',
-    date: dayjs().toISOString().split('T')[0]
-  });*/
-//Table
-function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
-}
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get(`https://localhost:44377/api/Budget`);
+      console.log("Projects:", response.data); // Debugging: log fetched projects
+      setProjects(response.data);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
 
-function priceRow(qty, unit) {
-  return qty * unit;
-}
-
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
-}
-
-const subtotal = (items) => {
-  return items.map(({ qty, unit }) => priceRow(qty, unit)).reduce((sum, i) => sum + i, 0);
-};
-
-
-  const rows = [
-    createRow('Selection Process Cost', 1, parseFloat(selectionprosessCost||0 )),
-    createRow('License Cost', 1, parseFloat(licenseCost || 0)),
-    createRow('Servers Cost', 1, parseFloat(serversCost || 0)),
-    createRow('Hardware Cost', 1, parseFloat(hardwareCost || 0)),
-    createRow('Connection Cost', 1, parseFloat(connectionCost || 0)),
-    createRow('Developer Cost', 1, parseFloat(developerCost || 0)),
-    createRow('Other Expenses', 1, parseFloat(otherExpenses || 0))
-  ];
-
-  const invoiceSubtotal = subtotal(rows);
-  const invoiceTotal = invoiceSubtotal;
-//End
-
-
+  const fetchBudgetData = async (projectid) => {
+    try {
+      const response = await axios.get(`https://localhost:44377/api/Budget/Projects/${projectid}`);
+      console.log("Budget data:", response.data); // Debugging: log fetched budget data
+      setBudgetData(response.data);
+    } catch (error) {
+      console.error("Error fetching budget data:", error);
+    }
+  };
 
   const handleProjectChange = (event) => {
-    setselectedProject(event.target.value);
-  }
+    setSelectedProject(event.target.value);
+  };
 
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  }
-  
-  const handleSelectionprocessCostChange = (event) => {
-    setSelectionProcessCost(event.target.value);
-  }
-  
-  const handleLicenseCostChange = (event) => {
-    setLicenseCost(event.target.value);
-  }
-  
-  const handleServersCostChange = (event) => {
-    setServersCost(event.target.value);
-  }
-  
-  const handleHardwareCostChange = (event) => {
-    setHardwareCost(event.target.value);
-  }
-  
-  const handleConnectionCostChange = (event) => {
-    setConnectionCost(event.target.value);
-  }
-  
-  const handleDeveloperCostChange = (event) => {
-    setDeveloperCost(event.target.value);
-  }
-  
-  const handleOtherExpensesChange = (event) => {
-    setOtherExpenses(event.target.value);
-  }
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-  }
-  const currentDate = new Date().toISOString().split('T')[0];
-
-  
-  useEffect(() => {
-    fetchData();
-  },[]);
-
-  useEffect(() => {
-    const budgetdata=[
-      selectionprosessCost,
-      serversCost,
-      hardwareCost,
-      connectionCost,
-      developerCost,
-      otherExpenses,
-      licenseCost
-      ];
-  
-    const total = budgetdata.reduce((acc, currentValue) => acc + parseFloat(currentValue || 0), 0);
-    setTotalValue(total);
-}, [connectionCost, developerCost, hardwareCost, licenseCost, otherExpenses, selectionprosessCost, serversCost]);
-
-
-
-  const fetchData = async ()=>{
-   try{
-    const response= await  axios.get ('https://localhost:44377/api/Budget');
-    setProjectData(response.data);//Add data
-   }
-   catch (error) {
-    console.error('Error fetching data:', error);
-  }
-};
-
-  
-  const handleSubmit = () => {
-    const budgetdata = {
-     
-      Objectives: description,
-      SelectionprocessCost: selectionprosessCost,
-      LicenseCost: licenseCost,
-      ServersCost: serversCost,
-      HardwareCost: hardwareCost,
-      ConnectionCost: connectionCost,
-      DeveloperCost: developerCost,
-      OtherExpenses: otherExpenses,
-      TotalCost:totalValue,
-      Date :date
-    };
-
-    const url = 'https://localhost:44377/api/Budget';
-    axios.post(url, budgetdata).then((result) =>
-      alert('data inserted')
-    ).catch((error) =>{
-      alert(error);
-    });
-
+  const gotoEditpage = (projectid)=>{
+    navigate('/budgetformedit', { state:  {projectId  : selectedProject  }});
   }
 
   return (
@@ -193,153 +79,95 @@ const subtotal = (items) => {
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>
               
-                  <select id="SelectProject" className="Projectlist" value={selectedProject} onChange={handleProjectChange}>
-                  <option value="Select project first">Select project here... </option>
-                  {projectData.map((budget,index)=>(
-                   <option key={index} value={budget.projectName}>{budget.projectName}</option>
-                  ))}   
-                   </select>
-              
+            <select id="SelectProject" className="Projectlist" value={selectedProject} onChange={handleProjectChange}>
+                        <option value="">Select project here...</option>
+                        {projects.map(project => (
+                       <option key={project.projectId} value={project.projectId}>{project.projectName}</option>
+                       ))}
+                        </select>
             </Form.Label>
           </Form.Group>
         </Row>
 
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>Budget Description</Form.Label>
-            <Form.Control placeholder="Enter budget description" onChange={handleDescriptionChange} />
-          </Form.Group>
-        </Row>
 
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>Selection Process Cost</Form.Label>
-            <Form.Control placeholder="Enter budget selection process cost" onChange={handleSelectionprocessCostChange} />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>LicenseCost</Form.Label>
-            <Form.Control placeholder="Enter budget licenseCost" onChange={handleLicenseCostChange} />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridZip">
-            <Form.Label>Servers Cost</Form.Label>
-            <Form.Control placeholder="Enter budget server cost" onChange={handleServersCostChange} />
-          </Form.Group>
-        </Row>
-
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>Hardware Cost</Form.Label>
-            <Form.Control placeholder="Enter budget Hardware Cost" onChange={handleHardwareCostChange} />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>Connection Cost</Form.Label>
-            <Form.Control placeholder="Enter budget Connection Cost" onChange={handleConnectionCostChange} />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridZip">
-            <Form.Label>Developer Cost</Form.Label>
-            <Form.Control placeholder="Enter budget Developer Cost" onChange={handleDeveloperCostChange} />
-          </Form.Group>
-        </Row>
-
-        <Row className="Other">
-          <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>Other Expenses</Form.Label>
-            <Form.Control placeholder="Enter budget Other Expenses" onChange={handleOtherExpensesChange} />
-          </Form.Group>
-        </Row>
-        <Row className="Datepicker"           onChange={handleDateChange}>
-        <LocalizationProvider  dateAdapter={AdapterDayjs} >
-      <DemoContainer components={['DatePicker']}>
-        <DatePicker className="datepicker"
-          defaultValue={dayjs('2022-04-17')}
-          views={['year', 'month', 'day']}
-          max={currentDate}
-        />
-      </DemoContainer>
-    </LocalizationProvider>
-        </Row>
-       
-
-        <Row className="Total" >
-        <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>Total Estimation</Form.Label>
-            <Form.Control value={totalValue} />
-          </Form.Group>
-         
-        </Row>
+                  
         
-       
-        {/*<Row className="pdfform"><BudgetEstForm selectedProject={selectedProject} 
-        selectionprosessCost={selectionprosessCost}  
-        licenseCost={licenseCost}
-        serversCost={serversCost}
-        hardwareCost={hardwareCost}
-        connectionCost={connectionCost}
-        developerCost={developerCost}
-        otherExpenses={otherExpenses}
-        date={date}
-        /></Row>*/}
-
-                  <Row>
+      </Form>
+      <div>
+      {Object.keys(budgetData).length > 0 && (
+      <div className="budgetpdf">  {/*Budget Pdf form*/ }
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left" colSpan={3}>
+                  {budgetData.description}
+                </TableCell>
+                <TableCell align="left">Date: {budgetData.date}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Expense</TableCell>
+                <TableCell colSpan={4}>Amount</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {budgetData.map((item,index) => (
+                <><TableRow key={index}>
+                  <TableCell>Selection Process Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.selectionprocessCost}</TableCell>
+                </TableRow><TableRow key={index}>
+                    <TableCell>License Cost</TableCell>
+                    <TableCell align="left" colSpan={4}>{item.licenseCost}</TableCell>
+                  </TableRow>
+                  <TableRow key={index}>
+                  <TableCell>Server Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.serversCost}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Hardware Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.hardwareCost}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Connection Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.connectionCost}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Developer Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.developerCost}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Other Expenses</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.otherExpenses}</TableCell>
+                </TableRow>
+                <TableRow key={index}>
+                  <TableCell>Total Cost</TableCell>
+                  <TableCell align="left" colSpan={4}>{item.totalCost}</TableCell>
+                </TableRow>
+                </>
+                
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    )}
+    <div className="btn12">
+    <Row>
         
         <Form.Group className="print-btn" controlId="formGridAddress1">
           <Button variant="primary" type="submit" id="Print" >
             Print
           </Button>
         </Form.Group>
-
+        
         <Form.Group className="submit-btn" controlId="formGridAddress1">
-        <Button variant="primary" type="button" id="usubmit" onClick={handleSubmit}>
-          Submit
+        <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
+          Edit
         </Button>
         </Form.Group>
         </Row>
-           
         
-      </Form>
-      <div>
-      <div className="budgetpdf">  {/*Budget Pdf form*/ }
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left" colSpan={3}>
-                {description}
-              </TableCell>
-              <TableCell align="left">Date: {date}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Expense</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Unit Cost</TableCell>
-              <TableCell>Amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.desc}>
-                <TableCell>{row.desc}</TableCell>
-                <TableCell>{row.qty}</TableCell>
-                <TableCell>{ccyFormat(row.unit)}</TableCell>
-                <TableCell align="left">{ccyFormat(row.price)}</TableCell>
-              </TableRow>
-            ))}
-            <TableRow>
-              <TableCell rowSpan={3} />
-              <TableCell colSpan={3}>Subtotal</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+           
     </div>
       </div>
      

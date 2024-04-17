@@ -17,7 +17,7 @@
                 "path": "/usercreation1"
             },
             {
-                "title": "Deactivate User",
+                 "title": "Deactivate User",
                 "path": "/userlist"
             }
             
@@ -69,5 +69,10 @@
                 "path": "/sendemail"   
             }
         ]
+    },  {
+        "title": "DeveloperDashboard",
+        "icon": "bi-gear-fill",
+        "path" :"/DeveloperDashboard"
     }
 ]
+
