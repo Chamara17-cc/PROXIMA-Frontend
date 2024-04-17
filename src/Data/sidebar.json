@@ -14,7 +14,11 @@
             },
             {
                 "title": "Add New User",
-                "path": "/usercreation"
+                "path": "/usercreation1"
+            },
+            {
+                 "title": "Deactivate User",
+                "path": "/userlist"
             }
             
         ]
