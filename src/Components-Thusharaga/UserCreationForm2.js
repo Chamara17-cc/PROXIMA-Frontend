@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import './UserCreationForm.css'
+import './styles/UserCreationForm.css'
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Link } from 'react-router-dom';
@@ -10,7 +10,18 @@ import { Link } from 'react-router-dom';
 export default function UserCreationForm() {
   const [userCategory, setUserCategory] = useState('');
   const [selectedJobs, setSelectedJobs] = useState([]);
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    // Check form validity whenever any field changes
+    console.log('Form validity:', isFormValid);
+    setIsFormValid(
+      userCategory !== '' &&
+      selectedJobs !== ''     
+    );
+  }, [userCategory, selectedJobs]);
+
+  
   const handleJobChange = (e) => {
     const job = e.target.value;
     setSelectedJobs(selectedJobs => {
@@ -25,21 +36,32 @@ export default function UserCreationForm() {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission
     const data = {
-      userCategory: userCategory,
-      selectedJobs: selectedJobs
+      CategoryName: userCategory,
+      RoleName: selectedJobs
     };
 
-    const url = ''; // Add your URL here
+    const url = 'https://localhost:7187/api/User_Management/register'; // Add your URL here
     axios.post(url, data)
-      .then((result) => alert('Data inserted'))
-      .catch((error) => alert(error));
+      .then((result) => {
+          clear();
+          const dt= result.data;
+          alert(dt.statusMessage);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      const clear= ()=>{
+        setUserCategory('');
+        setSelectedJobs('');
+      }
   }
 
   return (
     <div className="content">
       <div className="form_group">
         <div> 
-          <h3>User Creation : Job Information</h3>
+          <h3>User Creation: Job Information</h3>
         </div>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formGridUserCategory">
@@ -126,7 +148,7 @@ export default function UserCreationForm() {
             />
              <Form.Check
               type="checkbox"
-              label="Software ENgineer"
+              label="Software Engineer"
               value="Job 9"
               onChange={handleJobChange}
             />
@@ -171,19 +193,19 @@ export default function UserCreationForm() {
 
           <Row className="mb-10">
             <Col>
-            <Link to="/userCreation">
-              <Button variant="primary" type="back" id="submitButton">
+            <Link to='/usercreation1'>
+              <Button variant="secondary" type="back" id="resetButton">
                 Back
               </Button>
               </Link>
             </Col>
 
             <Col>
-          
-              <Button variant="secondary" type="submit" id="resetButton">
+              <Link to='/userCreation2/success'>
+              <Button variant="primary" type="submit" id="submitButton" disabled={!isFormValid}>
                 Submit
               </Button>
-            
+              </Link>
             </Col>
 
           </Row>

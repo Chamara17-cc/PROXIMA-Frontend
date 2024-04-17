@@ -2,9 +2,9 @@ import React from 'react'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 import '../Pages/PageStructure.css'
-import AdminDashboardComponent from '../Components-Thusharaga/AdminDashboardComponent'
+import PasswordReset from '../Components-Thusharaga/PasswordReset'
 
-function AdminDashboard() {
+function ResetPassword() {
   return (
     <div className="FullPage">
       
@@ -13,13 +13,14 @@ function AdminDashboard() {
      
       <div className="Content">
        
-        <AdminDashboardComponent/>
+        <PasswordReset/>
      
       </div>
       
     </div>
 
+    
   )
 }
 
-export default AdminDashboard
+export default ResetPassword

@@ -1,10 +1,11 @@
 import React from 'react'
+import UserCreationSuccessComponent from '../Components-Thusharaga/UserCreationSuccessComponent'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 import '../Pages/PageStructure.css'
-import AdminDashboardComponent from '../Components-Thusharaga/AdminDashboardComponent'
 
-function AdminDashboard() {
+
+function UserCreationSuccess() {
   return (
     <div className="FullPage">
       
@@ -12,9 +13,7 @@ function AdminDashboard() {
       <Topbar/>
      
       <div className="Content">
-       
-        <AdminDashboardComponent/>
-     
+        <UserCreationSuccessComponent/>
       </div>
       
     </div>
@@ -22,4 +21,4 @@ function AdminDashboard() {
   )
 }
 
-export default AdminDashboard
+export default UserCreationSuccess

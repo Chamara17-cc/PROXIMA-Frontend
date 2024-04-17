@@ -92,3 +92,27 @@
     color: #fff;
     font-weight: 700;
 }
+
+.popup {
+    position: fixed;
+    top: 60%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(252, 0, 0, 0.7);
+    padding : 20px;
+    border-radius: 10px;
+    z-index: 9999;
+   
+  }
+  
+  .popup-content {
+    color: #fff;
+    
+  }
+  
+  .close {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    cursor: pointer;
+  }
