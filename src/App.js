@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import DashboardAdmin from "./Pages-Thusharga/DashboardAdmin";
+import AdminDashboard from "./Pages-Thusharga/AdminDashboard";
 // import UserCreation from "./Pages-Thusharga/UserCreation";
 // import UserList from "./Pages-Thusharga/UserList";
 import ProjectCreation from "./Pages-Suraj/ProjectCreation";
@@ -31,6 +31,13 @@ import TaskRecord from "./Pages-Baumika/TaskRecord";
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
 
 
+import UserCreation1 from "./Pages-Thusharga/UserCreation1";
+import UserCreation2 from "./Pages-Thusharga/UserCreation2";
+import UserCreationSuccess from "./Pages-Thusharga/UserCreationSuccess";
+import ViewUserList from "./Pages-Thusharga/ViewUserList";
+import LoginForm from "./Pages-Thusharga/LoginForm";
+import ResetPassword from "./Pages-Thusharga/ResetPassword";
+import ForgotPassword from "./Pages-Thusharga/ForgotPassword";
 
 function App() {
   return (
@@ -38,9 +45,11 @@ function App() {
       
       <BrowserRouter>
       <Routes>
-        <Route path="/" element= {<DashboardAdmin/>}></Route>
-        {/* <Route path="/usercreation" element={<UserCreation/>}></Route>
-        <Route path="/userlist" element ={<UserList/>}></Route> */}
+        <Route path="/" element= {<AdminDashboard/>}></Route>
+        <Route path="/usercreation1" element={<UserCreation1/>}></Route>
+        <Route path="/usercreation2" element={<UserCreation2/>}></Route>
+        <Route path="/usercreation2/success" element={<UserCreationSuccess/>}></Route>
+        <Route path="/userlist" element ={<ViewUserList/>}></Route>
         <Route path="/projectcreation" element ={<ProjectCreation/>}></Route>
         <Route path="/projectlist" element ={<ProjectList/>}></Route>
         <Route path="/taskcreation" element ={<TaskCreation/>}></Route>

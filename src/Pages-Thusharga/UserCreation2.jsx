@@ -4,7 +4,7 @@ import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 
 
-function UserCreation() {
+function UserCreation2() {
   return (
    
     <div className="FullPage">
@@ -23,4 +23,4 @@ function UserCreation() {
     )
 }
 
-export default UserCreation
+export default UserCreation2

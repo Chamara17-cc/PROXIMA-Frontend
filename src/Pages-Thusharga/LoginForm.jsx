@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './styles/LoginForm.css';
 import { FaUser, FaLock } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -46,11 +47,12 @@ const LoginForm = () => {
           />
           <FaLock className='icon' />
         </div>
-
+        <Link to="/">
         <button type="submit">Login</button>
+        </Link>
 
         <div className="remember-forgot">
-          <a href="#">Forgot password?</a>
+          <a href="/forgotpassword">Forgot password?</a>
         </div>
       </form>
       </div>
