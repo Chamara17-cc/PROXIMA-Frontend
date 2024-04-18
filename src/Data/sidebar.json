@@ -46,8 +46,8 @@
                 "path": "/budget"
             },
             {
-                "title": "Invoice",
-                "path": "/incoice" 
+                "title": "Transaction",
+                "path": "/transaction" 
                 
             }
         ]
