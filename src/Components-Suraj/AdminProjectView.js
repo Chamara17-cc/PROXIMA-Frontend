@@ -15,10 +15,16 @@ export default function AdminProjectView() {
   const [projectData, setProjectData] = useState([]);
   const location = useLocation();
 
+
+  const [devData, setDevData] = useState([]);
+
+
   //  console.log(location.state.selectedId);
   const selectedId = location.state.selectedId;
 
   const navigate = useNavigate();
+
+  //---------get project data in project info
   
   const getData = async () => {
     try {
@@ -33,8 +39,19 @@ export default function AdminProjectView() {
   };
 
 
+  //-----------get assigned developer list in team info
+  const getAssignedDev = async () => {
+    try {
+      const response = await axios.get(`https://localhost:44319/api/GetAssignedDevelopers/${selectedId}`);
+      setDevData(response.data);
+      console.log(devData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(() => {
     getData();
+    getAssignedDev();
 
   },[]);
 
@@ -44,9 +61,12 @@ export default function AdminProjectView() {
     navigate("/AddDevelopersPage", {state:{selectedId:selectedId}});
   }
 
-  const HandleAssign = () => {
-    console.log('clicked');
-    navigate('/taskcreation');
+  const HandleAssign = (id) => {
+    var selectedDevId = id;
+    console.log("clicked " + selectedDevId + " " + selectedId);
+    navigate('/taskcreation', {state: {selectedDevId, selectedId}});
+   
+
   }
 
   return (
@@ -97,31 +117,26 @@ export default function AdminProjectView() {
               <table className="ProjectList">
                 <thead>
                   <th>DeveloperId</th>
-                  <th>Developer Name</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
                   <th>Job Role</th>
                   <th>Assign Task</th>
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td>3</td>
-                    <td>developer3</td>
-                    <td>fronendDev</td>
-                    <td><Button onClick={HandleAssign} variant="danger">Assign</Button></td>
-
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>developer4</td>
-                    <td>wfwf3</td>
-                    <td><Button  variant="danger">Assign</Button></td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>developer5</td>
-                    <td>wfwf3</td>
-                    <td><Button variant="danger">Assign</Button></td>
-                  </tr>
+                  {devData.map((dev, index) => (
+                    <tr
+                      key={dev.developerId}>
+                        <td>{dev.userId}</td>
+                        <td>{dev.firstName}</td>
+                        <td>{dev.lastName}</td>
+                        <td>{dev.jobRoleName}</td>
+                        <td><Button onClick={() => HandleAssign(dev.userId)}>Assign Task</Button></td>
+                      </tr>
+                  ))}
+                    
+            
+                  
                 </tbody>
               </table>
 

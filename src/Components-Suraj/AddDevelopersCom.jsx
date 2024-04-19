@@ -9,6 +9,10 @@ export default function AddDevelopersCom() {
   const [developer, setDevelper] = useState([]);
   const [add, setAdd] = useState([]);
 
+  const [check, setCheck] = useState([]);
+
+  const [message, setMessage] = useState('');
+
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -25,8 +29,6 @@ export default function AddDevelopersCom() {
       console.log("Error occured: " + error);
     }
   };
-
-  const [msgArray, setMsgArray] = useState([]);
 
   //---------DEveloper Addition
   var count = 0;
@@ -46,8 +48,7 @@ export default function AddDevelopersCom() {
     }
     if (id === addedId) {
       alert("Already added");
-    }
-    else {
+    } else {
       newAdd.push(id);
       setAdd(newAdd);
     }
@@ -72,36 +73,58 @@ export default function AddDevelopersCom() {
       newAdd.splice(index, 1);
       setAdd(newAdd);
 
-      
-
       console.log(add);
     } else {
       alert("Not added");
     }
   };
 
+  //-------------check availability
+  // const checkAvailability = async () => {
+  //   const addedDev = await axios.get(`https://localhost:44319/api/CheckAddedDevelopers/${selectedId}`);
+  //   setCheck(addedDev);
+
+  //   var count = check.length;
+  //   for (var i = 0; i < count; i++){
+  //     if(check[i].developerId === developer.userId){
+  //     return(
+  //       <td>Added</td>
+  //     );
+
+  //   }}
+
+  //     return(
+  //       <td>not added</td>
+  //     );
+
+  //   }
+
+  // const assignedDev = axios.get("");
+  // setCheck(assignedDev);
+
   useEffect(() => {
     SetList();
+    //checkAvailability();
   }, []);
 
   const HandleSubmit = async () => {
-    for(var i = 0; i < add.length; i++){
-      const data ={
-        projectId : selectedId,
-        developerId : add[i] 
-      }
+    for (var i = 0; i < add.length; i++) {
+      const data = {
+        projectId: selectedId,
+        developerId: add[i],
+      };
+      const url = "https://localhost:44319/api/AddDevelopers";
 
-      axios.post('url', data)
-      .then(alert("succes"))
-      .catch(e => alert(e));
-      
+      axios
+        .post(url, data)
+        .then(console.log("succes"))
+        .catch((e) => alert(e));
     }
 
-    
-    alert('Developers added: ' + add);
-    console.log('clicked');
+    alert("Developers added: " + add);
+    console.log("clicked");
     navigate(-1);
-  }
+  };
 
   return (
     <div>
@@ -111,7 +134,8 @@ export default function AddDevelopersCom() {
           <th>Developer Username</th>
           <th>Job Role</th>
           <th>Add/Remove </th>
-          <th></th>
+          <th>Status</th>
+          
         </thead>
 
         <tbody>
@@ -133,20 +157,32 @@ export default function AddDevelopersCom() {
                   Remove
                 </Button>
               </td>
+              {() => {
+                const addedDev = axios.get(
+                  `https://localhost:44319/api/CheckAddedDevelopers/${selectedId}`
+                );
+                setCheck(addedDev);
 
-              {/* {add.map((item, index) => (
-            <td key={index}>
-              {item} - {msg[index]}
-            </td>
-          ))} */}
+                var count = check.length;
+                for (var i = 0; i < count; i++) {
+                  if (check[i].developerId === dev.userId) {
+                    setMessage('added');
+                    return (<td>{message}</td>);
+                  }
+                }
 
-              <td>{msgArray[index]}</td>
+                setMessage('not added')
+                return (<><td>{message}</td></>);
+              }}
+              
             </tr>
           ))}
         </tbody>
       </table>
       <br />
-      <Button onClick={HandleSubmit} variant="primary">Submit</Button>
+      <Button onClick={HandleSubmit} variant="primary">
+        Submit
+      </Button>
     </div>
   );
 }

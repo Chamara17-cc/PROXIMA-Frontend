@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-
+import TextField from "@mui/material/TextField";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -10,26 +10,14 @@ import Row from "react-bootstrap/Row";
 
 import InputGroup from "react-bootstrap/InputGroup";
 
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./datepickerStyle.css";
 
 import "./FormStyle.css";
 import { useNavigate } from "react-router-dom";
 
-import moment from 'moment';
-
-
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-
-
 
 export default function ProjectCreationForm() {
-
-
   const navigate = useNavigate();
 
   //const [projectId, setProjectId] = useState("");
@@ -45,18 +33,13 @@ export default function ProjectCreationForm() {
   const [timeline, setTimeline] = useState("");
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [technologies, setTechnologies] = useState("");
-  
 
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const [selectedDueDate, setSelectedDueDate] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
-  
   // const handlePIdChange = (value) => {
   //   setProjectId(value);
   // };
-
-  
-
 
   const handlePNameChange = (value) => {
     setProjectName(value);
@@ -106,132 +89,107 @@ export default function ProjectCreationForm() {
     setTechnologies(value);
   };
 
-  const handleStartDateChange = (value) => {
-    setSelectedStartDate(value);
-
-  };
-
-  const handleDueDateChange = (value) => {
-    setSelectedDueDate(value);
-  }
-
   const [validated, setValidated] = useState(false);
 
-//   const handleSubmit = (event) => {
-//     const form = event.currentTarget;
-//     if(form.checkValidity() === false) {
-//       event.preventDefault();
-//       event.stopPropagation();
-      
-//     }
-    
-    
-//     setValidated(true);
+  //   const handleSubmit = (event) => {
+  //     const form = event.currentTarget;
+  //     if(form.checkValidity() === false) {
+  //       event.preventDefault();
+  //       event.stopPropagation();
 
-    
+  //     }
 
-//     const data = {
-//       //ProjectId: projectId,
-//       ProjectName: projectName,
-//       ProjectDescription: description,
-//       Technologies: technologies,
-//       BudgetEstimation: budgetAllocation,
-//       StartDate: selectedStartDate,
-//       DueDate: selectedDueDate,
-//       Duration: timeDuration,
-//       Objectives: objectives,
+  //     setValidated(true);
 
-//       //ProjectStatus:
-//       TeamName: projectTeamName,
-//       ProjectManagerId: projectManagerID,
-//       //TaskCount
-//       ClientId: clientID,
-//       TimeLine: timeline
-//       //AdminId
-//     };
+  //     const data = {
+  //       //ProjectId: projectId,
+  //       ProjectName: projectName,
+  //       ProjectDescription: description,
+  //       Technologies: technologies,
+  //       BudgetEstimation: budgetAllocation,
+  //       StartDate: selectedStartDate,
+  //       DueDate: selectedDueDate,
+  //       Duration: timeDuration,
+  //       Objectives: objectives,
 
-//     const url = "https://localhost:44319/api/CreateProject";
+  //       //ProjectStatus:
+  //       TeamName: projectTeamName,
+  //       ProjectManagerId: projectManagerID,
+  //       //TaskCount
+  //       ClientId: clientID,
+  //       TimeLine: timeline
+  //       //AdminId
+  //     };
 
-//     axios.post(url,data).then((e) =>{
-//       alert("data inserted");
-//       console.log(data);
-//     }
-    
-//     ).catch((error)=>{
-//         console.log(data);
-//         alert(error);
+  //     const url = "https://localhost:44319/api/CreateProject";
 
-//       })
-// }
-    
-const handleAddDevelopers = () => {
-  navigate('/AddDevelopersPage');
-}
-    
-  
-const handleSubmit = (event) => {
+  //     axios.post(url,data).then((e) =>{
+  //       alert("data inserted");
+  //       console.log(data);
+  //     }
 
-  const selectedStartDateObj = selectedStartDate ? moment(selectedStartDate, 'MM/DD/YYYY hh:mm A').toISOString() : null;
-  const selectedDueDateObj = selectedDueDate ? moment(selectedDueDate, 'MM/DD/YYYY hh:mm A').toISOString() : null;
-  
-  console.log(selectedStartDateObj);
+  //     ).catch((error)=>{
+  //         console.log(data);
+  //         alert(error);
 
-  const form = event.currentTarget;
-  if (form.checkValidity() === false) {
-    event.preventDefault();
-    event.stopPropagation();
-    alert("Input the required fields");
-  } else {
-    event.preventDefault(); // Prevent default form submission
-    // Form is valid, proceed with data submission
-    const data = {
-      
-      //ProjectId: projectId,
-      ProjectName: projectName,
-      ProjectDescription: description,
-      Technologies: technologies,
-      BudgetEstimation: budgetAllocation,
-      StartDate: selectedStartDateObj,
-      DueDate: selectedDueDateObj,
-      Duration: timeDuration,
-      Objectives: objectives,
+  //       })
+  // }
 
-      //ProjectStatus:
-      TeamName: projectTeamName,
-      ProjectManagerId: projectManagerID,
-      //TaskCount
-      ClientId: clientID,
-      TimeLine: timeline
-      //AdminId
-    };
+  const handleAddDevelopers = () => {
+    navigate("/AddDevelopersPage");
+  };
 
-    
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      alert("Input the required fields");
+    } else {
+      event.preventDefault(); // Prevent default form submission
+      // Form is valid, proceed with data submission
+      const data = {
+        //ProjectId: projectId,
+        ProjectName: projectName,
+        ProjectDescription: description,
+        Technologies: technologies,
+        BudgetEstimation: budgetAllocation,
+        P_StartDate: startDate,
+        P_DueDate: dueDate,
+        Duration: timeDuration,
+        Objectives: objectives,
 
-    const url = "https://localhost:44319/api/CreateProject";
+        //ProjectStatus:
+        TeamName: projectTeamName,
+        ProjectManagerId: projectManagerID,
+        //TaskCount
+        ClientId: clientID,
+        TimeLine: timeline,
+        //AdminId
+      };
 
-    axios.post(url, data)
-      .then((response) => {
-        alert("Data inserted successfully");
-        console.log(response.data);
+      console.log(data);
 
-        //---after successful submission
-        
-        setValidated(false);
-        
+      const url = "https://localhost:44319/api/CreateProject";
 
-      })
-      .catch((error) => {
-        
-        alert("Error occurred : " + error);
-      });
-  }
+      axios
+        .post(url, data)
+        .then((response) => {
+          alert("Data inserted successfully");
+          console.log("**");
+          console.log(response.data);
 
-  setValidated(true); // Always set validated to true after attempting validation
-  
+          //---after successful submission
 
-};
+          setValidated(false);
+        })
+        .catch((error) => {
+          alert("Error occurred : " + error);
+        });
+    }
 
-
+    setValidated(true); // Always set validated to true after attempting validation
+  };
 
   return (
     <>
@@ -241,11 +199,11 @@ const handleSubmit = (event) => {
         <div className="Section">
           <h3 className="SectionHeading">Project Initialization</h3>
           <Row className="mb-3">
-            
             <Form.Group as={Col}>
               <Form.Label htmlFor="projectName">Project Name:</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
+                  autoFocus
                   required
                   type="text"
                   placeholder="ProjectName"
@@ -264,7 +222,6 @@ const handleSubmit = (event) => {
           <Form.Group className="mb-3">
             <Form.Label htmlFor="description">Project Description:</Form.Label>
             <Form.Control
-              
               placeholder="Enter project description"
               id="description"
               onChange={(e) => handleDescriptionChange(e.target.value)}
@@ -274,7 +231,6 @@ const handleSubmit = (event) => {
           <Form.Group className="mb-3">
             <Form.Label>Project Objectives:</Form.Label>
             <Form.Control
-              
               placeholder="Enter project objectives"
               id="objectives"
               onChange={(e) => handleObjectiveChange(e.target.value)}
@@ -283,7 +239,7 @@ const handleSubmit = (event) => {
           {/*----------------------File upload part----------------------- */}
           <Form.Group as={Col} className="mb-3">
             <Form.Label>Upload:</Form.Label>
-            <Form.Control  type="file" size="sm" style={{ width: "250px" }} />
+            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
           </Form.Group>
         </div>
 
@@ -302,6 +258,7 @@ const handleSubmit = (event) => {
                   id="projectManagerName"
                   //onChange={(e) => handlePManagerNameChange(e.target.value)}
                 />
+
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
                   Please project manager name.
@@ -319,9 +276,9 @@ const handleSubmit = (event) => {
                     onChange={(e) => handleTeamNameChange(e.target.value)}
                   />
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please enter team name.
-                </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please enter team name.
+                  </Form.Control.Feedback>
                 </InputGroup>
               </Form.Group>
               <br />
@@ -362,7 +319,7 @@ const handleSubmit = (event) => {
                   type="text"
                   placeholder="Enter client name"
                   id="clientName"
-                 // onChange={(e) => handleClientNameChange(e.target.value)}
+                  // onChange={(e) => handleClientNameChange(e.target.value)}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
@@ -398,37 +355,30 @@ const handleSubmit = (event) => {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label>Start Date</Form.Label>
-              <DatePicker
-                
+
+              <TextField
+                style={{backgroundColor: "whitesmoke", borderRadius: "10px"}}
+                margin="dense"
+                id="last_updated"
                 type="date"
-                className="datepicker"
-                selected={selectedStartDate}
-                onChange={()=>handleStartDateChange(selectedStartDate)}
-                dateFormat="YYYY-MM-DD HH:MM:SS[.mmm...]"
-                //0001-01-01 00:00:00.0000000
-                // You can customize the date format and other options
+                fullWidth
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
               />
-
-
-
             </Form.Group>
 
             <Form.Group as={Col}>
               <Form.Label>Due Date</Form.Label>
 
-              <InputGroup>
-                <Form.Control
-                  
-                  type="datetime-local"
-                  selected={selectedDueDate}
-                  dateFormat="YYYY-MM-DD HH:MM:SS[.mmm...]"
-                  onChange={handleDueDateChange}
-                />
-
-                
-              </InputGroup>
-
-
+              <TextField
+                style={{backgroundColor: "whitesmoke", borderRadius: "10px"}}
+                margin="dense"
+                id="last_updated"
+                type="date"
+                fullWidth
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
 
               {/* <DatePicker
                 type="date"
@@ -440,7 +390,7 @@ const handleSubmit = (event) => {
                 // You can customize the date format and other options
               /> */}
 
-{/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer
         components={['DateTimePicker', 'DateTimePicker', 'DateTimePicker']}
       >
@@ -448,12 +398,6 @@ const handleSubmit = (event) => {
         <DateTimePicker name="startDateTime" onChange={handleDueDateChange} dateFormat=""/>
       </DemoContainer>
     </LocalizationProvider> */}
-
-
-
-
-
-
             </Form.Group>
 
             <Form.Group as={Col}>
@@ -467,21 +411,17 @@ const handleSubmit = (event) => {
                   onChange={(e) => handleDurationChange(e.target.value)}
                 />
 
-<Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
                   Please enter time duration.
                 </Form.Control.Feedback>
-
               </InputGroup>
-
-             
             </Form.Group>
           </Row>
 
           <Form.Group className="mb-3">
             <Form.Label>Project Time Line</Form.Label>
             <Form.Control
-            
               type="text"
               placeholder=""
               id="timeline"
@@ -492,7 +432,7 @@ const handleSubmit = (event) => {
           {/*----------------------File upload part----------------------- */}
           <Form.Group as={Col} className="mb-3">
             <Form.Label>Upload</Form.Label>
-            <Form.Control  type="file" size="sm" style={{ width: "250px" }} />
+            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
           </Form.Group>
         </div>
 
@@ -500,8 +440,7 @@ const handleSubmit = (event) => {
           <Form.Group className="mb-3">
             <Form.Label>Budget Allocation</Form.Label>
             <Form.Control
-            type="text"
-            
+              type="text"
               placeholder="Enter budget allocation"
               id="budgetAllocation"
               onChange={(e) => handleBudgetChange(e.target.value)}
@@ -511,7 +450,6 @@ const handleSubmit = (event) => {
             <Form.Label>Technologies</Form.Label>
             <Form.Control
               type="text"
-              
               placeholder="Enter technologies"
               id="technologies"
               onChange={(e) => handleTechnologyChange(e.target.value)}
@@ -549,7 +487,6 @@ const handleSubmit = (event) => {
           <Form.Group controlId="formFileMultiple" className="mb-3">
             <Form.Label>Other Resources</Form.Label>
             <Form.Control
-            
               type="file"
               multiple
               style={{ width: "250px" }}
@@ -557,8 +494,6 @@ const handleSubmit = (event) => {
             {/* Multiple file upload */}
           </Form.Group>
         </div>
-
-        
 
         <Button type="submit">Submit form</Button>
       </Form>
