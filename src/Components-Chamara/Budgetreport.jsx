@@ -47,7 +47,7 @@ export default function ProjectCreationForm() {
   const fetchBudgetData = async (projectid) => {
     try {
       const response = await axios.get(`https://localhost:44377/api/Budget/Projects/${projectid}`);
-      console.log("Budget data:", response.data); // Debugging: log fetched budget data
+      console.log("Budget data:", response.data);
       setBudgetData(response.data);
     } catch (error) {
       console.error("Error fetching budget data:", error);
