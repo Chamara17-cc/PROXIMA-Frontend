@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
+import { useNavigate } from 'react-router-dom';
 
 
 function Projectlist() {
@@ -8,13 +9,16 @@ function Projectlist() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://localhost:7044/api/DeveloperProject/GetAllProject');
+        //DeveloperId == 10 In here
+        const response = await axios.get('https://localhost:7044/api/DeveloperProject/10');
         setProjects(response.data);
         console.log(projects);
-      } catch (error) {
+      } catch (error){
         setError(error);
         alert(error);
         console.log("Error occured: " + error);
@@ -23,8 +27,20 @@ function Projectlist() {
       }
     };
 
+
+
+
     fetchData();
   }, []);
+
+
+  var selectedId;
+
+
+  const ProjectSelection = (id) => {
+    selectedId = id;
+    navigate('/ProjectDescriptionDeveloper',{state:{selectedId:selectedId}});
+  };
 
   return (
     <div>
@@ -41,7 +57,10 @@ function Projectlist() {
           </thead>
           <tbody>
             {projects.map((project) => (
-              <tr key={project.projectId}>
+              <tr 
+              key={project.projectId}
+              onClick = {() =>ProjectSelection(project.projectId)}
+              >
                 <td>{project.projectId}</td>
                 <td>{project.projectName}</td>
                 <td>{project.projectStatus}</td>
