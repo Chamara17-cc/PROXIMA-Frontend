@@ -1,10 +1,10 @@
 import React from 'react'
-import UsercreationForm1 from '../Components-Thusharaga/UsercreationForm1'
+import UserCreationForm from '../Components-Thusharaga/UserCreationForm'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 import '../Pages/PageStructure.css'
 
-function UserCreation1() {
+function UserCreation() {
   return (
    
     <div className="FullPage">
@@ -14,7 +14,7 @@ function UserCreation1() {
      
       <div className="Content">
      
-        <UsercreationForm1/>
+        <UserCreationForm/>
      
       </div>
       
@@ -23,4 +23,4 @@ function UserCreation1() {
     )
 }
 
-export default UserCreation1
+export default UserCreation

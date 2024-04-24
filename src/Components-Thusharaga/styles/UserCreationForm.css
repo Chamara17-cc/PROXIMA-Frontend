@@ -15,7 +15,7 @@
     max-height: fit-content;
     margin: 20px auto;
     color: #333;
-    position: absolute;
+    position: fixed;
     top: 9%;
     left: 21%;
   }
