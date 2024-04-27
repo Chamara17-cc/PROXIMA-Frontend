@@ -1,6 +1,7 @@
 import './TaskDescription.css'
 import React, { useEffect, useState } from 'react';
-
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 
 export default function TaskDescription() {
@@ -9,19 +10,52 @@ export default function TaskDescription() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const location = useLocation();
+    const selectedId = location.state.selectedId;
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch('https://localhost:7044/api/DeveloperTask/1') 
-      .then(response => response.json())
-      .then(data => {
-        setTaskDetails(data);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        setError(error);
-        setIsLoading(false);
-      });
-  }, []);
+
+  // useEffect(() => {
+  //   fetch('https://localhost:7044/api/DeveloperTask/${selectedId}') 
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setTaskDetails(data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch(error => {
+  //       setError(error);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
+
+  
+  // if (isLoading) {
+  //   return <div>Loading Task details...</div>;
+  // }
+
+  // if (error) {
+    
+  //   return <div>Error fetching task details: {error.message}</div>;
+  // }
+
+//////////////////////////
+  console.log(selectedId);
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(`https://localhost:7044/api/DeveloperTask/${selectedId}`);
+      setTaskDetails(response.data);
+      setIsLoading(false);
+      console.log(response.data);
+    } catch (error) {
+      alert(error);
+      setIsLoading(false);
+    }
+  };
+useEffect(() => {
+    getData();
+
+  },[]);
 
   
   if (isLoading) {
@@ -29,8 +63,8 @@ export default function TaskDescription() {
   }
 
   if (error) {
-    
-    return <div>Error fetching task details: {error.message}</div>;
+    // Handle errors gracefully, e.g., display an error message
+    return <div>Error fetching Task details: {error.message}</div>;
   }
 
   return ( taskDetails && (
