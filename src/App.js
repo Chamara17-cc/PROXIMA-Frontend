@@ -9,17 +9,13 @@ import TaskCreation from "./Pages-Suraj/TaskCreation";
 // import ClientList from "./Pages-Hemal/ClientList";
 // import Payments from "./Pages-Hemal/Payments";
  import Budgetplan from "./Pages-Chamara/Budgetplan";
-// import Invoice from "./Pages-Chamara/Invoice";
 // import SendEmail from "./Pages-Hemal/SendEmail";
 import AdminProjectViewPage from "./Pages-Suraj/AdminPojectViewPage";
 import AddDevelopersPage from "./Pages-Suraj/AddDevelopersPage";
 // import BudgetEstimationForm from "./Pages-Chamara/BudgetEstimationForm";
-
 // import LoginForm from "./Pages-Thusharga/LoginForm";
 import Usercreation1 from "./Pages-Thusharga/UserCreation1";
 import Usercreation2 from "./Pages-Thusharga/UserCreation2";
-
-
 //newly added Pages 
 import DashboardDeveloper from "./Pages-Baumika/DashboardDeveloper";
 import ProjectDeveloper from "./Pages-Baumika/ProjectDeveloper";
@@ -29,8 +25,6 @@ import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDevel
 import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
 import TaskRecord from "./Pages-Baumika/TaskRecord";
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
-
-
 import UserCreation1 from "./Pages-Thusharga/UserCreation1";
 import UserCreation2 from "./Pages-Thusharga/UserCreation2";
 import UserCreationSuccess from "./Pages-Thusharga/UserCreationSuccess";
@@ -38,6 +32,7 @@ import ViewUserList from "./Pages-Thusharga/ViewUserList";
 import LoginForm from "./Pages-Thusharga/LoginForm";
 import ResetPassword from "./Pages-Thusharga/ResetPassword";
 import ForgotPassword from "./Pages-Thusharga/ForgotPassword";
+import TransactionPage from "./Pages-Chamara/TransactionPage";
 
 function App() {
   return (
@@ -55,9 +50,8 @@ function App() {
         <Route path="/taskcreation" element ={<TaskCreation/>}></Route>
         {/* <Route path="/clientlist" element ={<ClientList/>}></Route>
         <Route path="/payments" element ={<Payments/>}></Route>
-        <Route path="/sendemail" element ={<SendEmail/>}></Route>
-        
-        <Route path="/invoice" element ={<Invoice/>}></Route> */}
+        <Route path="/sendemail" element ={<SendEmail/>}></Route>*/}
+        <Route path="/transaction" element ={<TransactionPage/>}></Route>
         <Route path="/budget" element ={<Budgetplan/>}></Route>
         <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
@@ -80,6 +74,7 @@ function App() {
         <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
         <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
         <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
+        
         
         
 
