@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import "./Invoicestyles.css";
+import InvoiceEdit from './InvoiceEdit';
+
 
 function Invoice(props) {
     const {projectId}=props;
@@ -21,7 +23,7 @@ function Invoice(props) {
 
    const fetchTransaction= async (projectId)=>{
     try{
-        const response= await axios.get(`https://localhost:44377/api/Transaction/Projects/${projectId}`)
+        const response= await axios.get(`https://localhost:44339/api/Transaction/Projects/${projectId}`)
         console.log("Transacdara",JSON.stringify(response.data))
         setTransacdata(response.data)
        
@@ -32,7 +34,7 @@ function Invoice(props) {
 const deletetransac =async (transacId)=>{
   try{
     if(window.confirm("Are you sure you need to delete this item"))
-    await axios.delete(`https://localhost:44377/api/Transaction/Transaction/${transacId}`);
+    await axios.delete(`https://localhost:44339/api/Transaction/Transaction/${transacId}`);
     setTransacdata(transacdata.filter(item => item.transacId !== transacId));
     alert("Deleted Successfully")
   }catch(error){
@@ -68,7 +70,8 @@ const deletetransac =async (transacId)=>{
                   <TableCell align='left' colSpan={3}>{item.value}</TableCell>
                   <TableCell align='left' colSpan={4}>{item.income}</TableCell>
                   <TableCell align='left' colSpan={5}>{item.expence}</TableCell>
-                  <TableCell align='left' colSpan={6}><Button onClick={() => deletetransac(item.transacId)}  
+                  <TableCell align='left' colSpan={6}><InvoiceEdit transacId={item.transacId}/></TableCell>
+                  <TableCell align='left' colSpan={7}><Button onClick={() => deletetransac(item.transacId)}  
                     className='deletebutton'>Delete</Button></TableCell>
                 </TableRow>
               ))}

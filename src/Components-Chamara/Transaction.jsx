@@ -23,7 +23,7 @@ function Transaction() {
 
     const fetchProjects = async () => {
         try {
-          const response = await axios.get(`https://localhost:44377/api/Budget`);
+          const response = await axios.get(`https://localhost:44339/api/Budget`);
           console.log("Projects:", response.data); // Debugging: log fetched projects
           setProjects(response.data);
         } catch (error) {
@@ -51,7 +51,7 @@ function Transaction() {
         Date: Date
       };
     
-      const url = `https://localhost:44377/api/Transaction/Project/${selectedProject}`;
+      const url = `https://localhost:44339/api/Transaction/Project/${selectedProject}`;
     
       try {
         const response = await axios.post(url, transacdata);
