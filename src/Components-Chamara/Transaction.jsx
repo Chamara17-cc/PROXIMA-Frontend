@@ -93,7 +93,7 @@ function Transaction() {
             <div className="Type">
         <p><b>Type</b> : {SelectedType} </p>
         </div>
-            <select id="SelectProject" className="Projectlist" value={SelectedType} onChange={handleTypeChange}>
+            <select id="SelectProject" className="transactype" value={SelectedType} onChange={handleTypeChange}>
                         <option value="">Select Type...</option>
                         <option value="Income">Income</option>   {/*Can be occur error that Income then change in to income */}
                         <option value="Expence">Expence</option>
@@ -150,7 +150,7 @@ function Transaction() {
       </Form>
 
       <div className="invoicereport">
-        <Invoice projectId={selectedProject}/>
+        <Invoice projectId={selectedProject}/>  {/*import invoice report*/}
       </div>
     </div>
   

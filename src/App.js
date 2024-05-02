@@ -42,7 +42,7 @@ function App() {
       
       <BrowserRouter>
       <Routes>
-        <Route path="/adminDashboard" element= {<AdminDashboard/>}></Route>
+        <Route path="/" element= {<AdminDashboard/>}></Route>
         <Route path="/managerDashboard" element= {<SecondLevelUserDashboard/>}></Route>
         <Route path="/usercreation" element={<UserCreation/>}></Route>
         
