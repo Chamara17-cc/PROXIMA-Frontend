@@ -13,7 +13,7 @@ function PasswordReset() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Your password validation logic goes here
-    if (newPassword.length >= 8 && newPassword === confirmPassword) {
+    if (newPassword.length >= 10 && newPassword === confirmPassword) {
       // Password is valid
       setShowAlert(true); // Display success message
       // Additional logic for resetting password
