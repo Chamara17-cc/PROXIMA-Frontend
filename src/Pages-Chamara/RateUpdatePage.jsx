@@ -12,7 +12,7 @@ export default function PopupForm() {
   const [Date, setDate] = useState('');
   const [Rate, setRate] = useState(null);
   const [CurrentRate, setCurrentRate] = useState({ currentRate: 0 });
-
+  const [error, setError] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,28 +23,48 @@ export default function PopupForm() {
   };
 
   const handleSubmit = () => {
+    if (!Date && !Rate) {
+      setError('Date and Rate fields are required');
+      return;
+    }
+    if (!Date) {
+      setError('Date field is required');
+      return;
+    }
+    if (!Rate) {
+      setError('Rate field is required');
+      return;
+    }
+    if (Rate <0 ) {
+      setError('Invalid rate');
+      return;
+    }
+    if (isNaN(parseFloat(Rate))){
+      setError('Rate must be a number');
+      return;
+    }
+    setError('');
     const ratedata = {
       CurrentRate: Rate,
       UpdatedDate: Date
     };
-    const url = 'https://localhost:44377/api/DeveloperRate';
+    const url = 'https://localhost:44339/api/DeveloperRate';
     axios.post(url, ratedata)
       .then((result) => {
         alert("Data inserted");
+        window.location.reload(); 
       })
       .catch((error) => {
         alert(error);
       });
   }
 
-  
-
   useEffect(() => {
     const fetchData = async() => {
       try{
-        const response= await axios.get('https://localhost:44377/api/DeveloperRate');
-          setCurrentRate(response.data);  
-          console.log(CurrentRate)
+        const response= await axios.get('https://localhost:44339/api/DeveloperRate');
+        setCurrentRate(response.data);  
+        console.log(CurrentRate)
       }
       catch(error){
         console.error('Error fetching data:', error);
@@ -60,6 +80,7 @@ export default function PopupForm() {
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle className='Rateheader'>Hourly Rate</DialogTitle>
           <DialogContent>
+            {error && <div style={{ color: 'red' }}>{error}</div>}
             <TextField
               autoFocus
               margin="dense"
@@ -77,6 +98,7 @@ export default function PopupForm() {
               fullWidth
               value={CurrentRate ? CurrentRate.currentRate : ''}
             />
+          
             <TextField
               margin="dense"
               id="newrate"
