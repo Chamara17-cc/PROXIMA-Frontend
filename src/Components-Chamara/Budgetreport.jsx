@@ -36,7 +36,7 @@ export default function ProjectCreationForm() {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get(`https://localhost:44377/api/Budget`);
+      const response = await axios.get(`https://localhost:44339/api/Budget`);
       console.log("Projects:", response.data); // Debugging: log fetched projects
       setProjects(response.data);
     } catch (error) {
@@ -46,7 +46,7 @@ export default function ProjectCreationForm() {
 
   const fetchBudgetData = async (projectid) => {
     try {
-      const response = await axios.get(`https://localhost:44377/api/Budget/Projects/${projectid}`);
+      const response = await axios.get(`https://localhost:44339/api/Budget/Projects/${projectid}`);
       console.log("Budget data:", response.data);
       setBudgetData(response.data);
     } catch (error) {
@@ -150,7 +150,7 @@ export default function ProjectCreationForm() {
             Print
           </Button>
         </Form.Group>
-        
+
         <Form.Group className="submit-btn" controlId="formGridAddress1">
         <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
           Edit
