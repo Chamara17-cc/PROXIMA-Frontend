@@ -33,6 +33,8 @@ import LoginForm from "./Pages-Thusharga/LoginForm";
 import ResetPassword from "./Pages-Thusharga/ResetPassword";
 import ForgotPassword from "./Pages-Thusharga/ForgotPassword";
 import TransactionPage from "./Pages-Chamara/TransactionPage";
+import TaskList from "./Pages-Suraj/TaskList";
+import TaskDetailsPage from "./Pages-Suraj/TaskDetailsPage";
 
 function App() {
   return (
@@ -74,7 +76,10 @@ function App() {
         <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
         <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
         <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
-        
+
+
+        <Route path="/TaskList" element={<TaskList/>}></Route>
+        <Route path="/TaskDetailsPage" element={<TaskDetailsPage/>}></Route>    
         
         
 

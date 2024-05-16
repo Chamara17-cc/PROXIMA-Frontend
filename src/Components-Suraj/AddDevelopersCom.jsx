@@ -21,7 +21,7 @@ export default function AddDevelopersCom() {
   const SetList = async () => {
     try {
       const response = await axios.get(
-        "https://localhost:44319/api/AddDevelopers"
+        "https://localhost:44339/api/AddDevelopers"
       );
       setDevelper(response.data);
       console.log(developer);
@@ -113,7 +113,7 @@ export default function AddDevelopersCom() {
         projectId: selectedId,
         developerId: add[i],
       };
-      const url = "https://localhost:44319/api/AddDevelopers";
+      const url = "https://localhost:44339/api/AddDevelopers";
 
       axios
         .post(url, data)
@@ -159,7 +159,7 @@ export default function AddDevelopersCom() {
               </td>
               {() => {
                 const addedDev = axios.get(
-                  `https://localhost:44319/api/CheckAddedDevelopers/${selectedId}`
+                  `https://localhost:44339/api/CheckAddedDevelopers/${selectedId}`
                 );
                 setCheck(addedDev);
 
