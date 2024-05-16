@@ -14,8 +14,8 @@ import AdminProjectViewPage from "./Pages-Suraj/AdminPojectViewPage";
 import AddDevelopersPage from "./Pages-Suraj/AddDevelopersPage";
 // import BudgetEstimationForm from "./Pages-Chamara/BudgetEstimationForm";
 // import LoginForm from "./Pages-Thusharga/LoginForm";
-import Usercreation1 from "./Pages-Thusharga/UserCreation1";
-import Usercreation2 from "./Pages-Thusharga/UserCreation2";
+
+
 //newly added Pages 
 import DashboardDeveloper from "./Pages-Baumika/DashboardDeveloper";
 import ProjectDeveloper from "./Pages-Baumika/ProjectDeveloper";
@@ -25,14 +25,16 @@ import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDevel
 import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
 import TaskRecord from "./Pages-Baumika/TaskRecord";
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
-import UserCreation1 from "./Pages-Thusharga/UserCreation1";
-import UserCreation2 from "./Pages-Thusharga/UserCreation2";
+import UserCreation from "./Pages-Thusharga/UserCreation";
+
 import UserCreationSuccess from "./Pages-Thusharga/UserCreationSuccess";
 import ViewUserList from "./Pages-Thusharga/ViewUserList";
 import LoginForm from "./Pages-Thusharga/LoginForm";
 import ResetPassword from "./Pages-Thusharga/ResetPassword";
-import ForgotPassword from "./Pages-Thusharga/ForgotPassword";
+//import ForgotPassword from "./Pages-Thusharga/ForgotPassword";
 import TransactionPage from "./Pages-Chamara/TransactionPage";
+import SecondLevelUserDashboard from "./Pages-Thusharga/SecondLevelUserDashboard";
+import ViewUserDetail from "./Pages-Thusharga/ViewUserDetail";
 import TaskList from "./Pages-Suraj/TaskList";
 import TaskDetailsPage from "./Pages-Suraj/TaskDetailsPage";
 
@@ -43,9 +45,10 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/" element= {<AdminDashboard/>}></Route>
-        <Route path="/usercreation1" element={<UserCreation1/>}></Route>
-        <Route path="/usercreation2" element={<UserCreation2/>}></Route>
-        <Route path="/usercreation2/success" element={<UserCreationSuccess/>}></Route>
+        <Route path="/managerDashboard" element= {<SecondLevelUserDashboard/>}></Route>
+        <Route path="/usercreation" element={<UserCreation/>}></Route>
+        
+        <Route path="/usercreationsuccess" element={<UserCreationSuccess/>}></Route>
         <Route path="/userlist" element ={<ViewUserList/>}></Route>
         <Route path="/projectcreation" element ={<ProjectCreation/>}></Route>
         <Route path="/projectlist" element ={<ProjectList/>}></Route>
@@ -61,9 +64,9 @@ function App() {
         <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
         <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
 
-         {/*<Route path="/loginForm" element={<LoginForm/>}></Route>*/}
-          <Route path="/userCreation" element={<UserCreation1/>}></Route>
-          <Route path="/userCreation/2" element={<UserCreation2/>}></Route> 
+         <Route path="/loginform" element={<LoginForm/>}></Route>
+         <Route path="/resetpassword" element={<ResetPassword/>}></Route>         
+         <Route path="/userprofilepage/:userId" element={<ViewUserDetail/>}></Route>
 
         {/* <Route path="/budgetestform"  element={<BudgetEstimationForm/>}></Route> */}
 

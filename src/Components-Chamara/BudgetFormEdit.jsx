@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import { useState,useEffect } from 'react';
 import { useLocation,Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import { InputGroup } from 'react-bootstrap';
 
 
 function BudgetFormEdit() {
@@ -93,7 +94,7 @@ const handleSubmit = async () => {
     Date: date
   };
 
-  const url = `https://localhost:44377/api/Budget/Projects/${projectId}`;
+  const url = `https://localhost:44339/api/Budget/Projects/${projectId}`;
 
   try {
     const response = await axios.post(url, budgetdata);
@@ -157,8 +158,18 @@ const handleSubmit = async () => {
         <Row className="Other">
           <Form.Group as={Col} controlId="formGridCity">
             <Form.Label>Other Expenses</Form.Label>
+
+            <InputGroup hasValidation>
+
             <Form.Control placeholder="Enter budget Other Expenses" onChange={handleOtherExpensesChange} 
             style={{ fontSize: "16px" }} autoComplete="off"/>
+          
+
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Please enter project name.
+                </Form.Control.Feedback>
+          </InputGroup>
           </Form.Group>
         </Row>
         <Row className="Datepicker">

@@ -1,5 +1,6 @@
 import './ProjectDescriptionStyle.css'
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function ProjectDescription() {
@@ -7,21 +8,41 @@ export default function ProjectDescription() {
     const [projectDetails, setProjectDetails] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const location = useLocation();
+    const selectedId = location.state.selectedId;
+    const navigate = useNavigate();
 
   
-  useEffect(() => {
-    // Replace with your actual API call
-    fetch('https://localhost:7044/api/DeveloperProject/1') 
-      .then(response => response.json())
-      .then(data => {
-        setProjectDetails(data);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        setError(error);
-        setIsLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://localhost:7044/api/DeveloperProject/ProjectDescription/${selectedId}') 
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setProjectDetails(data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch(error => {
+  //       setError(error);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
+
+  console.log(selectedId);
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(`https://localhost:7044/api/DeveloperProject/ProjectDescription/${selectedId}`);
+      setProjectDetails(response.data);
+      setIsLoading(false);
+      console.log(response.data);
+    } catch (error) {
+      alert(error);
+      setIsLoading(false);
+    }
+  };
+useEffect(() => {
+    getData();
+
+  },[]);
 
   
   if (isLoading) {

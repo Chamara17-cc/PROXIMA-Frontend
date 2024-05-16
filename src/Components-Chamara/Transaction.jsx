@@ -23,7 +23,7 @@ function Transaction() {
 
     const fetchProjects = async () => {
         try {
-          const response = await axios.get(`https://localhost:44377/api/Budget`);
+          const response = await axios.get(`https://localhost:44339/api/Budget`);
           console.log("Projects:", response.data); // Debugging: log fetched projects
           setProjects(response.data);
         } catch (error) {
@@ -51,7 +51,7 @@ function Transaction() {
         Date: Date
       };
     
-      const url = `https://localhost:44377/api/Transaction/Project/${selectedProject}`;
+      const url = `https://localhost:44339/api/Transaction/Project/${selectedProject}`;
     
       try {
         const response = await axios.post(url, transacdata);
@@ -93,7 +93,7 @@ function Transaction() {
             <div className="Type">
         <p><b>Type</b> : {SelectedType} </p>
         </div>
-            <select id="SelectProject" className="Projectlist" value={SelectedType} onChange={handleTypeChange}>
+            <select id="SelectProject" className="transactype" value={SelectedType} onChange={handleTypeChange}>
                         <option value="">Select Type...</option>
                         <option value="Income">Income</option>   {/*Can be occur error that Income then change in to income */}
                         <option value="Expence">Expence</option>
@@ -150,7 +150,7 @@ function Transaction() {
       </Form>
 
       <div className="invoicereport">
-        <Invoice projectId={selectedProject}/>
+        <Invoice projectId={selectedProject}/>  {/*import invoice report*/}
       </div>
     </div>
   

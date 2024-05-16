@@ -1,26 +1,24 @@
 import React from 'react'
-import UserCreationForm2 from '../Components-Thusharaga/UserCreationForm2'
+import UserDetailView from '../Components-Thusharaga/UserDetailView'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
+import '../Pages/PageStructure.css'
 
-
-function UserCreation2() {
+function ViewUserDetail() {
   return (
-   
     <div className="FullPage">
       
       <Sidebar/>
       <Topbar/>
      
       <div className="Content">
-     
-        <UserCreationForm2/>
+       
+      <UserDetailView/>
      
       </div>
       
     </div>
-
-    )
+      )
 }
 
-export default UserCreation2
+export default ViewUserDetail
