@@ -1,0 +1,12 @@
+[
+    {
+        "title": "Dashboard",
+        "icon": "bi-gear-fill",
+        "path" :"/ProjectManagerDashboard"
+    },
+    {
+        "title": "Project List",
+        "icon": "bi bi-stack",
+        "path" :"/ProjectManagerDashboard"
+    }
+]

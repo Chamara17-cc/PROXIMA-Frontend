@@ -37,6 +37,7 @@ import SecondLevelUserDashboard from "./Pages-Thusharga/SecondLevelUserDashboard
 import ViewUserDetail from "./Pages-Thusharga/ViewUserDetail";
 import TaskList from "./Pages-Suraj/TaskList";
 import TaskDetailsPage from "./Pages-Suraj/TaskDetailsPage";
+import ProjectManagerDashboard from "./Pages-Suraj/ProjectManagerDashboard";
 
 function App() {
   return (
@@ -84,7 +85,8 @@ function App() {
         <Route path="/TaskList" element={<TaskList/>}></Route>
         <Route path="/TaskDetailsPage" element={<TaskDetailsPage/>}></Route>    
         
-        
+        {/* project manager dashboard */}
+        <Route path="/ProjectManagerDashboard" element={<ProjectManagerDashboard/>}></Route>
 
       </Routes>
         <Routes>
