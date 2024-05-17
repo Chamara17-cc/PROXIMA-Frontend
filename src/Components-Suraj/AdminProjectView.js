@@ -97,18 +97,24 @@ export default function AdminProjectView() {
 
     const url1 = `https://localhost:44339/api/ProjectFileUpload/BasicInfo?ProID=${selectedId}`;
 
-    try {
+    
       axios.post(url1, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
-
-      alert("Upload Successful");
+      }).then(() => {
+        alert("Upload Successful");
+        
       setBasicInfo(null);
-    } catch (error) {
+      })
+     .catch ((error) => {
+      
       console.error("Error uploading file:", error);
-    }
+      
+    });
+
+      
+    
   };
 
   //------view basic info
@@ -333,7 +339,10 @@ export default function AdminProjectView() {
               <p className="ViewItems">Objectives : {pro.objectives}</p>
             </div>
           ))}
-          <div></div>
+          <div>
+            <Button>Finance</Button> &nbsp;&nbsp;
+            <Button>Time</Button>
+          </div>
 
           
         </Tab>

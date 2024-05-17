@@ -36,7 +36,8 @@ export default function TaskListCom() {
   
   const HandleTaskClick = (id) => {
     const selectedTaskId = id;
-    navigate('/TaskDetailsPage', {state: {selectedTaskId}})
+    alert(ProId + " " + selectedTaskId);
+    navigate('/TaskDetailsPage', { state: { selectedTaskId, ProId } });
   }
 
   useEffect(() => {
