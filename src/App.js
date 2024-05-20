@@ -35,6 +35,7 @@ import ResetPassword from "./Pages-Thusharga/ResetPassword";
 import TransactionPage from "./Pages-Chamara/TransactionPage";
 import SecondLevelUserDashboard from "./Pages-Thusharga/SecondLevelUserDashboard";
 import ViewUserDetail from "./Pages-Thusharga/ViewUserDetail";
+import FinanceDigram from "./Pages-Chamara/FinanceDigram";
 
 function App() {
   return (
@@ -77,7 +78,7 @@ function App() {
         <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
         <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
         <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
-        
+        <Route path="/findig" element={<FinanceDigram/>}></Route>
         
         
 

@@ -34,7 +34,7 @@ function Invoice(props) {
 const deletetransac =async (transacId)=>{
   try{
     if(window.confirm("Are you sure you need to delete this item"))
-    await axios.delete(`https://localhost:44339/api/Transaction/Transaction/${transacId}`);
+    await axios.delete(`https://localhost:44339/api/Transaction/Transaction/${transacId}/${projectId}`);
     setTransacdata(transacdata.filter(item => item.transacId !== transacId));
     alert("Deleted Successfully")
   }catch(error){
