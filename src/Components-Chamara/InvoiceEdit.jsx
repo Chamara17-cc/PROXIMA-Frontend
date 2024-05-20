@@ -44,7 +44,7 @@ export default function InvoiceEdit(props) {
     };
 
     console.log(editdata)
-    const url = `https://localhost:44339/api/Transaction/Transaction/${transacId}`;
+    const url = `https://localhost:44339/api/Transaction/Transaction/${transacId}?value=${value}&type=${type}&description=${discription}`;
     axios.put(url, editdata)
       .then((result) => {
         alert("Data edited");
@@ -97,7 +97,7 @@ export default function InvoiceEdit(props) {
           <select id="SelectProject" class="form-select" value={type} onChange={handleTypeChange}>
             <option value="" >Select Type...</option>
             <option value="Income">Income</option>
-            <option value="Expense">Expense</option>
+            <option value="Expence">Expense</option>
           </select>
         </td>
         <td><input type="text" class="form-control" onChange={handleValueEdit}/></td>
