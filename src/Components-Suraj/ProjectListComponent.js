@@ -10,11 +10,13 @@ export default function ProjectListComponent() {
 
   const navigate = useNavigate();
 
-  //const url = "https://localhost:44319/api/ViewProjectList";
+  //const url = "https://localhost:44319/api/ViewProjectList";    //old
+
+  const url = "https://localhost:44339/api/ViewProjectList";    //new
 
   useEffect(() => {
     axios
-      .get("https://localhost:44319/api/ViewProjectList")
+      .get(url)
       .then((result) => setData(result.data))
       .catch((e) => console.log(e));
 
@@ -28,13 +30,11 @@ export default function ProjectListComponent() {
     selectedId = id;
   //  alert(selectedId);
     
-    // axios.post('https://localhost:44319/api/AdminProjectView', {selectedId})
-    // .then(result => console.log(result.selectedId))
-    // .catch((err)=>console.log(err));
+    
      
     navigate('/AdminProjectViewPage',{state:{selectedId:selectedId}});
     
-    // return (selectedId);
+   
     
   };
 

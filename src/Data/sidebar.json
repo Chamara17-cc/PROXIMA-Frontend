@@ -78,6 +78,11 @@
         "title": "DeveloperDashboard",
         "icon": "bi-gear-fill",
         "path" :"/DeveloperDashboard"
+    },  
+    {
+        "title": "ProjectManagerDashboard",
+        "icon": "bi-gear-fill",
+        "path" :"/ProjectManagerDashboard"
     }
 ]
 
