@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import TextField from "@mui/material/TextField";
@@ -15,7 +15,6 @@ import "./datepickerStyle.css";
 
 import "./FormStyle.css";
 import { useNavigate } from "react-router-dom";
-
 
 export default function ProjectCreationForm() {
   const navigate = useNavigate();
@@ -41,6 +40,43 @@ export default function ProjectCreationForm() {
   //   setProjectId(value);
   // };
 
+  //-------------get project manager'
+
+  const [data, setData] = useState([]);
+
+  const url = "https://localhost:44339/api/GetProjectManagerName";
+
+  const getPmanager = async () => {
+    try {
+      const response = await axios.get(url);
+      setData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //------------get client names
+
+  const [clients, setClients] = useState([]);
+
+  const url2 = "https://localhost:44339/api/GetClientNames";
+  const getClients = async () => {
+    try {
+      const response2 = await axios.get(url2);
+      setClients(response2.data);
+      console.log(response2.data);
+    } catch (error) {
+      console.log(error);
+      console.log("==");
+    }
+  };
+
+  useEffect(() => {
+    getPmanager();
+    getClients();
+  }, []);
+
   const handlePNameChange = (value) => {
     setProjectName(value);
   };
@@ -61,20 +97,18 @@ export default function ProjectCreationForm() {
     setProjectTeamName(value);
   };
 
-  const handlePManagerIDChange = (value) => {
-    setProjectManagerID(value);
+  const handlePManagerIDChange = (event) => {
+    setProjectManagerID(event.target.value);
+    console.log(projectManagerID);
   };
 
   // const handleClientNameChange = (value) => {
   //   setClientName(value);
   // };
 
-  const handleClientIDChange = (value) => {
-    setClientID(value);
-  };
-
-  const handleDurationChange = (value) => {
-    setTimeDuration(value);
+  const handleClientIDChange = (event) => {
+    setClientID(event.target.value);
+    console.log(clientID);
   };
 
   const handleTimelineChange = (value) => {
@@ -135,11 +169,30 @@ export default function ProjectCreationForm() {
   //       })
   // }
 
-  const handleAddDevelopers = () => {
-    navigate("/AddDevelopersPage");
-  };
+  //---------------------------------------------------------------------------------------
+
+  const sdate = new Date(startDate);
+  const ddate = new Date(dueDate);
+
+  function getDaysBetweenDates(startDate, endDate) {
+    // Ensure both dates are valid Date objects
+    if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
+      return null; // Handle invalid dates
+    }
+
+    const oneDay = 1000 * 60 * 60 * 24; // Milliseconds in one day
+    const differenceInMs = endDate.getTime() - startDate.getTime();
+
+    // Math.floor rounds down to the nearest whole day
+    return Math.floor(differenceInMs / oneDay);
+  }
+
+  var time = getDaysBetweenDates(sdate, ddate);
 
   const handleSubmit = (event) => {
+    setTimeDuration(time);
+    console.log(time);
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -170,7 +223,7 @@ export default function ProjectCreationForm() {
 
       console.log(data);
 
-      const url = "https://localhost:44319/api/CreateProject";
+      const url = "https://localhost:44339/api/CreateProject";
 
       axios
         .post(url, data)
@@ -182,14 +235,17 @@ export default function ProjectCreationForm() {
           //---after successful submission
 
           setValidated(false);
+          window.location.reload();
         })
         .catch((error) => {
-          alert("Error occurred : " + error);
+          alert(error);
         });
     }
 
     setValidated(true); // Always set validated to true after attempting validation
   };
+
+ 
 
   return (
     <>
@@ -236,6 +292,17 @@ export default function ProjectCreationForm() {
               onChange={(e) => handleObjectiveChange(e.target.value)}
             />
           </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Technologies</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter technologies"
+              id="technologies"
+              onChange={(e) => handleTechnologyChange(e.target.value)}
+            />
+          </Form.Group>
+
           {/*----------------------File upload part----------------------- */}
           <Form.Group as={Col} className="mb-3">
             <Form.Label>Upload:</Form.Label>
@@ -249,57 +316,56 @@ export default function ProjectCreationForm() {
           <h3 className="SectionHeading">Development Team Information</h3>
           <Row className="mb-3">
             <Form.Group as={Col}>
-              <Form.Label>Project Manager Name:</Form.Label>
-              <InputGroup hasValidation>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Enter project manager name"
-                  id="projectManagerName"
-                  //onChange={(e) => handlePManagerNameChange(e.target.value)}
-                />
-
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please project manager name.
-                </Form.Control.Feedback>
-              </InputGroup>
-              <br />
-              <Form.Group as={Col}>
-                <Form.Label>Project Team Name:</Form.Label>
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Project Manager: </Form.Label>
+                <br />
                 <InputGroup hasValidation>
-                  <Form.Control
-                    type="text"
+                  <select
                     required
-                    placeholder="Enter project team name"
-                    id="projectTeamName"
-                    onChange={(e) => handleTeamNameChange(e.target.value)}
-                  />
+                    id="SelectPmanager"
+                    className="Managerlist"
+                    value={projectManagerID}
+                    onChange={handlePManagerIDChange}
+                  >
+                    <option
+                      value=""
+                      style={{
+                        backgroundColor: "whitesmoke",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Select Project Manager
+                    </option>
+                    {data.map((val) => (
+                      <option key={val.userId} value={val.userId}>
+                        {val.userId}... {val.firstName} {val.lastName}
+                      </option>
+                    ))}
+                  </select>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   <Form.Control.Feedback type="invalid">
-                    Please enter team name.
+                    Please select project manager.
                   </Form.Control.Feedback>
                 </InputGroup>
               </Form.Group>
-              <br />
 
-              <Button onClick={handleAddDevelopers}>Add Developers</Button>
+              <Form.Group as={Col}></Form.Group>
+              <br />
             </Form.Group>
 
             <Form.Group as={Col}>
-              <Form.Label>Project Manager ID</Form.Label>
+              <Form.Label>Project Team Name:</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
+                  type="text"
                   required
-                  type="number"
-                  placeholder="Enter project manager ID"
-                  id="projectManagerID"
-                  onChange={(e) => handlePManagerIDChange(e.target.value)}
+                  placeholder="Enter project team name"
+                  id="projectTeamName"
+                  onChange={(e) => handleTeamNameChange(e.target.value)}
                 />
-
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  Please enter project manager ID.
+                  Please enter team name.
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
@@ -312,38 +378,39 @@ export default function ProjectCreationForm() {
           <h3 className="SectionHeading">Client Information</h3>
           <Row className="mb-3">
             <Form.Group as={Col}>
-              <Form.Label>Client Name</Form.Label>
-              <InputGroup hasValidation>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Enter client name"
-                  id="clientName"
-                  // onChange={(e) => handleClientNameChange(e.target.value)}
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please enter client name.
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Client: </Form.Label>
+                <br />
+                <InputGroup hasValidation>
+                  <select
+                    required
+                    id="SelectClient"
+                    className="Clientlist"
+                    value={clientID}
+                    onChange={handleClientIDChange}
+                  >
+                    <option
+                      value=""
+                      style={{
+                        backgroundColor: "whitesmoke",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Select Client...
+                    </option>
+                    {clients.map((val) => (
+                      <option key={val.clientId} value={val.clientId}>
+                        {val.clientId}... {val.clientName}
+                      </option>
+                    ))}
+                  </select>
 
-            <Form.Group as={Col}>
-              <Form.Label>Client ID</Form.Label>
-              <InputGroup hasValidation>
-                <Form.Control
-                  required
-                  type="number"
-                  placeholder="Enter client ID"
-                  id="clientID"
-                  onChange={(e) => handleClientIDChange(e.target.value)}
-                />
-
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please enter client ID.
-                </Form.Control.Feedback>
-              </InputGroup>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please enter client ID.
+                  </Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
             </Form.Group>
           </Row>
         </div>
@@ -355,23 +422,32 @@ export default function ProjectCreationForm() {
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label>Start Date</Form.Label>
-
-              <TextField
-                style={{backgroundColor: "whitesmoke", borderRadius: "10px"}}
-                margin="dense"
-                id="last_updated"
-                type="date"
-                fullWidth
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-              />
+              <InputGroup hasValidation>
+                <TextField
+                  aria-required
+                  style={{
+                    backgroundColor: "whitesmoke",
+                    borderRadius: "10px",
+                  }}
+                  margin="dense"
+                  id="last_updated"
+                  type="date"
+                  fullWidth
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Please select start date.
+                </Form.Control.Feedback>
+              </InputGroup>
             </Form.Group>
 
             <Form.Group as={Col}>
               <Form.Label>Due Date</Form.Label>
 
               <TextField
-                style={{backgroundColor: "whitesmoke", borderRadius: "10px"}}
+                style={{ backgroundColor: "whitesmoke", borderRadius: "10px" }}
                 margin="dense"
                 id="last_updated"
                 type="date"
@@ -398,24 +474,6 @@ export default function ProjectCreationForm() {
         <DateTimePicker name="startDateTime" onChange={handleDueDateChange} dateFormat=""/>
       </DemoContainer>
     </LocalizationProvider> */}
-            </Form.Group>
-
-            <Form.Group as={Col}>
-              <Form.Label>Time Estimation</Form.Label>
-              <InputGroup hasValidation>
-                <Form.Control
-                  required
-                  type="number"
-                  placeholder="Enter time estimation"
-                  id="timeDuration"
-                  onChange={(e) => handleDurationChange(e.target.value)}
-                />
-
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please enter time duration.
-                </Form.Control.Feedback>
-              </InputGroup>
             </Form.Group>
           </Row>
 
@@ -446,15 +504,7 @@ export default function ProjectCreationForm() {
               onChange={(e) => handleBudgetChange(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Technologies</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter technologies"
-              id="technologies"
-              onChange={(e) => handleTechnologyChange(e.target.value)}
-            />
-          </Form.Group>
+          
 
           {/*----------------------File upload part----------------------- */}
           <Form.Group as={Col} className="mb-3">
@@ -497,6 +547,9 @@ export default function ProjectCreationForm() {
 
         <Button type="submit">Submit form</Button>
       </Form>
+      
+      
+
     </>
   );
 }
