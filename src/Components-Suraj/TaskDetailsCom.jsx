@@ -318,23 +318,71 @@ export default function TaskDetailsCom() {
     try {
       // const response = await axios.get(url2);
       // console.log(response)
-
-      const response = await axios.get(urlDownload, {
-        responseType: 'blob' // Specify blob response type for downloading
-      });
-      console.log("downloaded");
-      const blob = new Blob([response.data], { type: response.data.type });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = fileName;
-      link.click();
-      alert("Downloaded");
+      if (window.confirm('Do you want to download this item?')){
+        const response = await axios.get(urlDownload, {
+          responseType: 'blob' 
+        });
+        console.log("downloaded");
+        const blob = new Blob([response.data], { type: response.data.type });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+        alert("Downloaded");
+      }
+      else{
+        console.log("Not download");
+      }
+      
 
 
     } catch (error) {
       console.log(error);  
     }
   }
+
+
+  const DeleteTask = async () => {
+    try{
+      const url = `https://localhost:44339/api/TaskDeletion?TId=${selectedTaskId}`;       // task delete
+      
+      if (window.confirm('Are you sure you want to delete this item?')) {
+        const response = await axios.delete(url);
+        if(response.status === 204){
+          alert("Deleted successfully");
+        }
+        else if(response.status === 200){
+          alert("Task is Ongoing");
+        }
+        
+      } else {
+        console.log('Deletion cancelled');
+      }
+      
+    }
+    catch(error){
+      alert("Please Delete All Uploaded Resources");
+      console.log(error);
+    }
+  }
+
+  const DeleteFiles = async () => {
+  try{
+    const url2 = `https://localhost:44339/api/TaskFileDelete?id=${selectedTaskId}`;     // file delete related to task
+
+    if (window.confirm('Are you sure you want to delete all uploaded files?')) {
+      const deletedFile = await axios.delete(url2);
+        if(deletedFile.status !== 204){
+          alert("Error Occured");
+          return;
+        }
+    }
+  } catch(error){
+    alert(error);
+  }   
+  }
+
+  
 
     useEffect(() => {
         GetTaskDetails();
@@ -365,8 +413,12 @@ export default function TaskDetailsCom() {
                 <p className="ViewItems">Priority: {task.priority}</p>
                 <p className="ViewItems">Dependancies: {task.dependancies}</p>
                 <p className="ViewItems">Task status: {task.taskStatus}</p>
+               
               </div>
+
+
             ))}
+            <Button style={{marginTop:'-20px'}} variant="danger" onClick={DeleteTask}>Delete Task</Button>
         
           
         </Tab>
@@ -541,6 +593,7 @@ export default function TaskDetailsCom() {
 
 
           </div>
+          <Button style={{marginTop:'20px'}} variant="danger" onClick={DeleteFiles}>Delete Files</Button>
         </Tab>
 
         <Tab eventKey="time" title="Task Info">

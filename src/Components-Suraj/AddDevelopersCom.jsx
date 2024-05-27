@@ -9,9 +9,8 @@ export default function AddDevelopersCom() {
   const [developer, setDevelper] = useState([]);
   const [add, setAdd] = useState([]);
 
-  const [check, setCheck] = useState([]);
 
-  const [message, setMessage] = useState('');
+  
 
   const navigate = useNavigate();
 
@@ -30,28 +29,68 @@ export default function AddDevelopersCom() {
     }
   };
 
+
+  const [developers, setDevelopers] = useState([]);
+
+  const GetAddedDevelopers = async () => {
+    const url = `https://localhost:44339/api/CheckAddedDevelopers/${selectedId}`;
+    try {
+      const response = await axios.get(url); 
+      setDevelopers(response.data);
+      console.log(developers);
+    } catch (error) {
+      console.error(error);
+    } 
+  };
+
+
+
+  //--------developer check
+
+  
+
+  const CheckDev = (id) => {
+    var i;
+    for(i = 0; i < developers.length; i++){
+      if(id === developers[i].developerId){
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  const CurrentAddition = (id) => {
+    var i;
+    var new1 = add;
+    for(i = 0; i < new1.length; i++){
+      if(id === new1[i]){
+        console.log('zzzz');
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   //---------DEveloper Addition
-  var count = 0;
-  var addedId;
+  const [count, setCount] = useState(0);
+  //var addedId;
 
   const HandleAdd = (id) => {
-    count++;
-
+    setCount(count + 1);
     console.log(id + " clicked");
     const newAdd = add;
 
     for (var i = 0; i < count; i++) {
-      if (id === add[i]) {
-        addedId = id;
-        break;
+      if (id === newAdd[i]) {
+        console.log()
+        alert("Already added");
+        return;  
       }
     }
-    if (id === addedId) {
-      alert("Already added");
-    } else {
-      newAdd.push(id);
-      setAdd(newAdd);
-    }
+    newAdd.push(id);
+    setAdd(newAdd);
 
     console.log(add);
   };
@@ -102,10 +141,16 @@ export default function AddDevelopersCom() {
   // const assignedDev = axios.get("");
   // setCheck(assignedDev);
 
+
+
   useEffect(() => {
     SetList();
+    GetAddedDevelopers();
+    CurrentAddition();
+
+    
     //checkAvailability();
-  }, []);
+  });
 
   const HandleSubmit = async () => {
     for (var i = 0; i < add.length; i++) {
@@ -133,6 +178,7 @@ export default function AddDevelopersCom() {
           <th>Developer Id</th>
           <th>Developer Username</th>
           <th>Job Role</th>
+          <th></th>
           <th>Add/Remove </th>
           <th>Status</th>
           
@@ -144,8 +190,9 @@ export default function AddDevelopersCom() {
               <td>{dev.userId}</td>
               <td>{dev.userName}</td>
               <td>{dev.jobRoleName}</td>
+              
 
-              <td>
+              {/* <td>
                 <Button variant="primary" onClick={() => HandleAdd(dev.userId)}>
                   Add
                 </Button>
@@ -156,29 +203,58 @@ export default function AddDevelopersCom() {
                 >
                   Remove
                 </Button>
+              </td> */}
+
+              <td>
+                {CurrentAddition(dev.userId) ? (
+                  <><i class="bi bi-check-circle-fill"></i></>
+                ) : (
+                  <></>
+                )}
               </td>
-              {() => {
-                const addedDev = axios.get(
-                  `https://localhost:44339/api/CheckAddedDevelopers/${selectedId}`
-                );
-                setCheck(addedDev);
+              <td>
+              {CheckDev(dev.userId) ? (
+                  <>
+                  <Button style={{backgroundColor: '#4f5469'}} disabled variant="primary" onClick={() => HandleAdd(dev.userId)}>
+                  Add
+                </Button>
+                &nbsp;&nbsp;
+                <Button
+                disabled
+                style={{backgroundColor: '#684848'}}
+                  variant="danger"
+                  onClick={() => HandleRemove(dev.userId)}
+                >
+                  Remove
+                </Button></>
+                ) : (
+                  <>
+                  <Button variant="primary" onClick={() => HandleAdd(dev.userId)}>
+                  Add
+                </Button>
+                &nbsp;&nbsp;
+                <Button
+                  variant="danger"
+                  onClick={() => HandleRemove(dev.userId)}
+                >
+                  Remove
+                </Button></>
+                )}
+              </td>
 
-                var count = check.length;
-                for (var i = 0; i < count; i++) {
-                  if (check[i].developerId === dev.userId) {
-                    setMessage('added');
-                    return (<td>{message}</td>);
-                  }
-                }
-
-                setMessage('not added')
-                return (<><td>{message}</td></>);
-              }}
+             <td>
+                {CheckDev(dev.userId) ? (
+                  <>added</>
+                ) : (
+                  <>Not added</>
+                )}
+              </td>
               
             </tr>
           ))}
         </tbody>
       </table>
+      <p></p>
       <br />
       <Button onClick={HandleSubmit} variant="primary">
         Submit

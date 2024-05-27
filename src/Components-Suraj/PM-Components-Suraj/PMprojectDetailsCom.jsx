@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import "./FormStyle.css";
-import "./AdminProjectViewCSS.css";
 import axios from "axios";
-import "./ProjectListComponent";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
@@ -13,10 +10,11 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 
-import "./ProjectListCSS.css";
 
-export default function AdminProjectView() {
-  const [projectData, setProjectData] = useState([]);
+
+export default function PMprojectDetailsCom() {
+  
+    const [projectData, setProjectData] = useState([]);
   const location = useLocation();
 
   const [devData, setDevData] = useState([]);
@@ -37,7 +35,6 @@ export default function AdminProjectView() {
       );
       setProjectData(response.data);
       console.log(projectData);
-      
     } catch (error) {
       console.log(error);
     }
@@ -58,49 +55,27 @@ export default function AdminProjectView() {
 
   const handleNavigate = async () => {
     console.log("clicked");
-    navigate("/AddDevelopersPage", { state: { selectedId: selectedId } });
+    navigate("/PMaddDevelopersPage", { state: { selectedId: selectedId } });
   };
 
   const HandleAssign = (id) => {
     var selectedDevId = id;
     //console.log("clicked " + selectedDevId + " " + selectedId);
-    navigate("/taskcreation", { state: { selectedDevId, selectedId } });
+    navigate("/PMtaskCreationPage", { state: { selectedDevId, selectedId } });
   };
 
   const HandleTaskListButton = (id) => {
     var selectedDevId = id;
     console.log("clicked " + selectedDevId + " " + selectedId);
-    navigate("/TaskList", {state: {selectedDevId, selectedId}});
-
-
-  }
-
-
-
-  //--------------------------************** Client Info --------------*******************///////////////
-
-  const [clientData, setClientData] = useState([]);
-
-  const GetClientInfo = async () => {
-
-    const url = "https://localhost:44339/api/AdminGetClientInfo?CId=1";
-    try{
-      const response = await axios.get(url);
-      setClientData(response.data);
-      console.log("**");
-      console.log(clientData);
-    }
-    catch(error){
-      alert(error);
-    }
+    navigate("/PMtaskListPage", {state: {selectedDevId, selectedId}});
   }
 
   //--------------------------------***********************   FILE UPLOAD PART  *************************-------------------
 
   const [basicInfo, setBasicInfo] = useState("");
-  const [budgetInfo, setBudgetInfo] = useState("");
+  //const [budgetInfo, setBudgetInfo] = useState("");
   const [timeLineInfo, setTimeLineInfo] = useState("");
-  const [clientInfo, setClientInfo] = useState("");
+  //const [clientInfo, setClientInfo] = useState("");
 
   //------------basic info
 
@@ -204,101 +179,101 @@ export default function AdminProjectView() {
     }
   };
 
-  //-----------budget
+//   //-----------budget
 
-  const handleBudgetInfoChange = (event) => {
-    setBudgetInfo(event.target.files[0]);
-    console.log("Budget info selected");
-  };
+//   const handleBudgetInfoChange = (event) => {
+//     setBudgetInfo(event.target.files[0]);
+//     console.log("Budget info selected");
+//   };
 
-  const handleBudgetInfoUpload = async () => {
-    if (!budgetInfo) {
-      alert("select a file");
-      return;
-    }
+//   const handleBudgetInfoUpload = async () => {
+//     if (!budgetInfo) {
+//       alert("select a file");
+//       return;
+//     }
 
-    const formData = new FormData();
-    formData.append("file", budgetInfo);
+//     const formData = new FormData();
+//     formData.append("file", budgetInfo);
 
-    const url3 = `https://localhost:44339/api/ProjectFileUpload/BudgetInfo?ProID=${selectedId}`;
+//     const url3 = `https://localhost:44339/api/ProjectFileUpload/BudgetInfo?ProID=${selectedId}`;
 
-    try {
-      axios.post(url3, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+//     try {
+//       axios.post(url3, formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       });
 
-      alert("Upload Successful");
-      setBudgetInfo(null);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
+//       alert("Upload Successful");
+//       setBudgetInfo(null);
+//     } catch (error) {
+//       console.error("Error uploading file:", error);
+//     }
+//   };
 
-  //--view budget info
+//   //--view budget info
 
-  const [budgetNames, setBudgetNames] = useState([]);
+//   const [budgetNames, setBudgetNames] = useState([]);
 
-  const GetBudgetNames = async () => {
-    const urlGetBudget = `https://localhost:44339/api/ProjectFileView/BudgetInfo?id=${selectedId}`;
+//   const GetBudgetNames = async () => {
+//     const urlGetBudget = `https://localhost:44339/api/ProjectFileView/BudgetInfo?id=${selectedId}`;
 
-    try {
-      const response = await axios.get(urlGetBudget);
-      setBudgetNames(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+//     try {
+//       const response = await axios.get(urlGetBudget);
+//       setBudgetNames(response.data);
+//       console.log(response.data);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
   //-----------client
 
-  const handleClientInfoChange = (event) => {
-    setClientInfo(event.target.files[0]);
-    console.log("Client info selected");
-  };
+//   const handleClientInfoChange = (event) => {
+//     setClientInfo(event.target.files[0]);
+//     console.log("Client info selected");
+//   };
 
-  const handleClientInfoUpload = async () => {
-    if (!clientInfo) {
-      alert("select a file");
-      return;
-    }
+//   const handleClientInfoUpload = async () => {
+//     if (!clientInfo) {
+//       alert("select a file");
+//       return;
+//     }
 
-    const formData = new FormData();
-    formData.append("file", clientInfo);
+//     const formData = new FormData();
+//     formData.append("file", clientInfo);
 
-    const url4 = `https://localhost:44339/api/ProjectFileUpload/ClientDoc?ProID=${selectedId}`;
+//     const url4 = `https://localhost:44339/api/ProjectFileUpload/ClientDoc?ProID=${selectedId}`;
 
-    try {
-      axios.post(url4, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+//     try {
+//       axios.post(url4, formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       });
 
-      alert("Upload Successful");
-      setClientInfo(null);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
+//       alert("Upload Successful");
+//       setClientInfo(null);
+//     } catch (error) {
+//       console.error("Error uploading file:", error);
+//     }
+//   };
 
   //--view ClientDocument info
 
-  const [clientDocNames, setClientDocNames] = useState([]);
+//   const [clientDocNames, setClientDocNames] = useState([]);
 
-  const GetClientDocNames = async () => {
-    const urlGetClientDoc = `https://localhost:44339/api/ProjectFileView/ClientDoc?id=${selectedId}`;
+//   const GetClientDocNames = async () => {
+//     const urlGetClientDoc = `https://localhost:44339/api/ProjectFileView/ClientDoc?id=${selectedId}`;
 
-    try {
-      const response = await axios.get(urlGetClientDoc);
-      setClientDocNames(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+//     try {
+//       const response = await axios.get(urlGetClientDoc);
+//       setClientDocNames(response.data);
+//       console.log(response.data);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
 
 
@@ -312,7 +287,7 @@ export default function AdminProjectView() {
     try {
       // const response = await axios.get(url2);
       // console.log(response)
-      if (window.confirm('Do you want to download this item?')){
+
       const response = await axios.get(urlDownload, {
         responseType: 'blob' // Specify blob response type for downloading
       });
@@ -323,9 +298,7 @@ export default function AdminProjectView() {
       link.download = fileName;
       link.click();
       alert("Downloaded");
-    }else{
-      console.log("Not downloaded");
-    }
+
 
     } catch (error) {
       console.log(error);  
@@ -339,20 +312,16 @@ export default function AdminProjectView() {
     getAssignedDev();
     GetBasicFileNames();
     GetTimeLineNames();
-    GetBudgetNames();
-    GetClientDocNames();
-    GetClientInfo();
-  },[projectData, clientInfo, basicInfo, timeLineInfo, budgetInfo]);
+
+    
+  },[basicInfo, timeLineInfo]);
 
   return (
     <>
     <div style={{display: 'flex', float:'right', marginTop:'-48px'}}>
-            <Button>Finance Info</Button> &nbsp;&nbsp;
             <Button>Time Info</Button>
           </div>
-          
     <div className="Section">
-      
       <Tabs
         defaultActiveKey="project"
         id="fill-tab-example"
@@ -372,7 +341,10 @@ export default function AdminProjectView() {
               <p className="ViewItems">Objectives : {pro.objectives}</p>
             </div>
           ))}
-          
+          <div>
+            
+            <Button>Time</Button>
+          </div>
 
           
         </Tab>
@@ -381,13 +353,13 @@ export default function AdminProjectView() {
           {projectData.map((pro) => (
             <div className="project-detail">
               <h3 className="card-topic">{pro.teamName}</h3>
-              <p className="ViewItems">Project Manager Name : {pro.projectManagerFName} {pro.projectManagerLName}</p>
             </div>
           ))}
-
-
           <div className="project-detail">
-            
+            <p className="ViewItems">Project Manager Name: manager01</p>
+
+            <br />
+
             <h3 className="card-topic">Developers</h3>
             <table className="ProjectList">
               <thead>
@@ -427,24 +399,8 @@ export default function AdminProjectView() {
           </Button>
           
         </Tab>
-        <Tab eventKey="client" title="Client Info">
-        {clientData.map((client) => (
-          <div className="project-detail" key={client.clientId}>
-            
-          <h3 className="card-topic">{client.clientName}</h3>
-          <p className="ViewItems">{client.clientDescription}</p>
-          <p className="ViewItems">Client Id : {client.clientId}</p>
-          <p className="ViewItems">NIC : {client.nic}</p>
-          <p className="ViewItems">Address : {client.address}</p>
-          <p className="ViewItems">Contact Number : {client.contactNumber}</p>
-          <p className="ViewItems">E-mail : {client.email}</p>
-         
-        </div>
-              
-            ))}
-          
-        </Tab>
-        <Tab eventKey="budget" title="Resources">
+        
+        <Tab eventKey="resources" title="Resources">
           <div className="project-detail">
             <h3 className="card-topic">Project Resources</h3>
             <Form.Group as={Col} className="mb-3">
@@ -483,41 +439,7 @@ export default function AdminProjectView() {
               </div>
             </Form.Group>
 
-            <Form.Group as={Col} className="mb-3">
-              <Form.Label>Budget Info: </Form.Label>
-              <div style={{ display: "flex" }}>
-                <Form.Control
-                  type="file"
-                  size="sm"
-                  style={{ width: "250px" }}
-                  onChange={handleBudgetInfoChange}
-                />
-                <Button
-                  onClick={handleBudgetInfoUpload}
-                  style={{ marginLeft: "60px", marginBottom: "4px" }}
-                >
-                  Upload
-                </Button>
-              </div>
-            </Form.Group>
-
-            <Form.Group as={Col} className="mb-3">
-              <Form.Label>Client Declarement: </Form.Label>
-              <div style={{ display: "flex" }}>
-                <Form.Control
-                  type="file"
-                  size="sm"
-                  style={{ width: "250px" }}
-                  onChange={handleClientInfoChange}
-                />
-                <Button
-                  onClick={handleClientInfoUpload}
-                  style={{ marginLeft: "60px", marginBottom: "4px" }}
-                >
-                  Upload
-                </Button>
-              </div>
-            </Form.Group>
+        
           </div>
 
           <h3 className="card-topic">Uploaded Resources</h3>
@@ -542,25 +464,9 @@ export default function AdminProjectView() {
               ))}
             </Form.Group>
 
-            <Form.Group as={Col} className="mb-3">
-              <Form.Label>Budget Info: </Form.Label>
+            
 
-              {budgetNames.map((file, index) => (
-                <ul>
-                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
-                </ul>
-              ))}
-            </Form.Group>
-
-            <Form.Group as={Col} className="mb-3">
-              <Form.Label>ClientDocument Info: </Form.Label>
-
-              {clientDocNames.map((file, index) => (
-                <ul>
-                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button style={{borderRadius:"7px", padding:"0.5px", backgroundColor:"whitesmoke"}}>{file.fileName}</button></li>
-                </ul>
-              ))}
-            </Form.Group>
+            
             
           </div>
           <p style={{color:"red"}}>*click on file to download</p>
