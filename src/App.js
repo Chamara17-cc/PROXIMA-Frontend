@@ -38,6 +38,12 @@ import ViewUserDetail from "./Pages-Thusharga/ViewUserDetail";
 import TaskList from "./Pages-Suraj/TaskList";
 import TaskDetailsPage from "./Pages-Suraj/TaskDetailsPage";
 import ProjectManagerDashboard from "./Pages-Suraj/ProjectManagerDashboard";
+import PMprojectListPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMprojectListPage";
+import PMprojectDetailsPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMprojectDetailsPage";
+import PMtaskCreationPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskCreationPage";
+import PMtaskListPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskListPage";
+import PMaddDevelopersPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMaddDevelopersPage";
+import PMtaskDetailsPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskDetailsPage";
 
 function App() {
   return (
@@ -87,6 +93,12 @@ function App() {
         
         {/* project manager dashboard */}
         <Route path="/ProjectManagerDashboard" element={<ProjectManagerDashboard/>}></Route>
+        <Route path="/PMprojectListPage" element={<PMprojectListPage/>}></Route>
+        <Route path="/PMprojectDetailsPage" element={<PMprojectDetailsPage/>}></Route>
+        <Route path="/PMtaskCreationPage" element={<PMtaskCreationPage/>}></Route>
+        <Route path="/PMtaskListPage" element= {<PMtaskListPage />}></Route>
+        <Route path="/PMaddDevelopersPage" element = {<PMaddDevelopersPage />}></Route>
+        <Route path="PMtaskDetailsPage" element = {<PMtaskDetailsPage />}></Route>
 
       </Routes>
         <Routes>
