@@ -14,8 +14,8 @@ function Projectlist() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //DeveloperId ==  In here
-        const response = await axios.get('https://localhost:7044/api/DeveloperProject/8');
+        //DeveloperId == 5
+        const response = await axios.get('https://localhost:7008/api/DeveloperProject/5');
         setProjects(response.data);
         console.log(projects);
       } catch (error){

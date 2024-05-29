@@ -30,7 +30,7 @@ export default function ProjectDescription() {
 
   const getData = async () => {
     try {
-      const response = await axios.get(`https://localhost:7044/api/DeveloperProject/ProjectDescription/${selectedId}`);
+      const response = await axios.get(`https://localhost:7008/api/DeveloperProject/ProjectDescription/${selectedId}`);
       setProjectDetails(response.data);
       setIsLoading(false);
       console.log(response.data);
