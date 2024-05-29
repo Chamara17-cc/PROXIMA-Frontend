@@ -1,109 +1,107 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import './TaskStyle.css'
+import axios from 'axios';
+import './TaskStyle.css';
 
 export default function Task() {
 
+
   const [taskData, setTaskData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [startTime, setStartTime] = useState(null); 
+  const [stopTime, setStopTime] = useState(null); 
+  const location = useLocation();
+  const selectedTaskId = location.state.selectedTaskId;
 
+  console.log("Taskid = " + selectedTaskId);
 
-    const [startTime, setStartTime] = useState(null);
-    const [stopTime, setStopTime] = useState(null);
-    const [workingHours, setWorkingHours] = useState(null);
-
-
-   
-    const startTimer = () => {
-      setStartTime(new Date());
-      console.log('time recoded(start time)');
+  const startTimer = () => {
+    const currentDateTime = new Date().toISOString();
+    setStartTime(currentDateTime);
+    console.log('Start Time:', currentDateTime);
   };
 
   const stopTimer = () => {
-      setStopTime(new Date());
-      console.log('time recoded(stop time)');
-      fetchData();
-
-      // const duration = stopTime - startTime;
-      // // Calculate working hours from duration (in milliseconds) and update state
-      // setWorkingHours(duration / (1000 * 60 * 60));
+    const currentDateTime = new Date().toISOString();
+    setStopTime(currentDateTime);
+    console.log('Stop Time:', currentDateTime);
+   
   };
 
+  const submit = () => {
+    handleEdit();
 
-  const calculateDuration = () => {
-    if (!startTime || !stopTime) {
-      return null;  // Handle invalid scenario
-    }
+  }
+  const handleEdit = async () => {
+    const editData = {
+    
+      TaskStartTime: startTime,
+      TaskCompleteTime: stopTime,
+    };
   
-    const duration = stopTime.getTime() - startTime.getTime();
-    return duration; // Duration in milliseconds
-  };
-
-
-
-
-  const fetchData = async () => {
     try {
-      const calculatedDuration = calculateDuration();
-      if (!calculatedDuration) {
-        // Handle invalid duration scenario (optional)
-        return;
-      }
-  
-      const response = await fetch('http://your-backend-url/api/endpoint', {
-        method: 'POST', // Adjust based on your backend's requirements
-        headers: { 'Content-Type': 'application/json' }, // Adjust as needed
-        body: JSON.stringify({ duration: calculatedDuration }),
-      });
-  
-      const data = await response.json();
-      // Handle successful response (e.g., display confirmation)
+    
+     
+     const url =`https://localhost:7044/api/DeveloperTime/taskTimes/${selectedTaskId}/8`;
+      const response = await axios.post(url, editData);
+
+      const urltask = `https://localhost:7044/api/DeveloperTime/tasks/${selectedTaskId}`;
+      const responsetask = await axios.put(urltask,editData);
+
+      const newproject = `https://localhost:7044/api/DeveloperTime/projects/${selectedTaskId}`;
+      const responseproject = await axios.put(newproject,editData);
+
+      // const responsetask = await axios.put(urltask);
+      // const responseproject = await axios.put(newproject);
+      console.log(editData);
+      alert('Data edited successfully!'); 
+      window.location.reload(); 
     } catch (error) {
-      // Handle errors (e.g., display error message)
+      console.error('There was an error editing the data!', error);
+     
+      alert('An error occurred while saving data. Please check the console for details.');
     }
   };
-
-
-
 
   useEffect(() => {
-    fetch('https://localhost:7044/api/DeveloperTask/1') 
-      .then(response => response.json())
-      .then(data => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://localhost:7044/api/DeveloperTask/${selectedTaskId}`);
+        const data = await response.json();
         setTaskData(data);
         setIsLoading(false);
-      })
-      .catch(error => {
+
+        setStartTime(null);
+        setStopTime(null);
+      } catch (error) {
         setError(error);
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
-  
   if (isLoading) {
     return <div>Loading Task details...</div>;
   }
 
   if (error) {
-    
     return <div>Error fetching task details: {error.message}</div>;
   }
 
-
-
   return (
     <div className='Task'>
-<div className='Description'><h3>{taskData.taskName}</h3></div>
-<div className='DueDate'><h4>Due Date :{taskData.taskDueDate}</h4></div>
-
-
-<button onClick={startTimer}>Start</button>
-<button onClick={stopTimer}>Stop</button>
-{/* <p>start time: {startTime}</p>
-<p>stop time: {stopTime}</p> */}
-<p>Working Hours: {workingHours}</p>
-
+      <div className='Description'>
+        <h3>{taskData.taskName}</h3>
+      </div>
+      <div className='DueDate'>
+        <h4>Due Date: {taskData.taskDueDate}</h4>
+      </div>
+      <button onClick={startTimer}>Start</button>
+      <button onClick={stopTimer}>Stop</button>
+      <button onClick={submit}>Submit</button>
     </div>
-  )
-
+  );
 }
