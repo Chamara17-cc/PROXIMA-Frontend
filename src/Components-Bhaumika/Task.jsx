@@ -42,14 +42,14 @@ export default function Task() {
   
     try {
     
-     
-     const url =`https://localhost:7044/api/DeveloperTime/taskTimes/${selectedTaskId}/8`;
+     //DeveloperId == 5
+     const url =`https://localhost:7008/api/DeveloperTime/taskTimes/${selectedTaskId}/5`;
       const response = await axios.post(url, editData);
 
-      const urltask = `https://localhost:7044/api/DeveloperTime/tasks/${selectedTaskId}`;
+      const urltask = `https://localhost:7008/api/DeveloperTime/tasks/${selectedTaskId}`;
       const responsetask = await axios.put(urltask,editData);
 
-      const newproject = `https://localhost:7044/api/DeveloperTime/projects/${selectedTaskId}`;
+      const newproject = `https://localhost:7008/api/DeveloperTime/projects/${selectedTaskId}`;
       const responseproject = await axios.put(newproject,editData);
 
       // const responsetask = await axios.put(urltask);
@@ -67,7 +67,7 @@ export default function Task() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://localhost:7044/api/DeveloperTask/${selectedTaskId}`);
+        const response = await fetch(`https://localhost:7008/api/DeveloperTask/${selectedTaskId}`);
         const data = await response.json();
         setTaskData(data);
         setIsLoading(false);

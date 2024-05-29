@@ -17,7 +17,8 @@ function Tasklist() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://localhost:7044/api/DeveloperTask/GetAllTasks/8');
+        //DeveloperID == 5
+        const response = await axios.get('https://localhost:7008/api/DeveloperTask/GetAllTasks/5');
         setTasks(response.data);
         console.log(tasks);
       } catch (error) {
