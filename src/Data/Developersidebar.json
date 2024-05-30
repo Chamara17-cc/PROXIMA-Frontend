@@ -26,5 +26,10 @@
         "title": "TaskRecord",
         "icon": "bi bi-person-lines-fill",
         "path" :"/taskRecord"
+    },
+    {
+        "title": "Payments",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/DeveloperPayment"
     }
 ]
