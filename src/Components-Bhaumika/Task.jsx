@@ -16,51 +16,72 @@ export default function Task() {
 
   console.log("Taskid = " + selectedTaskId);
 
-  const startTimer = () => {
+  const startTimer = async () => {
     const currentDateTime = new Date().toISOString();
     setStartTime(currentDateTime);
     console.log('Start Time:', currentDateTime);
+
+    const editDataNew = { TaskStartTime: currentDateTime };
+
+    try {
+      const urlTaskStatusStart = `https://localhost:7008/api/DeveloperTime/tasksStatusStart/${selectedTaskId}`;
+      const responseTaskStatusStart = await axios.put(urlTaskStatusStart, editDataNew);
+      console.log('Start time submitted:', editDataNew);
+    } catch (error) {
+      console.error('There was an error submitting the start time!', error);
+      alert('An error occurred while submitting start time. Please check the console for details.');
+    }
   };
+
 
   const stopTimer = () => {
     const currentDateTime = new Date().toISOString();
     setStopTime(currentDateTime);
     console.log('Stop Time:', currentDateTime);
-   
   };
 
-  const submit = () => {
-    handleEdit();
-
-  }
-  const handleEdit = async () => {
+  const submit = async () => {
     const editData = {
-    
       TaskStartTime: startTime,
       TaskCompleteTime: stopTime,
     };
-  
+
     try {
-    
-     //DeveloperId == 5
-     const url =`https://localhost:7008/api/DeveloperTime/taskTimes/${selectedTaskId}/5`;
+      // DeveloperId == 5
+      const url = `https://localhost:7008/api/DeveloperTime/taskTimes/${selectedTaskId}/5`;
       const response = await axios.post(url, editData);
 
-      const urltask = `https://localhost:7008/api/DeveloperTime/tasks/${selectedTaskId}`;
-      const responsetask = await axios.put(urltask,editData);
+      const urlTask = `https://localhost:7008/api/DeveloperTime/tasks/${selectedTaskId}`;
+      const responseTask = await axios.put(urlTask, editData);
 
-      const newproject = `https://localhost:7008/api/DeveloperTime/projects/${selectedTaskId}`;
-      const responseproject = await axios.put(newproject,editData);
+      const newProject = `https://localhost:7008/api/DeveloperTime/projects/${selectedTaskId}`;
+      const responseProject = await axios.put(newProject, editData);
 
-      // const responsetask = await axios.put(urltask);
-      // const responseproject = await axios.put(newproject);
       console.log(editData);
-      alert('Data edited successfully!'); 
-      window.location.reload(); 
+      alert('Data edited successfully!');
+      window.location.reload();
     } catch (error) {
       console.error('There was an error editing the data!', error);
-     
       alert('An error occurred while saving data. Please check the console for details.');
+    }
+  };
+
+  const completed = async () => {
+    const editData = {
+      TaskStartTime: startTime,
+      TaskCompleteTime: stopTime,
+    };
+
+    try {
+      const urlTaskStatus = `https://localhost:7008/api/DeveloperTime/tasksStatusStop/${selectedTaskId}`;
+      const responseTaskStatus = await axios.put(urlTaskStatus, editData);
+
+      console.log(editData);
+      alert('Task marked as completed!');
+      // Consider alternative UI updates (e.g., disabling buttons, showing success message)
+    } catch (error) {
+      console.error('There was an error marking task as completed!', error);
+      alert('An error occurred while marking task as completed. Please check the console for details.');
     }
   };
 
@@ -91,17 +112,20 @@ export default function Task() {
     return <div>Error fetching task details: {error.message}</div>;
   }
 
+  const dueDateISO = new Date(taskData.taskDueDate).toISOString().split('T')[0];
+
   return (
     <div className='Task'>
       <div className='Description'>
         <h3>{taskData.taskName}</h3>
       </div>
       <div className='DueDate'>
-        <h4>Due Date: {taskData.taskDueDate}</h4>
+      <h4>Due Date: {dueDateISO}</h4>
       </div>
       <button onClick={startTimer}>Start</button>
       <button onClick={stopTimer}>Stop</button>
       <button onClick={submit}>Submit</button>
+      <button onClick={completed}>Task Completed</button>
     </div>
   );
 }
