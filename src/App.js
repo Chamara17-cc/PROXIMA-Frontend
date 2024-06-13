@@ -24,6 +24,10 @@ import ProgressDeveloper from "./Pages-Baumika/ProgressDeveloper";
 import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDeveloper";
 import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
 import TaskRecord from "./Pages-Baumika/TaskRecord";
+import ProjectReport from "./Pages-Baumika/ProjectReport";
+import ProjectModuleReport from "./Pages-Baumika/ProjectModuleReport";
+
+
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
 import UserCreation from "./Pages-Thusharga/UserCreation";
 
@@ -88,6 +92,9 @@ function App() {
         <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
         <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
         <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
+        <Route path="/ProjectReport" element={<ProjectReport/>}></Route>
+        <Route path="/ProjectModuleReport" element={<ProjectModuleReport/>}></Route>
+        
         <Route path="/DeveloperPayment" element={<Payment/>}></Route>
         {/* project manager dashboard */}
         <Route path="/ProjectManagerDashboard" element={<ProjectManagerDashboard/>}></Route>

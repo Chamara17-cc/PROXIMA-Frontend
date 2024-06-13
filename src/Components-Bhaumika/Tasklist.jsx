@@ -62,7 +62,7 @@ function Tasklist() {
       {loading && <p>Loading tasks...</p>}
       {error && <p>Error: {error.message}</p>}
       {!loading && !error && (
-        <Table striped bordered hover>
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>Task ID</th>
@@ -86,7 +86,7 @@ function Tasklist() {
               </tr>
             ))}
           </tbody>
-        </Table>
+          </table>
       )}
     </div>
     )
