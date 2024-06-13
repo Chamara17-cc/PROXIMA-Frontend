@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Tasklist() {
+
+
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +17,8 @@ function Tasklist() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://localhost:7044/api/DeveloperTask/GetAllTasks/10');
+        //DeveloperID == 5
+        const response = await axios.get('https://localhost:7008/api/DeveloperTask/GetAllTasks/5');
         setTasks(response.data);
         console.log(tasks);
       } catch (error) {
@@ -31,11 +34,28 @@ function Tasklist() {
   }, []);
 
   var selectedId;
+  var selectedTaskId;
+
 
   const TaskSelection = (id) => {
     selectedId = id;
     navigate('/TaskDescriptionDeveloper',{state:{selectedId:selectedId}});
   };
+
+  const TaskSelectionNew = (taskid) => {
+      console.log(taskid);
+   
+    selectedTaskId = taskid;
+  
+   navigate('/TaskRecord',{state:{selectedTaskId:selectedTaskId}});
+
+  };
+
+
+
+
+
+
 
     return (
       <div>
@@ -53,13 +73,16 @@ function Tasklist() {
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <tr key={task.taskId}
-              onClick = {() =>TaskSelection(task.taskId)}
+              <tr 
               >
                 <td>{task.taskId}</td>
-                <td>{task.taskName}</td>
+                <td 
+                key={task.taskId}
+              onClick = {() =>TaskSelection(task.taskId)}>{task.taskName}</td>
                 <td>{task.taskDueDate}</td>
-                <td>{task.taskStatus}</td>
+                <td
+                onClick = {() =>TaskSelectionNew(task.taskId)}
+                >{task.taskStatus}</td>
               </tr>
             ))}
           </tbody>

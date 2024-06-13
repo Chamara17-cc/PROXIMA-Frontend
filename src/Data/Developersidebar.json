@@ -20,12 +20,7 @@
         "title": "Progress",
         "icon": "bi bi-person-lines-fill",
         "path" :"/DeveloperProgress"
-    },
-   
-    {
-        "title": "TaskRecord",
-        "icon": "bi bi-person-lines-fill",
-        "path" :"/taskRecord"
+    
     },
     {
         "title": "Payments",
