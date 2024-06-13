@@ -49,11 +49,6 @@
                 "title": "Transaction",
                 "path": "/transaction" 
                 
-            },
-            {
-                "title": "FinanceDigram",
-                "path": "/findig" 
-                
             }
         ]
     },
