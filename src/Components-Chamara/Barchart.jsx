@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import axios from 'axios';
 
-
-export default function BasicBars() {
+export default function BasicBars(props) {
     const [Income,setIncome] = useState(0);
     const [Expence,setExpence] = useState(0);
-  
+
+
+   const projectId=props.projectid;
     useEffect(() => {
-      fetchBardata(11); // Assuming project ID is 11, change as necessary
-    }, []);
+      fetchBardata(projectId); // Assuming project ID is 11, change as necessary
+    }, [projectId]);
   
     const fetchBardata = async (projectId) => {
       try {

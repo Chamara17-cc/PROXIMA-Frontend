@@ -33,7 +33,7 @@ export default function ProjectCreationForm() {
   const fetchProjects = async () => {
     try {
       const response = await axios.get(`https://localhost:44339/api/Budget`);
-      console.log("Projects:", response.data); // Debugging: log fetched projects
+      console.log("Projects:", response.data); 
       setProjects(response.data);
     } catch (error) {
       console.error("Error fetching projects:", error);
