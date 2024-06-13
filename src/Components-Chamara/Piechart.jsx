@@ -5,13 +5,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 
-export default function PieCharts() {
+export default function PieCharts(props) {
   const [remaining, setRemaining] = useState(0);
   const [used, setUsed] = useState(0);
 
+  const projectId= props.projectid;
+
   useEffect(() => {
-    fetchDigramData(11); // Assuming project ID is 11, change as necessary
-  }, []);
+    fetchDigramData(projectId); // Assuming project ID is 11, change as necessary
+  }, [projectId]);
 
   const fetchDigramData = async (projectId) => {
     try {

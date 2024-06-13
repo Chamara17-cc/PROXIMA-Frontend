@@ -85,6 +85,7 @@ function App() {
         <Route path="/DeveloperPayment" element={<Payment/>}></Route>
         {/* project manager dashboard */}
         <Route path="/ProjectManagerDashboard" element={<ProjectManagerDashboard/>}></Route>
+        <Route path="/financedigram" element={<FinanceDigram/>}></Route>
 
       </Routes>
         <Routes>         

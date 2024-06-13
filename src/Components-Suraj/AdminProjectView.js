@@ -318,6 +318,10 @@ export default function AdminProjectView() {
     GetClientDocNames();
   },[clientInfo, basicInfo, timeLineInfo, budgetInfo]);
 
+  const gotofinancereport=()=>{
+    navigate ('/financedigram',{state:{projectId:selectedId}})
+  }
+
   return (
     <div className="Section">
       <Tabs
@@ -340,7 +344,7 @@ export default function AdminProjectView() {
             </div>
           ))}
           <div>
-            <Button>Finance</Button> &nbsp;&nbsp;
+            <Button onClick={gotofinancereport}>Finance</Button> &nbsp;&nbsp;
             <Button>Time</Button>
           </div>
 
