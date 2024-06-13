@@ -35,7 +35,6 @@ import ResetPassword from "./Pages-Thusharga/ResetPassword";
 import TransactionPage from "./Pages-Chamara/TransactionPage";
 import SecondLevelUserDashboard from "./Pages-Thusharga/SecondLevelUserDashboard";
 import ViewUserDetail from "./Pages-Thusharga/ViewUserDetail";
-import FinanceDigram from "./Pages-Chamara/FinanceDigram";
 import TaskList from "./Pages-Suraj/TaskList";
 import TaskDetailsPage from "./Pages-Suraj/TaskDetailsPage";
 import ProjectManagerDashboard from "./Pages-Suraj/ProjectManagerDashboard";
@@ -45,6 +44,8 @@ import PMtaskCreationPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskC
 import PMtaskListPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskListPage";
 import PMaddDevelopersPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMaddDevelopersPage";
 import PMtaskDetailsPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskDetailsPage";
+import FinanceDigram from "./Pages-Chamara/FinanceDigram";
+import Payment from "./Pages-Chamara/Payment";
 
 function App() {
   return (
@@ -72,9 +73,9 @@ function App() {
         <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
         <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
 
-         <Route path="/loginform" element={<LoginForm/>}></Route>
-         <Route path="/resetpassword" element={<ResetPassword/>}></Route>         
-         <Route path="/userprofilepage/:userId" element={<ViewUserDetail/>}></Route>
+        <Route path="/loginform" element={<LoginForm/>}></Route>
+        <Route path="/resetpassword" element={<ResetPassword/>}></Route>         
+        <Route path="/userprofilepage/:userId" element={<ViewUserDetail/>}></Route>
 
         {/* <Route path="/budgetestform"  element={<BudgetEstimationForm/>}></Route> */}
 
@@ -87,11 +88,7 @@ function App() {
         <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
         <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
         <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
-<Route path="/findig" element={<FinanceDigram/>}></Route>
-
-        <Route path="/TaskList" element={<TaskList/>}></Route>
-        <Route path="/TaskDetailsPage" element={<TaskDetailsPage/>}></Route>    
-        
+        <Route path="/DeveloperPayment" element={<Payment/>}></Route>
         {/* project manager dashboard */}
         <Route path="/ProjectManagerDashboard" element={<ProjectManagerDashboard/>}></Route>
         <Route path="/PMprojectListPage" element={<PMprojectListPage/>}></Route>
@@ -100,11 +97,10 @@ function App() {
         <Route path="/PMtaskListPage" element= {<PMtaskListPage />}></Route>
         <Route path="/PMaddDevelopersPage" element = {<PMaddDevelopersPage />}></Route>
         <Route path="PMtaskDetailsPage" element = {<PMtaskDetailsPage />}></Route>
+        <Route path="/financedigram" element={<FinanceDigram/>}></Route>
 
       </Routes>
-        <Routes>
-          
-          
+        <Routes>         
         </Routes>
       </BrowserRouter>
       
