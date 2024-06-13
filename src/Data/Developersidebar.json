@@ -21,5 +21,18 @@
         "icon": "bi bi-person-lines-fill",
         "path" :"/DeveloperProgress"
     
+    },
+    {
+        "title": "TimeReport",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/ProjectReport"
+    
+    },
+    {
+        "title": "ModuleReport",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/ProjectModuleReport"
+    
     }
+
 ]
