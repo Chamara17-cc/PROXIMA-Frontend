@@ -32,7 +32,7 @@ export default function ProjectCreationForm() {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get(`https://localhost:44339/api/Budget`);
+      const response = await axios.get(`https://localhost:44339/api/Budget/register`);
       console.log("Projects:", response.data); 
       setProjects(response.data);
     } catch (error) {
@@ -42,7 +42,7 @@ export default function ProjectCreationForm() {
 
   const fetchBudgetData = async (projectid) => {
     try {
-      const response = await axios.get(`https://localhost:44339/api/Budget/Projects/${projectid}`);
+      const response = await axios.get(`https://localhost:44339/api/Budget/register/Projects/${projectid}`);
       console.log("Budget data:", response.data);
       setBudgetData(response.data);
     } catch (error) {
