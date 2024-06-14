@@ -48,7 +48,7 @@ export default function PopupForm() {
       CurrentRate: Rate,
       UpdatedDate: Date
     };
-    const url = 'https://localhost:44339/api/DeveloperRate';
+    const url = 'https://localhost:44339/api/DeveloperRate/register';
     axios.post(url, ratedata)
       .then((result) => {
         alert("Data inserted");
@@ -62,7 +62,7 @@ export default function PopupForm() {
   useEffect(() => {
     const fetchData = async() => {
       try{
-        const response= await axios.get('https://localhost:44339/api/DeveloperRate');
+        const response= await axios.get('https://localhost:44339/api/DeveloperRate/register');
         setCurrentRate(response.data);  
         console.log(CurrentRate)
       }
@@ -75,7 +75,7 @@ export default function PopupForm() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>Developer rate</Button>
+      <Button onClick={handleClickOpen} style={{ backgroundColor: '#3D97ED', color: 'white' }}>Developer rate</Button>
       <div className="developer_rate">
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle className='Rateheader'>Hourly Rate</DialogTitle>
