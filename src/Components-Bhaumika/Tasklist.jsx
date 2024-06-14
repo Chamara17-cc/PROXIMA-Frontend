@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
-
-
+import { format } from 'date-fns'; // Import date-fns for formatting
 
 function Tasklist() {
-
-
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,10 +14,10 @@ function Tasklist() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //DeveloperID == 5
+        // DeveloperID == 5 (replace with appropriate logic)
         const response = await axios.get('https://localhost:7008/api/DeveloperTask/GetAllTasks/5');
         setTasks(response.data);
-        console.log(tasks);
+        console.log(tasks.dueDate);
       } catch (error) {
         setError(error);
         alert(error);
@@ -34,7 +31,7 @@ function Tasklist() {
   }, []);
 
   var selectedId;
-  var selectedTaskId;
+
 
 
   const TaskSelection = (id) => {
@@ -42,27 +39,16 @@ function Tasklist() {
     navigate('/TaskDescriptionDeveloper',{state:{selectedId:selectedId}});
   };
 
-  const TaskSelectionNew = (taskid) => {
-      console.log(taskid);
-   
-    selectedTaskId = taskid;
-  
-   navigate('/TaskRecord',{state:{selectedTaskId:selectedTaskId}});
-
+  const handleTaskSelectionNew = (taskId) => {
+    navigate('/TaskRecord', { state: { selectedTaskId: taskId } });
   };
 
-
-
-
-
-
-
-    return (
-      <div>
+  return (
+    <div>
       {loading && <p>Loading tasks...</p>}
       {error && <p>Error: {error.message}</p>}
       {!loading && !error && (
-        <table class="table table-striped">
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>Task ID</th>
@@ -73,23 +59,44 @@ function Tasklist() {
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <tr 
-              >
-                <td>{task.taskId}</td>
+              <tr key={task.taskId}>
+                <td
+                 key={task.taskId}
+                 onClick = {() =>TaskSelection(task.taskId)}>{task.taskId}</td>
                 <td 
                 key={task.taskId}
               onClick = {() =>TaskSelection(task.taskId)}>{task.taskName}</td>
-                <td>{task.taskDueDate}</td>
                 <td
-                onClick = {() =>TaskSelectionNew(task.taskId)}
-                >{task.taskStatus}</td>
+                 key={task.taskId}
+                 onClick = {() =>TaskSelection(task.taskId)}>
+                  {task.dueDate ? format(new Date(task.dueDate), 'yyyy-MM-dd') : '-'}
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleTaskSelectionNew(task.taskId)}
+                    disabled={task.taskStatus === 3} 
+                  >
+                    {task.taskStatus === 1
+                      ? 'To Do'
+                      : task.taskStatus === 2
+                        ? 'In Progress'
+                        : 'Done'}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
-          </table>
+        </Table>
       )}
     </div>
-    )
+  );
 }
-  
-export default Tasklist
+
+export default Tasklist;
+
+
+
+
+
+
+
