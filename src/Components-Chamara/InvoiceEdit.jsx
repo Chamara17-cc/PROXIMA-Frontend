@@ -44,7 +44,7 @@ export default function InvoiceEdit(props) {
     };
 
     console.log(editdata)
-    const url = `https://localhost:44339/api/Transaction/Transaction/${transacId}?value=${value}&type=${type}&description=${discription}`;
+    const url = `https://localhost:44339/api/Transaction/Transaction/${transacId}/register?value=${value}&type=${type}&description=${discription}`;
     axios.put(url, editdata)
       .then((result) => {
         alert("Data edited");
