@@ -348,7 +348,8 @@ export default function AdminProjectView() {
     <>
     <div style={{display: 'flex', float:'right', marginTop:'-48px'}}>
             <Button>Finance Info</Button> &nbsp;&nbsp;
-            <Button>Time Info</Button>
+            <Button>Time Progress</Button>
+            <Button>Module Progress</Button>
           </div>
           
     <div className="Section">
