@@ -211,48 +211,48 @@ export default function TaskDetailsCom() {
       console.log("Video selected");
     }
 
-    const UploadVideo = async () => {
-      if(!video){
-        alert("select an Video");
-        return;
-      }
+  //   const UploadVideo = async () => {
+  //     if(!video){
+  //       alert("select an Video");
+  //       return;
+  //     }
 
-      const formData = new FormData();
-    formData.append("file", video);
+  //     const formData = new FormData();
+  //   formData.append("file", video);
 
-    const url1 = `https://localhost:44339/api/TaskVideoUpload/VideoUpload?ProID=${proId}TId=${selectedTaskId}`;
+  //   const url1 = `https://localhost:44339/api/TaskVideoUpload/VideoUpload?ProID=${proId}TId=${selectedTaskId}`;
 
     
-      axios.post(url1, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(() => {
-        alert("Upload Successful");
-        setVideo(null);
-      })
-     .catch ((error) => {
-      alert("Select an Video");
-      console.error("Error uploading file:", error);
-    });
-    }
+  //     axios.post(url1, formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     }).then(() => {
+  //       alert("Upload Successful");
+  //       setVideo(null);
+  //     })
+  //    .catch ((error) => {
+  //     alert("Select an Video");
+  //     console.error("Error uploading file:", error);
+  //   });
+  //   }
 
 
-    //------view video info
+  //   //------view video info
 
-  const [videoNames, setVideoNames] = useState([]);
+  // const [videoNames, setVideoNames] = useState([]);
 
-  const GetVideoNames = async () => {
-    const url = `https://localhost:44339/api/TaskFilesView/video?PId=${proId}&TId=${selectedTaskId}`;
+  // const GetVideoNames = async () => {
+  //   const url = `https://localhost:44339/api/TaskFilesView/video?PId=${proId}&TId=${selectedTaskId}`;
 
-    try {
-      const response = await axios.get(url);
-      setVideoNames(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     const response = await axios.get(url);
+  //     setVideoNames(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
 
 
@@ -340,11 +340,11 @@ export default function TaskDetailsCom() {
       console.log(error);  
     }
   }
-
+//  *******************task deletion
 
   const DeleteTask = async () => {
     try{
-      const url = `https://localhost:44339/api/TaskDeletion?TId=${selectedTaskId}`;       // task delete
+      const url = `https://localhost:44339/api/TaskDeletion?TId=${selectedTaskId}`;       
       
       if (window.confirm('Are you sure you want to delete this item?')) {
         const response = await axios.delete(url);
@@ -389,9 +389,8 @@ export default function TaskDetailsCom() {
         GetBasicFileNames();
         GetImgNames();
         GetAudioNames();
-        GetVideoNames();
         GetZipNames();
-    },[basicNames, imgNames, audioNames, videoNames, zipNames]);
+    },[basicNames, imgNames, audioNames, zipNames]);
 
 
 
@@ -480,7 +479,7 @@ export default function TaskDetailsCom() {
             </Form.Group>
 
 
-            <Form.Group as={Col} className="mb-3">
+            {/* <Form.Group as={Col} className="mb-3">
               <Form.Label>Videos: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -497,8 +496,8 @@ export default function TaskDetailsCom() {
                 </Button>
 
                 
-              </div>
-            </Form.Group>
+              </div> 
+            </Form.Group>*/}
 
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Audios: </Form.Label>
@@ -528,10 +527,10 @@ export default function TaskDetailsCom() {
                   type="file"
                   size="sm"
                   style={{ width: "250px" }}
-                 // onChange={HandleZipChange}
+                  onChange={HandleZipChange}
                 />
                 <Button
-                 // onClick={UploadZip}
+                  onClick={UploadZip}
                   style={{ marginLeft: "60px", marginBottom: "4px" }}
                 >
                   Upload
@@ -559,7 +558,7 @@ export default function TaskDetailsCom() {
              
             </Form.Group>
 
-            <Form.Group as={Col} className="mb-3">
+            {/* <Form.Group as={Col} className="mb-3">
               <Form.Label>Videos: </Form.Label>
               {videoNames.map((file, index) => (
                 <ul>
@@ -567,7 +566,7 @@ export default function TaskDetailsCom() {
               </ul>
               ))}
              
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Audios: </Form.Label>

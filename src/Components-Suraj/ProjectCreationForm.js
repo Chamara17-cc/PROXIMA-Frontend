@@ -257,7 +257,7 @@ export default function ProjectCreationForm() {
         {/* ------Project Initalization part----- has a validation */}
 
         <div className="Section">
-          <h3 className="SectionHeading">Project Initialization</h3>
+          <h3 className="SectionHeading">Project Initialization</h3> 
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label htmlFor="projectName">Project Name:</Form.Label>
@@ -268,6 +268,7 @@ export default function ProjectCreationForm() {
                   type="text"
                   placeholder="ProjectName"
                   id="projectName"
+                  style={{color:"black"}}
                   onChange={(e) => handlePNameChange(e.target.value)}
                 />
 
@@ -419,15 +420,16 @@ export default function ProjectCreationForm() {
 
         <div className="Section">
           <h2 className="SectionHeading">Project Planing</h2>
-          <Row className="mb-3">
+          <Row className="mb-3" style={{width:"65%"}}>
             <Form.Group as={Col}>
-              <Form.Label>Start Date</Form.Label>
+              <Form.Label>Start Date:</Form.Label>
               <InputGroup hasValidation>
                 <TextField
                   aria-required
                   style={{
                     backgroundColor: "whitesmoke",
                     borderRadius: "10px",
+                    width:"300px"
                   }}
                   margin="dense"
                   id="last_updated"
@@ -444,10 +446,10 @@ export default function ProjectCreationForm() {
             </Form.Group>
 
             <Form.Group as={Col}>
-              <Form.Label>Due Date</Form.Label>
+              <Form.Label>Due Date:</Form.Label>
 
               <TextField
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px" }}
+                style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width:"300px"}}
                 margin="dense"
                 id="last_updated"
                 type="date"
