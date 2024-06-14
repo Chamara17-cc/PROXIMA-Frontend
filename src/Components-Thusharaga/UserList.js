@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import SearchBar from "../Compornents/Searchbar.jsx"; // Import the SearchBar component
+import apiRequest from '../Auth/ApiService'; // Import the apiRequest function
 
 export default function UserListComponent() {
   const [data, setData] = useState([]);
-  const [load, setLoad] = useState(true);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchData(); // Fetch data on component mount
   }, []);
 
-  const fetchData = () => {
-    axios
-      .get("https://localhost:7121/api/User/list")
-      .then((result) => setData(result.data))
-      .catch((e) => console.log(e));
-
-    setLoad(false);
+  const fetchData = async () => {
+    try {
+      const result = await apiRequest("https://localhost:44339/api/User/list");
+      setData(result);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleUserSelection = (id) => {
@@ -29,18 +31,20 @@ export default function UserListComponent() {
     navigate('/userCreation');
   };
 
-  const handleSearch = (searchTerm) => {
+  const handleSearch = async (searchTerm) => {
     if (searchTerm.trim() === "") {
       fetchData(); // If search term is empty, fetch all data
     } else {
-      axios
-        .get(`https://localhost:7121/api/User/search?id=${searchTerm}`)
-        .then((result) => setData(result.data))
-        .catch((e) => console.log(e));
+      try {
+        const result = await apiRequest(`https://localhost:44339/api/User/search?id=${searchTerm}`);
+        setData(result);
+      } catch (error) {
+        console.error("Error searching data:", error);
+      }
     }
   };
 
-  if (load) {
+  if (loading) {
     return (
       <div className="container mt-5">
         <div className="spinner-border text-primary" role="status">

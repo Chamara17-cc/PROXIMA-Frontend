@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -7,6 +6,8 @@ import Row from "react-bootstrap/Row";
 import './styles/UserCreationForm.css'
 //import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import apiRequest from '../Auth/ApiService';
+
 
 export default function UserCreationForm() {
   const [firstName, setFirstName] = useState('');
@@ -26,15 +27,15 @@ export default function UserCreationForm() {
   const navigate = useNavigate();
 
   //const [errorMessage, setErrorMessage] = useState(null);
-  
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
+  //ProfilePictureLink: profilePhoto,
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setFormSubmitted(true);
-   
+  
     if (!validateForm()) {
       return;
     }
-
+  
     const data = {
       FirstName: firstName,
       LastName: lastName,
@@ -45,29 +46,28 @@ export default function UserCreationForm() {
       Gender: gender,
       ContactNumber: mobileNumber,
       Email: email,
-      //ProfilePictureLink: profilePhoto,
       UserCategoryType: userCategory,
       JobRoleType: jobRole
     };
-
-    const url = 'https://localhost:7121/api/User/register'; 
-    axios.post(url, data)
-    .then((result) => {
-    clear();
-    alert(result.data.message); // Display the success message
-    navigate('/userCreationSuccess');
-  })
-  .catch((error) => {
-    if (error.response && error.response.data && error.response.data.message) {
-      alert(error.response.data.message);
-    } else {
-      alert("An error occurred. Please try again later.");
+  
+    try {
+      const result = await apiRequest('https://localhost:44339/api/User/register', {
+        method: 'POST',
+        data: data
+      });
+      clear();
+      alert(result.data.message);
+      navigate('/userCreationSuccess');
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("An error occurred. Please try again later.");
+      }
+      console.error('User creation failed:', error);
     }
-    console.log(error);
-  });
-
-
-  }
+  };
+  
 
   const clear = () => {
     setFirstName('');

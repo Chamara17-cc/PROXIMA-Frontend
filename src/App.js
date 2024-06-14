@@ -1,8 +1,8 @@
 import React from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import ProtectedRoute from './Auth/ProtectedRoute';
+import { AuthProvider } from './Auth/AuthContext';
 import AdminDashboard from "./Pages-Thusharga/AdminDashboard";
-// import UserCreation from "./Pages-Thusharga/UserCreation";
-// import UserList from "./Pages-Thusharga/UserList";
 import ProjectCreation from "./Pages-Suraj/ProjectCreation";
 import ProjectList from "./Pages-Suraj/ProjectList";
 import TaskCreation from "./Pages-Suraj/TaskCreation";
@@ -13,8 +13,6 @@ import TaskCreation from "./Pages-Suraj/TaskCreation";
 import AdminProjectViewPage from "./Pages-Suraj/AdminPojectViewPage";
 import AddDevelopersPage from "./Pages-Suraj/AddDevelopersPage";
 // import BudgetEstimationForm from "./Pages-Chamara/BudgetEstimationForm";
-// import LoginForm from "./Pages-Thusharga/LoginForm";
-
 
 //newly added Pages 
 import DashboardDeveloper from "./Pages-Baumika/DashboardDeveloper";
@@ -25,16 +23,16 @@ import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDevel
 import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
 import TaskRecord from "./Pages-Baumika/TaskRecord";
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
-import UserCreation from "./Pages-Thusharga/UserCreation";
 
+import UserCreation from "./Pages-Thusharga/UserCreation";
 import UserCreationSuccess from "./Pages-Thusharga/UserCreationSuccess";
 import ViewUserList from "./Pages-Thusharga/ViewUserList";
 import LoginForm from "./Pages-Thusharga/LoginForm";
 import ResetPassword from "./Pages-Thusharga/ResetPassword";
-//import ForgotPassword from "./Pages-Thusharga/ForgotPassword";
+import ForgotPassword from "./Pages-Thusharga/ForgotPassword";
 import TransactionPage from "./Pages-Chamara/TransactionPage";
-import SecondLevelUserDashboard from "./Pages-Thusharga/SecondLevelUserDashboard";
 import ViewUserDetail from "./Pages-Thusharga/ViewUserDetail";
+
 import TaskList from "./Pages-Suraj/TaskList";
 import TaskDetailsPage from "./Pages-Suraj/TaskDetailsPage";
 import ProjectManagerDashboard from "./Pages-Suraj/ProjectManagerDashboard";
@@ -42,15 +40,33 @@ import ProjectManagerDashboard from "./Pages-Suraj/ProjectManagerDashboard";
 function App() {
   return (
     <div className="main">
-      
+       <AuthProvider>
       <BrowserRouter>
       <Routes>
-        <Route path="/" element= {<AdminDashboard/>}></Route>
-        <Route path="/managerDashboard" element= {<SecondLevelUserDashboard/>}></Route>
-        <Route path="/usercreation" element={<UserCreation/>}></Route>
-        
+        <Route path="/" element={<LoginForm/>}></Route>
         <Route path="/usercreationsuccess" element={<UserCreationSuccess/>}></Route>
-        <Route path="/userlist" element ={<ViewUserList/>}></Route>
+        <Route path="/resetpassword" element={<ResetPassword/>}></Route>
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
+
+        <Route element={<ProtectedRoute allowedRoles={['1']} />}>
+              <Route path="/adminDashboard" element={<AdminDashboard />} />
+              <Route path="/usercreation" element={<UserCreation/>}></Route>
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={['1', '2']} />}>
+              <Route path="/userList" element={<ViewUserList />} />
+              <Route path="/userProfilePage/:userId" element={<ViewUserDetail />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={['2']} />}>
+              <Route path="/ProjectManagerDashboard" element={<ProjectManagerDashboard/>}></Route>
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={['3']} />}>
+              <Route path="/DeveloperDashboard" element={<DashboardDeveloper/>}></Route>
+        </Route>
+        
+    
         <Route path="/projectcreation" element ={<ProjectCreation/>}></Route>
         <Route path="/projectlist" element ={<ProjectList/>}></Route>
         <Route path="/taskcreation" element ={<TaskCreation/>}></Route>
@@ -63,14 +79,9 @@ function App() {
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
-        <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
-
-         <Route path="/loginform" element={<LoginForm/>}></Route>
-         <Route path="/resetpassword" element={<ResetPassword/>}></Route>         
-         <Route path="/userprofilepage/:userId" element={<ViewUserDetail/>}></Route>
-
+        <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>        
+            
         {/* <Route path="/budgetestform"  element={<BudgetEstimationForm/>}></Route> */}
-
 
        {/* newly added routes  */}
         <Route path="/DeveloperDashboard" element={<DashboardDeveloper/>}></Route>
@@ -84,9 +95,7 @@ function App() {
 
         <Route path="/TaskList" element={<TaskList/>}></Route>
         <Route path="/TaskDetailsPage" element={<TaskDetailsPage/>}></Route>    
-        
-        {/* project manager dashboard */}
-        <Route path="/ProjectManagerDashboard" element={<ProjectManagerDashboard/>}></Route>
+             
 
       </Routes>
         <Routes>
@@ -94,7 +103,7 @@ function App() {
           
         </Routes>
       </BrowserRouter>
-      
+      </AuthProvider>
     </div>
   )
 }
