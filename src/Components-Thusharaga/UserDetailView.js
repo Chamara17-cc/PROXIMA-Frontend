@@ -13,7 +13,7 @@ const UserDetailView = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`https://localhost:7121/api/User/${userId}`);
+        const response = await axios.get(`https://localhost:44339/api/User/${userId}`);
         setUserData(response.data);
         setLoading(false);
       } catch (error) {
