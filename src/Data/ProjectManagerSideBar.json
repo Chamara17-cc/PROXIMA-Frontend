@@ -2,7 +2,8 @@
     {
         "title": "Dashboard",
         "icon": "bi-gear-fill",
-        "path" :"/ProjectManagerDashboard"
+        "path" :"/ProjectManagerDashboard",
+        "roles" : ["2"]
     },
     {
         "title": "Project List",
