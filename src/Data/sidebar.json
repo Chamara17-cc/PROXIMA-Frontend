@@ -3,22 +3,26 @@
     {
         "title": "Dashboard",
         "icon": "bi-gear-fill",
-        "path" :"/"
+        "path" :"/adminDashboard",
+        "roles" : ["1"]
     },
       {  "title": "User",
          "icon": "bi-person-fill",
         "childrens": [
             {
                 "title": "User Accounts",
-                "path": "/userlist"
+                "path": "/userList",
+                "roles": ["1", "2"]
             },
             {
                 "title": "Add New User",
-                "path": "/usercreation"
+                "path": "/userCreation",
+                "roles": ["1"]
             },
             {
-                 "title": "Deactivate User",
-                "path": "/userlist"
+                "title": "Deactivate User",
+                "path": "/userList",
+                "roles": ["1"]
             }
             
         ]
@@ -34,6 +38,10 @@
             {
                 "title": "New Projects",
                 "path":"/projectcreation"
+            },
+            {
+                "title": "Task Assign",
+                "path": "/taskcreation"
             }
         ]
     },
@@ -46,9 +54,12 @@
                 "path": "/budget"
             },
             {
-                "title": "Transaction",
-                "path": "/transaction" 
-                
+                "title": "Invoice",
+                "path": "/invoice"   
+            },
+            {
+                "title": "Hourly rate",
+                "path": "/rate"   
             }
         ]
     },
@@ -69,15 +80,5 @@
                 "path": "/sendemail"   
             }
         ]
-    },  {
-        "title": "DeveloperDashboard",
-        "icon": "bi-gear-fill",
-        "path" :"/DeveloperDashboard"
-    },  
-    {
-        "title": "ProjectManagerDashboard",
-        "icon": "bi-gear-fill",
-        "path" :"/ProjectManagerDashboard"
     }
 ]
-
