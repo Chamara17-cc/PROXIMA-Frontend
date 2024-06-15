@@ -8,6 +8,6 @@
     {
         "title": "Project List",
         "icon": "bi bi-stack",
-        "path" :"/ProjectManagerDashboard"
+        "path" :"/PMprojectListPage"
     }
 ]

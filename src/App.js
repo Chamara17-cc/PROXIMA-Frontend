@@ -22,6 +22,10 @@ import ProgressDeveloper from "./Pages-Baumika/ProgressDeveloper";
 import ProjectDescriptionDeveloper from "./Pages-Baumika/ProjectDescriptionDeveloper";
 import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
 import TaskRecord from "./Pages-Baumika/TaskRecord";
+import ProjectReport from "./Pages-Baumika/ProjectReport";
+import ProjectModuleReport from "./Pages-Baumika/ProjectModuleReport";
+
+
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
 
 import UserCreation from "./Pages-Thusharga/UserCreation";
@@ -36,6 +40,14 @@ import ViewUserDetail from "./Pages-Thusharga/ViewUserDetail";
 import TaskList from "./Pages-Suraj/TaskList";
 import TaskDetailsPage from "./Pages-Suraj/TaskDetailsPage";
 import ProjectManagerDashboard from "./Pages-Suraj/ProjectManagerDashboard";
+import PMprojectListPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMprojectListPage";
+import PMprojectDetailsPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMprojectDetailsPage";
+import PMtaskCreationPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskCreationPage";
+import PMtaskListPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskListPage";
+import PMaddDevelopersPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMaddDevelopersPage";
+import PMtaskDetailsPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskDetailsPage";
+import FinanceDigram from "./Pages-Chamara/FinanceDigram";
+import Payment from "./Pages-Chamara/Payment";
 
 function App() {
   return (
@@ -79,8 +91,12 @@ function App() {
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         <Route path="/AddDevelopersPage" element={<AddDevelopersPage/>}></Route>
         <Route path="/AdminProjectViewPage" element={<AdminProjectViewPage/>}></Route>
-        <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>        
-            
+        <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
+
+        <Route path="/loginform" element={<LoginForm/>}></Route>
+        <Route path="/resetpassword" element={<ResetPassword/>}></Route>         
+        <Route path="/userprofilepage/:userId" element={<ViewUserDetail/>}></Route>
+
         {/* <Route path="/budgetestform"  element={<BudgetEstimationForm/>}></Route> */}
 
        {/* newly added routes  */}
@@ -91,16 +107,20 @@ function App() {
         <Route path="/ProjectDescriptionDeveloper" element={<ProjectDescriptionDeveloper/>}></Route>
         <Route path="/TaskDescriptionDeveloper" element={<TaskDescriptionDeveloper/>}></Route>
         <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
-
-
-        <Route path="/TaskList" element={<TaskList/>}></Route>
-        <Route path="/TaskDetailsPage" element={<TaskDetailsPage/>}></Route>    
-             
+        <Route path="/ProjectReport" element={<ProjectReport/>}></Route>
+        <Route path="/ProjectModuleReport" element={<ProjectModuleReport/>}></Route>
+        
+             <Route path="/DeveloperPayment" element={<Payment/>}></Route>
+        <Route path="/PMprojectListPage" element={<PMprojectListPage/>}></Route>
+        <Route path="/PMprojectDetailsPage" element={<PMprojectDetailsPage/>}></Route>
+        <Route path="/PMtaskCreationPage" element={<PMtaskCreationPage/>}></Route>
+        <Route path="/PMtaskListPage" element= {<PMtaskListPage />}></Route>
+        <Route path="/PMaddDevelopersPage" element = {<PMaddDevelopersPage />}></Route>
+        <Route path="PMtaskDetailsPage" element = {<PMtaskDetailsPage />}></Route>
+        <Route path="/financedigram" element={<FinanceDigram/>}></Route>
 
       </Routes>
-        <Routes>
-          
-          
+        <Routes>         
         </Routes>
       </BrowserRouter>
       </AuthProvider>

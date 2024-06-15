@@ -6,6 +6,7 @@ import axios from 'axios';
 
 export default function TaskDescription() {
 
+ 
     const [taskDetails, setTaskDetails] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,35 +16,12 @@ export default function TaskDescription() {
     const navigate = useNavigate();
 
 
-  // useEffect(() => {
-  //   fetch('https://localhost:7044/api/DeveloperTask/${selectedId}') 
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       setTaskDetails(data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch(error => {
-  //       setError(error);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
 
-  
-  // if (isLoading) {
-  //   return <div>Loading Task details...</div>;
-  // }
-
-  // if (error) {
-    
-  //   return <div>Error fetching task details: {error.message}</div>;
-  // }
-
-//////////////////////////
   console.log(selectedId);
 
   const getData = async () => {
     try {
-      const response = await axios.get(`https://localhost:7044/api/DeveloperTask/${selectedId}`);
+      const response = await axios.get(`https://localhost:7008/api/DeveloperTask/${selectedId}`);
       setTaskDetails(response.data);
       setIsLoading(false);
       console.log(response.data);

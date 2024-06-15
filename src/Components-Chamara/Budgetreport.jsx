@@ -6,15 +6,11 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 //import BudgetEstForm from './BudgetEstForm'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import jsPDF from "jspdf";
+import 'jspdf-autotable';
 import { useNavigate } from "react-router-dom";
+import Budgettable from "./Budgettable";
+import Budgetedit from "./Budgetedit";
 
 
 export default function ProjectCreationForm() {
@@ -36,8 +32,8 @@ export default function ProjectCreationForm() {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get(`https://localhost:44339/api/Budget`);
-      console.log("Projects:", response.data); // Debugging: log fetched projects
+      const response = await axios.get(`https://localhost:44339/api/Budget/register`);
+      console.log("Projects:", response.data); 
       setProjects(response.data);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -46,7 +42,7 @@ export default function ProjectCreationForm() {
 
   const fetchBudgetData = async (projectid) => {
     try {
-      const response = await axios.get(`https://localhost:44339/api/Budget/Projects/${projectid}`);
+      const response = await axios.get(`https://localhost:44339/api/Budget/register/Projects/${projectid}`);
       console.log("Budget data:", response.data);
       setBudgetData(response.data);
     } catch (error) {
@@ -61,6 +57,17 @@ export default function ProjectCreationForm() {
   const gotoEditpage = (projectid)=>{
     navigate('/budgetformedit', { state:  {projectId  : selectedProject  }});
   }
+
+  const downloadPDF=()=>{
+    const doc=new jsPDF();
+    doc.autoTable({
+      html:'#budgetTable',
+      theme:'grid',
+      styles: {fontSize:10},
+      headStyles: { fillColor: [22, 160, 133] }
+    })
+    doc.save('budget.pdf');
+  };
 
   return (
     <div>
@@ -85,77 +92,35 @@ export default function ProjectCreationForm() {
       </Form>
      
       <div>
-      {Object.keys(budgetData).length > 0 && (
-      <div className="budgetpdf">  {/*Budget Pdf form*/ }
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="left" colSpan={3}>
-                  {budgetData.description}
-                </TableCell>
-                <TableCell align="left">Date: {budgetData.date}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Expense</TableCell>
-                <TableCell colSpan={4}>Amount</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {budgetData.map((item,index) => (
-                <><TableRow key={index}>
-                  <TableCell>Selection Process Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.selectionprocessCost}</TableCell>
-                </TableRow><TableRow key={index}>
-                    <TableCell>License Cost</TableCell>
-                    <TableCell align="left" colSpan={4}>{item.licenseCost}</TableCell>
-                  </TableRow>
-                  <TableRow key={index}>
-                  <TableCell>Server Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.serversCost}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Hardware Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.hardwareCost}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Connection Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.connectionCost}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Developer Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.developerCost}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Other Expenses</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.otherExpenses}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Total Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.totalCost}</TableCell>
-                </TableRow>
-                </>
-                
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    )}
+      {budgetData.length>0 &&(
+        <div className="budgetPDF">
+          <Budgettable budgetData={budgetData} />
+        </div>
+      )}
     <div className="btn12">
     <Row>
         
         <Form.Group className="print-btn" controlId="formGridAddress1">
-          <Button variant="primary" type="submit" id="Print" >
+          <Button variant="primary" type="submit" id="Print" onClick={downloadPDF} >
             Print
           </Button>
         </Form.Group>
+        <div className="edit_or_create">
+          {budgetData.length >0 ?(
+                   <Form.Group className="submit-btn" controlId="formGridAddress1">
+                     <Budgetedit projectId={selectedProject} budgetData={budgetData}/>
+                   </Form.Group>
+          ):
+          (
+                   <Form.Group className="submit-btn" controlId="formGridAddress1">
+                   <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
+                     Create
+                   </Button>
+                   </Form.Group>
+          )}
+ 
+        </div>
 
-        <Form.Group className="submit-btn" controlId="formGridAddress1">
-        <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
-          Edit
-        </Button>
-        </Form.Group>
         </Row>
         
            

@@ -1,41 +1,34 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./ProjectListCSS.css";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 
-export default function ProjectListComponent() {
+export default function PMprojectListCom() {
+
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
 
+  const ProjectManagerId = 2;
+
   const navigate = useNavigate();
 
-  //const url = "https://localhost:44319/api/ViewProjectList";    //old
-
-  const url = "https://localhost:44339/api/ViewProjectList";    //new
+  const url = `https://localhost:44339/api/PmProjectList?id=${ProjectManagerId}`;    //new
 
   useEffect(() => {
     axios
       .get(url)
       .then((result) => setData(result.data))
       .catch((e) => console.log(e));
-
+      console.log(data);
       setLoad(false);
   }, []);
 
- 
   var selectedId;
 
   const HandleProjectSelection = (id) => {
     selectedId = id;
   //  alert(selectedId);
-    
-    
-     
-    navigate('/AdminProjectViewPage',{state:{selectedId:selectedId}});
-    
-   
-    
+    navigate('/PMprojectDetailsPage',{state:{selectedId:selectedId}});    
   };
 
   if(load){
@@ -45,11 +38,10 @@ export default function ProjectListComponent() {
       </>
     );
   }
-  
 
   return (
     <div>
-      <table className="ProjectList">
+        <table className="ProjectList">
         <thead>
           <th>Project Id</th>
           <th>Project Name</th>
@@ -75,6 +67,7 @@ export default function ProjectListComponent() {
         </tbody>
         
       </table>
+      
     </div>
-  );
+  )
 }

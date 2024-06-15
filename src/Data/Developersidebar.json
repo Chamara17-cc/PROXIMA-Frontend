@@ -21,11 +21,24 @@
         "title": "Progress",
         "icon": "bi bi-person-lines-fill",
         "path" :"/DeveloperProgress"
+    
     },
-   
     {
-        "title": "TaskRecord",
+        "title": "Payments",
         "icon": "bi bi-person-lines-fill",
-        "path" :"/taskRecord"
+        "path" :"/DeveloperPayment"
+    },
+    {
+        "title": "TimeReport",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/ProjectReport"
+    
+    },
+    {
+        "title": "ModuleReport",
+        "icon": "bi bi-person-lines-fill",
+        "path" :"/ProjectModuleReport"
+    
     }
+
 ]

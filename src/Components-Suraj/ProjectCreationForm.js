@@ -187,11 +187,15 @@ export default function ProjectCreationForm() {
     return Math.floor(differenceInMs / oneDay);
   }
 
-  var time = getDaysBetweenDates(sdate, ddate);
+  
+
+  useEffect(() => {
+    var time = getDaysBetweenDates(sdate, ddate);
+    setTimeDuration(time);
+  },[sdate, ddate])
 
   const handleSubmit = (event) => {
-    setTimeDuration(time);
-    console.log(time);
+    
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -253,7 +257,7 @@ export default function ProjectCreationForm() {
         {/* ------Project Initalization part----- has a validation */}
 
         <div className="Section">
-          <h3 className="SectionHeading">Project Initialization</h3>
+          <h3 className="SectionHeading">Project Initialization</h3> 
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label htmlFor="projectName">Project Name:</Form.Label>
@@ -264,6 +268,7 @@ export default function ProjectCreationForm() {
                   type="text"
                   placeholder="ProjectName"
                   id="projectName"
+                  style={{color:"black"}}
                   onChange={(e) => handlePNameChange(e.target.value)}
                 />
 
@@ -303,11 +308,7 @@ export default function ProjectCreationForm() {
             />
           </Form.Group>
 
-          {/*----------------------File upload part----------------------- */}
-          <Form.Group as={Col} className="mb-3">
-            <Form.Label>Upload:</Form.Label>
-            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-          </Form.Group>
+         
         </div>
 
         {/* -----------Develpment team info---------- has a validation */}
@@ -419,15 +420,16 @@ export default function ProjectCreationForm() {
 
         <div className="Section">
           <h2 className="SectionHeading">Project Planing</h2>
-          <Row className="mb-3">
+          <Row className="mb-3" style={{width:"65%"}}>
             <Form.Group as={Col}>
-              <Form.Label>Start Date</Form.Label>
+              <Form.Label>Start Date:</Form.Label>
               <InputGroup hasValidation>
                 <TextField
                   aria-required
                   style={{
                     backgroundColor: "whitesmoke",
                     borderRadius: "10px",
+                    width:"300px"
                   }}
                   margin="dense"
                   id="last_updated"
@@ -444,10 +446,10 @@ export default function ProjectCreationForm() {
             </Form.Group>
 
             <Form.Group as={Col}>
-              <Form.Label>Due Date</Form.Label>
+              <Form.Label>Due Date:</Form.Label>
 
               <TextField
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px" }}
+                style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width:"300px"}}
                 margin="dense"
                 id="last_updated"
                 type="date"
@@ -487,11 +489,7 @@ export default function ProjectCreationForm() {
             />
           </Form.Group>
 
-          {/*----------------------File upload part----------------------- */}
-          <Form.Group as={Col} className="mb-3">
-            <Form.Label>Upload</Form.Label>
-            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-          </Form.Group>
+          
         </div>
 
         <div className="Section">
@@ -504,46 +502,12 @@ export default function ProjectCreationForm() {
               onChange={(e) => handleBudgetChange(e.target.value)}
             />
           </Form.Group>
-          
-
-          {/*----------------------File upload part----------------------- */}
-          <Form.Group as={Col} className="mb-3">
-            <Form.Label>Upload</Form.Label>
-            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-          </Form.Group>
+    
         </div>
 
-        {/* -------------------------Legal and complaince------------ */}
-        <div className="Section">
-          <Row className="mb-3">
-            <h3 className="SectionHeading">Legal & Complaince</h3>
-            {/*----------------------File upload part----------------------- */}
-            <Form.Group as={Col} controlId="formFileSm" className="mb-3">
-              <Form.Label>Client Sign-off</Form.Label>
-              <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-            </Form.Group>
+       
 
-            {/*----------------------File upload part----------------------- */}
-            <Form.Group as={Col} controlId="formFileSm" className="mb-3">
-              <Form.Label>Contractual Agreement</Form.Label>
-              <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-            </Form.Group>
-          </Row>
-        </div>
-
-        {/* -------------------------Resource upload------------ */}
-        <div className="Section">
-          {/*----------------------File upload part----------------------- */}
-          <Form.Group controlId="formFileMultiple" className="mb-3">
-            <Form.Label>Other Resources</Form.Label>
-            <Form.Control
-              type="file"
-              multiple
-              style={{ width: "250px" }}
-            />{" "}
-            {/* Multiple file upload */}
-          </Form.Group>
-        </div>
+        
 
         <Button type="submit">Submit form</Button>
       </Form>
