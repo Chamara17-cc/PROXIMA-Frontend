@@ -2,6 +2,7 @@ import './ProjectDescriptionStyle.css'
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { format } from 'date-fns';
 
 export default function ProjectDescription() {
 
@@ -12,19 +13,7 @@ export default function ProjectDescription() {
     const selectedId = location.state.selectedId;
     const navigate = useNavigate();
 
-  
-  // useEffect(() => {
-  //   fetch('https://localhost:7044/api/DeveloperProject/ProjectDescription/${selectedId}') 
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       setProjectDetails(data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch(error => {
-  //       setError(error);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
+ 
 
   console.log(selectedId);
 
@@ -54,29 +43,37 @@ useEffect(() => {
     return <div>Error fetching project details: {error.message}</div>;
   }
 
-  return ( projectDetails && (
+  return (
+<div>
+    { projectDetails.map((item) => (
+
+
     <div className='ProjectDescription'>
-      <h2>{projectDetails.projectName}</h2>
+      <h2>{item.projectName}</h2>
       <h5>Basic Information:</h5>
       <div className='Projectdetails'>
-      <p>Project Name: {projectDetails.projectName}</p>
-      <p>Project Id: {projectDetails.projectId}</p>
-      <p>Description: {projectDetails.projectDescription}</p>
-      <p>Objectives: {projectDetails.projectObjectives}</p>
+      <p>Project Name: {item.projectName}</p>
+      <p>Project Id: {item.projectId}</p>
+      <p>Description: {item.projectDescription}</p>
+      <p>Objectives: {item.objectives}</p>
       </div>
       <h5>Project Manager Information:</h5>
       <div className='Projectdetails'>
-      <p>Manager Name: {projectDetails.projectManagerName}</p>
-      <p>Manager Id: {projectDetails.projectManagerId}</p>
+      <p>Manager Name: {item.projectManagerName}</p>
+      <p>Manager Id: {item.projectManagerId}</p>
       </div>
       <h5>Project Planning:</h5>
       <div className='Projectdetails'>
-      <p>Start Date: {projectDetails.projectStartDate}</p>
-      <p>Time Estimation: {projectDetails.projectDuration}</p>
-      <p>Due Date: {projectDetails.projectDueDate}</p>
+      <p>Start Date: {item.p_StartDate ? format(new Date(item.p_StartDate ), 'yyyy-MM-dd') : '-'}</p>
+      <p>Time Estimation: {item.duration}</p>
+      <p>Due Date: {item.p_DueDate ? format(new Date(item.p_DueDate ), 'yyyy-MM-dd') : '-'}</p>
       </div>
     </div>
-  )
+  
+  ))}
+
+</div>
+
 
 );
   

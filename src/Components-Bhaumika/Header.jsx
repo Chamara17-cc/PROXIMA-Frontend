@@ -9,7 +9,7 @@ function Header() {
   <dev><h1>Dashboard</h1></dev>
             
             <div className='header-right'>
-            <a className='active' href='#'>Summary</a>
+            
             </div>
             <div className="developerpayment">
                <DeveloperPayment/>  

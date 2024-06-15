@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './TaskStyle.css';
+import { format } from 'date-fns';
 
 export default function Task() {
 
@@ -17,27 +18,35 @@ export default function Task() {
   console.log("Taskid = " + selectedTaskId);
 
   const startTimer = async () => {
-    const currentDateTime = new Date().toISOString();
-    setStartTime(currentDateTime);
-    console.log('Start Time:', currentDateTime);
+    if (!startTime) { 
+      const currentDateTime = new Date().toISOString();
+      setStartTime(currentDateTime);
+      console.log('Start Time:', currentDateTime);
 
-    const editDataNew = { TaskStartTime: currentDateTime };
+      const editDataNew = { TaskStartTime: currentDateTime };
 
-    try {
-      const urlTaskStatusStart = `https://localhost:7008/api/DeveloperTime/tasksStatusStart/${selectedTaskId}`;
-      const responseTaskStatusStart = await axios.put(urlTaskStatusStart, editDataNew);
-      console.log('Start time submitted:', editDataNew);
-    } catch (error) {
-      console.error('There was an error submitting the start time!', error);
-      alert('An error occurred while submitting start time. Please check the console for details.');
+      try {
+        const urlTaskStatusStart = `https://localhost:7008/api/DeveloperTime/tasksStatusStart/${selectedTaskId}`;
+        const responseTaskStatusStart = await axios.put(urlTaskStatusStart, editDataNew);
+        console.log('Start time submitted:', editDataNew);
+      } catch (error) {
+        console.error('There was an error submitting the start time!', error);
+        alert('An error occurred while submitting start time. Please check the console for details.');
+      }
+    } else {
+      alert("Task already started. Please stop the timer before starting again.");
     }
   };
 
 
   const stopTimer = () => {
-    const currentDateTime = new Date().toISOString();
-    setStopTime(currentDateTime);
-    console.log('Stop Time:', currentDateTime);
+    if (startTime) { // Only allow stopping if started
+      const currentDateTime = new Date().toISOString();
+      setStopTime(currentDateTime);
+      console.log('Stop Time:', currentDateTime);
+    } else {
+      alert("Task not yet started. Please start the timer before stopping.");
+    }
   };
 
   const submit = async () => {
@@ -88,9 +97,10 @@ export default function Task() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://localhost:7008/api/DeveloperTask/${selectedTaskId}`);
+        const response = await fetch(`https://localhost:7008/api/DeveloperTask/TaskDescription/${selectedTaskId}`);
         const data = await response.json();
         setTaskData(data);
+        console.log(data);
         setIsLoading(false);
 
         setStartTime(null);
@@ -112,20 +122,26 @@ export default function Task() {
     return <div>Error fetching task details: {error.message}</div>;
   }
 
-  const dueDateISO = new Date(taskData.taskDueDate).toISOString().split('T')[0];
+
 
   return (
+    <div>
+    { taskData.map((item) => (
     <div className='Task'>
+      
       <div className='Description'>
-        <h3>{taskData.taskName}</h3>
+        <h3>{item.taskName}</h3>
       </div>
       <div className='DueDate'>
-      <h4>Due Date: {dueDateISO}</h4>
+      <h4>Due Date: {item.dueDate ? format(new Date(item.dueDate), 'yyyy-MM-dd') : '-'}</h4>
       </div>
       <button onClick={startTimer}>Start</button>
       <button onClick={stopTimer}>Stop</button>
       <button onClick={submit}>Submit</button>
       <button onClick={completed}>Task Completed</button>
+    
+    </div>
+  ))}
     </div>
   );
 }

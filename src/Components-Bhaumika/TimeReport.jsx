@@ -8,7 +8,7 @@ import './Report.css'
 
 function TimeReport() {
 
-   
+
     const [remain,setRemain] = useState(0);
     const [complete,setComplete] = useState(0);
    
@@ -19,24 +19,28 @@ function TimeReport() {
     
       const fetchDigramData = async (projectId) => {
         try {
-          const response = await axios.get(`https://localhost:7008/api/TimeProgressReport/ProjectProgressReport/${projectId}`);
-         const newData = response.data;
-          console.log(newData);
+          const responseremain = await axios.get(`https://localhost:7008/api/TimeProgressReport/ProjectProgressReportRemain/${projectId}`);
+          setRemain(responseremain.data);
+          console.log(remain);
 
+          const responsecomplete = await axios.get(`https://localhost:7008/api/TimeProgressReport/ProjectProgressReportComplete/${projectId}`);
+          setComplete(responsecomplete.data);
+          console.log(complete);
+          
 
-          console.log(newData.totalProjectCompletedHours);
-          console.log(newData.totalProjectRemainingHours);
-
-          setRemain(newData.totalProjectRemainingHours);
-          setComplete(newData.totalProjectCompletingHours);
 
         } catch (error) {
           console.error('Error fetching diagram data:', error);
         }
       };
+
+      console.log(remain);
+      console.log(complete);
+
+
       const data = [
-        { label: 'Project Remaining Time', value: 3, color: '#00E5FF' },
-        { label: 'Project Completed Time', value: 340, color: '#1A237E' },
+        { label: 'Project Remaining Time', value: remain, color: '#00E5FF' },
+        { label: 'Project Completed Time', value: complete, color: '#1A237E' },
       ];
     
       const TOTAL = data.map((item) => item.value).reduce((a, b) => a + b, 0);

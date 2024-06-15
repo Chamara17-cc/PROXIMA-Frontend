@@ -15,6 +15,7 @@ import InvoiceEdit from './InvoiceEdit';
 function Invoice(props) {
     const {projectId}=props;
     const[transacdata,setTransacdata]=useState([]);
+    
     useEffect(()=>{
       if(projectId){
         fetchTransaction(projectId);

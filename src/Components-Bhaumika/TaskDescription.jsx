@@ -2,6 +2,7 @@ import './TaskDescription.css'
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { format } from 'date-fns';
 
 
 export default function TaskDescription() {
@@ -10,7 +11,6 @@ export default function TaskDescription() {
     const [taskDetails, setTaskDetails] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
     const location = useLocation();
     const selectedId = location.state.selectedId;
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function TaskDescription() {
 
   const getData = async () => {
     try {
-      const response = await axios.get(`https://localhost:7008/api/DeveloperTask/${selectedId}`);
+      const response = await axios.get(`https://localhost:7008/api/DeveloperTask/TaskDescription/${selectedId}`);
       setTaskDetails(response.data);
       setIsLoading(false);
       console.log(response.data);
@@ -45,31 +45,39 @@ useEffect(() => {
     return <div>Error fetching Task details: {error.message}</div>;
   }
 
-  return ( taskDetails && (
+  return (
+
+    <div>
+    { taskDetails.map((item) => (
+
     <div className='TaskDescription'>
-      <h2>{taskDetails.taskName}</h2>
-      <h5>Task Details:</h5>
+      <h2>{item.taskName}</h2>
+      <h5>Project Details:</h5>
       <div className='TaskProjectdetails'>
-      <p>Project Name: {taskDetails.projectName}</p>
-      <p>Project Id: {taskDetails.projectId}</p>
+      <p>Project Name: {item.projectName}</p>
+      <p>Project Id: {item.projectId}</p>
       </div>
+      <h5>Task Details:</h5>
       <div className='Taskdetails'>
-      <p>Task Name: {taskDetails.taskName}</p>
-      <p>Task Id: {taskDetails.taskId}</p>
-      <p>Task Type: {taskDetails.taskType}</p>
-      <p>Description: {taskDetails.taskDescription}</p>
-      <p>Priority: {taskDetails.taskPriority}</p>
-      <p>Technology: {taskDetails.taskTechnologies}</p>
-      <p>Comments: {taskDetails.taskComments}</p>
+      <p>Task Name: {item.taskName}</p>
+      <p>Task Id: {item.taskId}</p>
+      <p>Task Status: {item.taskStatus}</p>
+      <p>Description: {item.taskDescription}</p>
+      <p>Priority: {item.priority}</p>
+      <p>Technology: {item.technology}</p>
+      <p>Dependancy: {item.dependancy}</p>
       </div>
       <h5>Time Information:</h5>
       <div className='Taskdetails'>
-      <p>Start Date: {taskDetails.taskStartDate}</p>
-      <p>Time Estimation: {taskDetails.taskDuration}</p>
-      <p>Due Date: {taskDetails.taskDueDate}</p>
+      <p>Start Date: {item.createdDate? format(new Date(item.createdDate), 'yyyy-MM-dd') : '-'}</p>
+      <p>Time Estimation: {item.timeDuration} </p>
+      <p>Due Date: {item.dueDate ? format(new Date(item.dueDate ), 'yyyy-MM-dd') : '-'}</p>
       </div>
     </div>
-  )
+  
+  ))}
+
+</div>
 
 );
 }
