@@ -55,6 +55,8 @@ export default function UserCreationForm() {
         method: 'POST',
         data: data
       });
+
+      console.log("Registration result:", result);
       clear();
       alert(result.data.message);
       navigate('/userCreationSuccess');
