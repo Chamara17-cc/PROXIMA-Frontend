@@ -4,7 +4,7 @@ import './styles/AdminDashboardStyles.css';
 import { BarChart } from '@mui/x-charts/BarChart';
 import axios from 'axios';
 
-function AdminDashboardComponent() {
+function AdminDashboardComponent({ showRateUpdate }) {
   const [monthlyincome,setIncome] = useState('');
   const [monthlyexpense,setExpence] = useState('');
   const [totaladmins,setTotalAdmins]=useState(0);
@@ -33,9 +33,11 @@ function AdminDashboardComponent() {
   return (
     <div>
     <div className='column1'>Hi, Welcome Back 
-      <div className='Developerrate'>
-      <RateUpdatePage/>
-      </div>
+    {showRateUpdate && (
+          <div className='Developerrate'>
+            <RateUpdatePage />
+          </div>
+        )}
     </div>
     <div className="column2">
       <div className="box">Total Admins<br/>{totaladmins}</div>

@@ -12,7 +12,7 @@ export default function PieCharts(props) {
   const projectId= props.projectid;
 
   useEffect(() => {
-    fetchDigramData(projectId); // Assuming project ID is 11, change as necessary
+    fetchDigramData(projectId); 
   }, [projectId]);
 
   const fetchDigramData = async (projectId) => {
