@@ -51,16 +51,15 @@
         "childrens": [
             {
                 "title": "New budget",
-                "path": "/budget"
+                "path": "/budget",
+                "roles": ["1"]
             },
             {
                 "title": "Invoice",
-                "path": "/invoice"   
-            },
-            {
-                "title": "Hourly rate",
-                "path": "/rate"   
+                "path": "/transaction",
+                "roles": ["1"]  
             }
+     
         ]
     },
     {
