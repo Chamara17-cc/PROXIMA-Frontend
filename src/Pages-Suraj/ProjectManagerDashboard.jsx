@@ -1,6 +1,7 @@
 import React from 'react'
 import Topbar from '../Compornents/Topbar'
 import ProjectManagerSidebar from '../Components-Suraj/ProjectManagerSidebar'
+import AdminDashboardComponent from '../Components-Thusharaga/AdminDashboardComponent'
 
 export default function ProjectManagerDashboard() {
   return (
@@ -10,13 +11,9 @@ export default function ProjectManagerDashboard() {
         <Topbar />
         <ProjectManagerSidebar />
         <div className="Content">
-            
-            
             <div>
-              {/* content */}
-             
+            <AdminDashboardComponent showRateUpdate={false} /> {/* Hide the RateUpdatePage */}
             </div>
-            
         </div>
         
       </div>

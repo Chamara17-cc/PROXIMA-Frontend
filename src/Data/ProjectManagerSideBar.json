@@ -8,6 +8,14 @@
     {
         "title": "Project List",
         "icon": "bi bi-stack",
-        "path" :"/PMprojectListPage"
-    }
+        "path" :"/PMprojectListPage",
+        "roles":["1","2"]
+    },
+
+       {
+           "title": "User Accounts",
+           "path": "/userList",
+           "icon": "bi-person-fill",
+           "roles": ["1", "2"]
+       }
 ]
