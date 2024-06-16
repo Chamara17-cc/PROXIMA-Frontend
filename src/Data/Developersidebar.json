@@ -24,11 +24,6 @@
     
     },
     {
-        "title": "Payments",
-        "icon": "bi bi-person-lines-fill",
-        "path" :"/DeveloperPayment"
-    },
-    {
         "title": "TimeReport",
         "icon": "bi bi-person-lines-fill",
         "path" :"/ProjectReport"
