@@ -36,25 +36,25 @@ const LoginForm = () => {
       const decodedToken = jwtDecode(accessToken);
       console.log('Decoded Token:', decodedToken); // Log the decoded token for debugging
 
-      const userCategory = decodedToken['UserCategory'];
-      console.log('UserCategory:', userCategory); 
+      const userCategoryId = decodedToken['UserCategoryId'];
+      console.log('UserCategoryId:', userCategoryId); 
 
       // Call the login function from the context
       login({
         userId: decodedToken['UserID'],
         userName: decodedToken['UserName'],
-        userCategoryId: userCategory,
+        userCategoryId: userCategoryId,
         accessToken: accessToken,
         refreshToken: refreshToken
       });
 
       // Redirect based on user's role
-      switch (userCategory) {
+      switch (userCategoryId) {
         case '1':
           navigate('/adminDashboard');
           break;
         case '2':
-          navigate('/managerDashboard');
+          navigate('/ProjectManagerDashboard');
           break;
         case '3':
           navigate('/developerDashboard');

@@ -48,6 +48,7 @@
     {
         "title": "Finance",
         "icon": "bi bi-bank2",
+        "roles": ["1"],
         "childrens": [
             {
                 "title": "New budget",
@@ -66,6 +67,7 @@
     {
         "title": "Client",
         "icon": "bi bi-person-lines-fill",
+        "roles": ["1"],
         "childrens": [
             {
                 "title": "Client list",
