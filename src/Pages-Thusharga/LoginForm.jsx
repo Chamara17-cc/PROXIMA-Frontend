@@ -27,7 +27,8 @@ const LoginForm = () => {
     };
 
     try {
-      const response = await axios.post('https://localhost:44339/api/Auth/login', data);
+      const response = await axios.post('https://localhost:7008/api/Auth/login', data);
+      //const response = await axios.post('https://localhost:44339/api/Auth/login', data);
       const { accessToken, refreshToken } = response.data; // Assuming your backend returns these fields
       localStorage.setItem('accessToken', accessToken); // Store the access token securely
       localStorage.setItem('refreshToken', refreshToken); // Store the refresh token securely
