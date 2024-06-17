@@ -29,7 +29,6 @@ import ProjectModuleReport from "./Pages-Baumika/ProjectModuleReport";
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
 
 import UserCreation from "./Pages-Thusharga/UserCreation";
-import UserCreationSuccess from "./Pages-Thusharga/UserCreationSuccess";
 import ViewUserList from "./Pages-Thusharga/ViewUserList";
 import LoginForm from "./Pages-Thusharga/LoginForm";
 import ResetPassword from "./Pages-Thusharga/ResetPassword";
@@ -56,7 +55,6 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginForm/>}></Route>
-        <Route path="/usercreationsuccess" element={<UserCreationSuccess/>}></Route>
         <Route path="/resetpassword" element={<ResetPassword/>}></Route>
         <Route path="/forgotPassword" element={<ForgotPassword />} />
 
