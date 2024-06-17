@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './TaskStyle.css';
 import { format } from 'date-fns';
+import Button from 'react-bootstrap/Button';
 
 export default function Task() {
 
@@ -22,6 +23,7 @@ export default function Task() {
       const currentDateTime = new Date().toISOString();
       setStartTime(currentDateTime);
       console.log('Start Time:', currentDateTime);
+      alert('Task marked as started!');
 
       const editDataNew = { TaskStartTime: currentDateTime };
 
@@ -44,6 +46,7 @@ export default function Task() {
       const currentDateTime = new Date().toISOString();
       setStopTime(currentDateTime);
       console.log('Stop Time:', currentDateTime);
+      alert('Task marked as stoped!');
     } else {
       alert("Task not yet started. Please start the timer before stopping.");
     }
@@ -67,7 +70,7 @@ export default function Task() {
       const responseProject = await axios.put(newProject, editData);
 
       console.log(editData);
-      alert('Data edited successfully!');
+      alert('Data submitted successfully!');
       window.location.reload();
     } catch (error) {
       console.error('There was an error editing the data!', error);
@@ -130,16 +133,35 @@ export default function Task() {
     <div className='Task'>
       
       <div className='Description'>
-        <h3>{item.taskName}</h3>
+        <h3>Task Name : {item.taskName}</h3>
       </div>
       <div className='DueDate'>
       <h4>Due Date: {item.dueDate ? format(new Date(item.dueDate), 'yyyy-MM-dd') : '-'}</h4>
       </div>
-      <button onClick={startTimer}>Start</button>
-      <button onClick={stopTimer}>Stop</button>
-      <button onClick={submit}>Submit</button>
-      <button onClick={completed}>Task Completed</button>
-    
+      <div className='ButtonBox'>
+
+      <Button onClick={startTimer} variant="secondary" size="lg" >
+      Start
+        </Button>
+    <br/>
+    <br/>
+
+    <Button onClick={stopTimer} variant="secondary" size="lg" >
+    Stop
+        </Button>
+    <br/>
+    <br/>
+
+    <Button onClick={submit} variant="secondary" size="lg">
+    Submit
+        </Button>
+    <br/>
+    <br/>
+    <Button onClick={completed} variant="secondary" size="lg" >
+    Task Completed
+        </Button>
+    <br/>
+      </div>
     </div>
   ))}
     </div>
