@@ -20,6 +20,7 @@
     "bootstrap": "^5.3.2",
     "chart.js": "^4.4.2",
     "dayjs": "^1.11.10",
+    "emailjs-com": "^3.2.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "jwt-decode": "^4.0.0",
