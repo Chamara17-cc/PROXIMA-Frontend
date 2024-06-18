@@ -115,7 +115,7 @@ export default function ProjectCreationForm() {
           <Budgettable budgetData={budgetData} />
         </div>
       )}
-    <div className="btn12">
+    <div className="btns">
           {budgetData.length >0 ?(
                 <Row>
                      <Form.Group className="print-btn" controlId="formGridAddress1">
