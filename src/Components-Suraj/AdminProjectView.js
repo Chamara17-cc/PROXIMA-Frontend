@@ -346,6 +346,10 @@ export default function AdminProjectView() {
     GetClientInfo();
   },[projectData, clientInfo, basicInfo, timeLineInfo, budgetInfo]);
 
+  const gotofinancereport=()=>{
+    navigate ('/financedigram',{state:{projectId:selectedId}})
+  }
+
   return (
     <>
     <div style={{display: 'flex', float:'right', marginTop:'-48px'}}>
@@ -375,6 +379,10 @@ export default function AdminProjectView() {
               <p className="ViewItems">Objectives : {pro.objectives}</p>
             </div>
           ))}
+          <div>
+            <Button onClick={gotofinancereport}>Finance</Button> &nbsp;&nbsp;
+            <Button>Time</Button>
+          </div>
           
 
           

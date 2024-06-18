@@ -15,6 +15,7 @@ import InvoiceEdit from './InvoiceEdit';
 function Invoice(props) {
     const {projectId}=props;
     const[transacdata,setTransacdata]=useState([]);
+    
     useEffect(()=>{
       if(projectId){
         fetchTransaction(projectId);
@@ -23,7 +24,7 @@ function Invoice(props) {
 
    const fetchTransaction= async (projectId)=>{
     try{
-        const response= await axios.get(`https://localhost:44339/api/Transaction/Projects/${projectId}`)
+        const response= await axios.get(`https://localhost:44339/api/Transaction/Projects/${projectId}/register`)
         console.log("Transacdara",JSON.stringify(response.data))
         setTransacdata(response.data)
        
@@ -34,7 +35,7 @@ function Invoice(props) {
 const deletetransac =async (transacId)=>{
   try{
     if(window.confirm("Are you sure you need to delete this item"))
-    await axios.delete(`https://localhost:44339/api/Transaction/Transaction/${transacId}/${projectId}`);
+    await axios.delete(`https://localhost:44339/api/Transaction/Transaction/${transacId}/${projectId}/register`);
     setTransacdata(transacdata.filter(item => item.transacId !== transacId));
     alert("Deleted Successfully")
   }catch(error){
@@ -47,11 +48,11 @@ const deletetransac =async (transacId)=>{
         
       <div className="transacform"> 
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+          <Table sx={{ minWidth: 700 }} aria-label="spanning table" id="invoicetable">
             <TableHead>
               <TableRow>
                 <TableCell align="left" colSpan={3}>
-                <TableCell align="left">Project: {projectId}</TableCell>
+                <TableCell align="left">Invoice Report</TableCell>
                 </TableCell>
               </TableRow>
               <TableRow>

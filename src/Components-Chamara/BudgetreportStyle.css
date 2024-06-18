@@ -20,15 +20,14 @@
     height: 30px;
 }
 .print-btn{
-    position:absolute;
-    margin-left: 10%;
-    margin-top: 5px;
+ /* position:absolute;
+ margin-left: 10%; */
    
 }
 .submit-btn{
     position: relative;
     margin-left: 80%;
-    margin-top: 5px;
+    margin-top: 0px;
 }
 .Datepicker{
    position: inherit;
@@ -47,4 +46,13 @@
 }
 .budgetpdf{
     margin-top: 50px;
+}
+.btns{
+    justify-content: space-between;
+    margin: 20px;
+}
+.delete-btn{
+
+    color: red;
+    width: 20px;
 }

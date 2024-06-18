@@ -66,7 +66,7 @@ function BudgetFormEdit() {
         Date: date
       };
 
-      const url = `https://localhost:44339/api/Budget/Projects/${projectId}`;
+      const url = `https://localhost:44339/api/Budget/register/Projects/${projectId}`;
 
       try {
         const response = await axios.post(url, budgetdata);
@@ -272,13 +272,11 @@ function BudgetFormEdit() {
 
         <Row>
         <Link to={'/budget'}> 
-        <Form.Group className="print-btn" controlId="formGridAddress1">
-          <Button variant="primary" type="submit" id="Print" >
+        <Form.Group className="reportpage" controlId="formGridAddress1">
+          <Button variant="primary" type="submit" id="report" style={{marginTop:'50px'}}>
             Report
           </Button>
         </Form.Group></Link>
-        
-
         <Form.Group className="submit-btn" controlId="formGridAddress1">
         <Button variant="primary" type="button" id="usubmit" onClick={handleSubmit}>
           Submit

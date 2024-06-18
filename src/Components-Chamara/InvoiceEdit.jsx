@@ -44,7 +44,7 @@ export default function InvoiceEdit(props) {
     };
 
     console.log(editdata)
-    const url = `https://localhost:44339/api/Transaction/Transaction/${transacId}?value=${value}&type=${type}&description=${discription}`;
+    const url = `https://localhost:44339/api/Transaction/Transaction/${transacId}/register?value=${value}&type=${type}&description=${discription}`;
     axios.put(url, editdata)
       .then((result) => {
         alert("Data edited");
@@ -53,17 +53,14 @@ export default function InvoiceEdit(props) {
       })
       .catch((error) => {
         if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
+
           console.error("Request made, but server responded with error:");
           console.error("Status Code:", error.response.status);
           console.error("Response Data:", error.response.data);
           console.error("Response Headers:", error.response.headers);
         } else if (error.request) {
-          // The request was made but no response was received
           console.error("Request made, but no response received:", error.request);
         } else {
-          // Something happened in setting up the request that triggered an Error
           console.error("Error setting up the request:", error.message);
         }
         alert("An error occurred while processing the request. Please check the console for details.");

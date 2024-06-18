@@ -13,7 +13,7 @@ function AdminDashboard() {
      
       <div className="Content">
        
-        <AdminDashboardComponent/>
+        <AdminDashboardComponent showRateUpdate={true}/>
      
       </div>
       
