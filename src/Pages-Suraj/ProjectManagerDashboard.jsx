@@ -12,7 +12,12 @@ export default function ProjectManagerDashboard() {
         <ProjectManagerSidebar />
         <div className="Content">
             <div>
+
+             {/* content */}
+             
+
             <AdminDashboardComponent showRateUpdate={false} /> {/* Hide the RateUpdatePage */}
+
             </div>
         </div>
         
