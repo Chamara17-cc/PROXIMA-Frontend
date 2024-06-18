@@ -265,6 +265,8 @@ export default function AdminProjectView() {
       return;
     }
 
+    console.log(clientInfo);
+
     const formData = new FormData();
     formData.append("file", clientInfo);
 
@@ -348,7 +350,7 @@ export default function AdminProjectView() {
     <>
     <div style={{display: 'flex', float:'right', marginTop:'-48px'}}>
             <Button>Finance Info</Button> &nbsp;&nbsp;
-            <Button>Time Progress</Button>
+            <Button>Time Progress</Button> &nbsp;&nbsp;
             <Button>Module Progress</Button>
           </div>
           
@@ -412,7 +414,7 @@ export default function AdminProjectView() {
                         Assign Task
                       </Button>
                       &nbsp; &nbsp;
-                      <Button style={{marginRight:"-100px"}} onClick={() => HandleTaskListButton(dev.userId)}>
+                      <Button style={{marginRight:"-60px"}} onClick={() => HandleTaskListButton(dev.userId)}>
                         Task List
                       </Button>
                     </td>
