@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import SearchBar from "../Compornents/Searchbar.jsx"; // Import the SearchBar component
-import apiRequest from '../Auth/ApiService'; // Import the apiRequest function
+import SearchBar from "../Compornents/Searchbar.jsx"; // Ensure the import path is correct
+import apiRequest from '../Auth/ApiService'; // Ensure the import path is correct
 
 export default function UserListComponent() {
   const [data, setData] = useState([]);
@@ -36,7 +36,7 @@ export default function UserListComponent() {
       fetchData(); // If search term is empty, fetch all data
     } else {
       try {
-        const result = await apiRequest(`https://localhost:44339/api/User/search?id=${searchTerm}`);
+        const result = await apiRequest(`https://localhost:44339/api/User/search?term=${searchTerm}`);
         setData(result);
       } catch (error) {
         console.error("Error searching data:", error);
