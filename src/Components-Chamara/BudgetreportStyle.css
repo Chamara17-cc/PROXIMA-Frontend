@@ -47,12 +47,8 @@
 .budgetpdf{
     margin-top: 50px;
 }
-.btns{
+.btn-group{
+    width: 200px;
     justify-content: space-between;
-    margin: 20px;
-}
-.delete-btn{
-
-    color: red;
-    width: 20px;
+    left: 700px;
 }

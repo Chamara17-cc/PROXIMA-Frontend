@@ -93,10 +93,10 @@ const Budgetedit =(props) =>{
 
   return (
     <div>
-      <Button onClick={handleClickOpen} style={{backgroundColor:'#3D97ED' , color:'white'}}>Edit</Button>
+      <button type="button" className="btn btn-secondary" onClick={handleClickOpen} style={{width:'80px',margin:'10px', backgroundColor:'shade blue'}}>Edit</button>
       <div className="budgetedit">
         <Dialog open={open} onClose={handleClose} maxWidth='100'>
-          <DialogTitle className='budgetedit'>Edit Budget</DialogTitle>
+          <DialogTitle className='budgetedit'><b>Edit Budget</b></DialogTitle>
           <DialogContent>
           <div class="container">
   <table class="table table-borderless">

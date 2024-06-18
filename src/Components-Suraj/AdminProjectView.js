@@ -353,7 +353,7 @@ export default function AdminProjectView() {
   return (
     <>
     <div style={{display: 'flex', float:'right', marginTop:'-48px'}}>
-            <Button>Finance Info</Button> &nbsp;&nbsp;
+            <Button onClick={gotofinancereport}>Finance Info</Button> &nbsp;&nbsp;
             <Button>Time Progress</Button> &nbsp;&nbsp;
             <Button>Module Progress</Button>
           </div>
@@ -380,7 +380,7 @@ export default function AdminProjectView() {
             </div>
           ))}
           <div>
-            <Button onClick={gotofinancereport}>Finance</Button> &nbsp;&nbsp;
+            <Button >Finance</Button> &nbsp;&nbsp;
             <Button>Time</Button>
           </div>
           

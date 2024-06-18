@@ -118,7 +118,12 @@ export default function ProjectCreationForm() {
     <div className="btns">
           {budgetData.length >0 ?(
                 <Row>
-                     <Form.Group className="print-btn" controlId="formGridAddress1">
+                    <div className="btn-group" role="group" aria-label="Basic example">
+                     <button type="button" className="btn btn-secondary" onClick={downloadPDF} style={{width:'80px',margin:'10px', backgroundColor:'shade blue'}}>Print</button>
+                     <Budgetedit projectId={selectedProject} budgetData={budgetData}/>
+                    <button type="button" className="btn btn-secondary" onClick={()=>deletebudget(selectedProject)}  style={{width:'80px',margin:'10px', backgroundColor:'red'}}>Delete</button>
+                    </div>
+                     {/* <Form.Group className="print-btn" controlId="formGridAddress1">
                      <Button variant="primary" type="submit" id="Print" onClick={downloadPDF} >
                     Print
                    </Button>
@@ -146,7 +151,7 @@ export default function ProjectCreationForm() {
                 >
                   Delete
                 </button>
-   
+    */}
 
                    </Row>
           ):
@@ -160,7 +165,6 @@ export default function ProjectCreationForm() {
             </Row>
 
           )}
- 
         </div>
        </div>
       </div>
