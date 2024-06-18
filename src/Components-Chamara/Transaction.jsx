@@ -8,6 +8,8 @@ import { Button } from "react-bootstrap";
 import "./TransactionStyles.css"
 import TextField from '@mui/material/TextField';
 import Invoice from "./Invoice";
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
 
 function Transaction() {
     const [projects, setProjects] = useState([]);
@@ -67,7 +69,24 @@ function Transaction() {
         }
       }
     };
-    console.log(selectedProject);
+    const downloadPDF = () => {
+      const doc = new jsPDF();
+      doc.autoTable({
+          html: '#invoicetable',
+          theme: 'grid',
+          styles: { fontSize: 10 },
+          headStyles: { fillColor: [22, 160, 133] },
+          columnStyles: {
+              0: { cellWidth: 40 }, // Description
+              1: { cellWidth: 30 }, // Date
+              2: { cellWidth: 20 }, // Value
+              3: { cellWidth: 30 }, // Total Income
+              4: { cellWidth: 30 }, // Total Expense
+          }
+      });
+      doc.save('Invoice.pdf');
+  };
+    
   return (
     <div>
        
@@ -151,6 +170,9 @@ function Transaction() {
 
       <div className="invoicereport">
         <Invoice projectId={selectedProject}/>  {/*import invoice report*/}
+      </div>
+      <div className="print-btn">
+        <Button variant="primary" type="button" id="usubmit" onClick={downloadPDF}>Print</Button>
       </div>
     </div>
   
