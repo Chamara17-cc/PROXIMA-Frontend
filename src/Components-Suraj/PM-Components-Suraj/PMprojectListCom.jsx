@@ -8,7 +8,7 @@ export default function PMprojectListCom() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
 
-  const ProjectManagerId = 2;
+  const ProjectManagerId = 10;
 
   const navigate = useNavigate();
 

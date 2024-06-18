@@ -204,12 +204,12 @@ export default function TaskDetailsCom() {
 
             // ---------------Upload Video --------------------------------
 
-    const [video, setVideo] = useState("");
+    // const [video, setVideo] = useState("");
 
-    const HandleVideoChange = (event) => {
-      setVideo(event.target.files[0]);
-      console.log("Video selected");
-    }
+    // const HandleVideoChange = (event) => {
+    //   setVideo(event.target.files[0]);
+    //   console.log("Video selected");
+    // }
 
   //   const UploadVideo = async () => {
   //     if(!video){
@@ -312,7 +312,6 @@ export default function TaskDetailsCom() {
 
   const download = async (filePath, fileName) => {
     const urlDownload = `https://localhost:44339/api/ProjectFileDownload/DownloadProjectFile?FilePath=${filePath}&FileName=${fileName}`;
-    
     
 
     try {

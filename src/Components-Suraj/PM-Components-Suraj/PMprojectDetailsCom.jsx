@@ -350,15 +350,13 @@ export default function PMprojectDetailsCom() {
         </Tab>
 
         <Tab eventKey="devTeam" title="Team Info">
-          {projectData.map((pro) => (
+        {projectData.map((pro) => (
             <div className="project-detail">
               <h3 className="card-topic">{pro.teamName}</h3>
+              <p className="ViewItems">Project Manager Name : {pro.projectManagerFName} {pro.projectManagerLName}</p>
             </div>
           ))}
           <div className="project-detail">
-            <p className="ViewItems">Project Manager Name: manager01</p>
-
-            <br />
 
             <h3 className="card-topic">Developers</h3>
             <table className="ProjectList">
