@@ -17,7 +17,8 @@ export default function ProjectCreationForm() {
 
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState("");
-  const [budgetData, setBudgetData] = useState([]);
+  const [budgetData, setBudgetData] = useState({});
+  const [budgetid,setBudgetId]=useState([]);
   
   const navigate= useNavigate();
   useEffect(() => {
@@ -45,6 +46,8 @@ export default function ProjectCreationForm() {
       const response = await axios.get(`https://localhost:44339/api/Budget/register/Projects/${projectid}`);
       console.log("Budget data:", response.data);
       setBudgetData(response.data);
+      setBudgetId(response.data.budgetId);
+      console.log("Id",response.data.budgetId)
     } catch (error) {
       console.error("Error fetching budget data:", error);
     }
@@ -52,11 +55,25 @@ export default function ProjectCreationForm() {
 
   const handleProjectChange = (event) => {
     setSelectedProject(event.target.value);
+    console.log("selectedone",selectedProject)
+    console.log(projects.selectedProject)
   };
 
   const gotoEditpage = (projectid)=>{
     navigate('/budgetformedit', { state:  {projectId  : selectedProject  }});
-  }
+  };
+  const deletebudget =async (selectedProject)=>{
+    try{
+      if(window.confirm("Are you sure you need to delete this item")){
+      await axios.delete(`https://localhost:44339/api/Budget?projectid=${selectedProject}`);
+     // setBudgetData(budgetData.filter(item => item.selectedProject !== selectedProject));
+      alert("Deleted Successfully");
+      window.location.reload();
+      }
+    }catch(error){
+      console.error('Error deleting transaction:', error);
+    }
+  };
 
   const downloadPDF=()=>{
     const doc=new jsPDF();
@@ -66,8 +83,9 @@ export default function ProjectCreationForm() {
       styles: {fontSize:10},
       headStyles: { fillColor: [22, 160, 133] }
     })
-    doc.save('budget.pdf');
+    doc.save('budgetreport.pdf');
   };
+  
 
   return (
     <div>
@@ -97,36 +115,55 @@ export default function ProjectCreationForm() {
           <Budgettable budgetData={budgetData} />
         </div>
       )}
-    <div className="btn12">
-    <Row>
-        
-        <Form.Group className="print-btn" controlId="formGridAddress1">
-          <Button variant="primary" type="submit" id="Print" onClick={downloadPDF} >
-            Print
-          </Button>
-        </Form.Group>
-        <div className="edit_or_create">
+    <div className="btns">
           {budgetData.length >0 ?(
+                <Row>
+                     <Form.Group className="print-btn" controlId="formGridAddress1">
+                     <Button variant="primary" type="submit" id="Print" onClick={downloadPDF} >
+                    Print
+                   </Button>
+                  </Form.Group>
+            
                    <Form.Group className="submit-btn" controlId="formGridAddress1">
-                     <Budgetedit projectId={selectedProject} budgetData={budgetData}/>
+                    <div className="edit">
+                        <Budgetedit projectId={selectedProject} budgetData={budgetData}/>
+                    </div>
                    </Form.Group>
+     
+                   <button 
+                  onClick={()=>deletebudget(selectedProject)}
+                  style={{ 
+                    backgroundColor: 'red', 
+                    color: 'white', 
+                    border: 'none', 
+                    padding: '8px 20px', 
+                    cursor: 'pointer', 
+                    borderRadius: '5px',
+                    width:'80px',
+                    marginTop:'-37px'
+                    
+                  }}
+                >
+                  Delete
+                </button>
+   
+
+                   </Row>
           ):
           (
+            <Row>
                    <Form.Group className="submit-btn" controlId="formGridAddress1">
                    <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
                      Create
                    </Button>
                    </Form.Group>
+            </Row>
+
           )}
  
         </div>
-
-        </Row>
-        
-           
-    </div>
+       </div>
       </div>
      
-    </div>
   );
 }

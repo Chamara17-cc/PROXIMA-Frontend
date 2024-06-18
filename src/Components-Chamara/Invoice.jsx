@@ -48,11 +48,11 @@ const deletetransac =async (transacId)=>{
         
       <div className="transacform"> 
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+          <Table sx={{ minWidth: 700 }} aria-label="spanning table" id="invoicetable">
             <TableHead>
               <TableRow>
                 <TableCell align="left" colSpan={3}>
-                <TableCell align="left">Project: {projectId}</TableCell>
+                <TableCell align="left">Invoice Report</TableCell>
                 </TableCell>
               </TableRow>
               <TableRow>
