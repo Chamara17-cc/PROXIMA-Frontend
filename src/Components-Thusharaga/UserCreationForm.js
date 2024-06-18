@@ -19,7 +19,7 @@ export default function UserCreationForm() {
   const [mobileNumber, setContactNumber] = useState('');
   const [email, setEmail] = useState('');
   const [userCategory, setUserCategory] = useState('');
-  const [jobRole, setSelectedJob] = useState([]);
+  const [jobRole, setSelectedJob] = useState('');
   const [formErrors, setFormErrors] = useState({});
   const [formSubmitted, setFormSubmitted] = useState(false); 
   const [randomPassword, setRandomPassword] = useState("");
@@ -29,11 +29,11 @@ export default function UserCreationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormSubmitted(true);
-
+  
     if (!validateForm()) {
       return;
     }
-
+  
     const data = {
       FirstName: firstName,
       LastName: lastName,
@@ -47,67 +47,50 @@ export default function UserCreationForm() {
       UserCategoryType: userCategory,
       JobRoleType: jobRole
     };
-
+  
     try {
-      // Save the user details in the general user table
       const response = await apiRequest('https://localhost:44339/api/User/register', 'POST', data);
-      // const newUserId = userResult.data.userId;
-      
-      // // Determine the specific endpoint based on user category
-      // let categoryEndpoint = '';
-      // if (userCategory === 'Admin') {
-      //   categoryEndpoint = 'https://localhost:44339/api/User/admin';
-      // } else if (userCategory === 'Manager') {
-      //   categoryEndpoint = 'https://localhost:44339/api/User/projectManager';
-      // } else if (userCategory === 'Developer') {
-      //   categoryEndpoint = 'https://localhost:44339/api/User/developer';
-      // }
-
-      // if (categoryEndpoint) {
-      //   // Save the user details in the specific category table
-      //   const categoryResult = await apiRequest(categoryEndpoint, 'POST', {
-      //     ...data,
-      //     UserId: newUserId
-      //   });
-        
-      //   alert(categoryResult.data.message);
-      // } else {
-      //   alert(userResult.data.message);
-      // }
-      
       console.log('API Response:', response);
-      setRandomPassword(response.data?.randomPassword || '');
-      setUserDetails({
+  
+      const randomPassword = response;
+      setRandomPassword(randomPassword);
+  
+      const userDetails = {
         UserName: data.UserName,
         Email: data.Email,
-      });
+      };
+      setUserDetails(userDetails);
 
-      clear();
-      //navigate('/userCreationSuccess');
-      alert("User registered successfully. Click 'Send Email' to send credentials.");
+      alert("User registered successfully. Sending email with credentials...");
+      
+      // Call sendEmail after successful registration
+      sendEmail(randomPassword, userDetails.UserName, userDetails.Email);
+      clearForm();
+
     } catch (error) {
       console.error("User registration failed:", error);
       alert("Failed to register user. Please try again later.");
     }
   };
-
-  const sendEmail = () => {
-    const serviceID = 'service_hecyz1k';
-    const templateID = 'template_v3i2dxr';
+  
+  const sendEmail = (password, userName, userEmail) => {
+    const serviceID = 'service_6hxgdeb';
+    const templateID = 'template_0y9c7xm';
     const publicKey = 'T4Kg7zhw6fdHfxh6K'; 
 
     const templateParams = {
-      user_name: userDetails.UserName,
-      user_email: userDetails.Email,
-      user_password: randomPassword,
+      user_name: userName,
+      user_password: password,
+      user_mail: userEmail
     };
 
+    console.log('Sending email with:', serviceID, templateID, templateParams, publicKey);
     emailjs
       .send(serviceID, templateID, templateParams, publicKey)
       .then((response) => {
         console.log("SUCCESS!", response.status, response.text);
         alert("Email sent successfully!");
-        navigate("/adminDashboard");
+        navigate("/userCreation");
       })
       .catch((error) => {
         console.error("FAILED...", error);
@@ -115,7 +98,7 @@ export default function UserCreationForm() {
       });
   };
 
-  const clear = () => {
+  const clearForm = () => {
     setFirstName('');
     setLastName('');
     setUserName('');
@@ -126,26 +109,26 @@ export default function UserCreationForm() {
     setGender('');
     setNIC('');
     setUserCategory('');
-    setSelectedJob([]);
+    setSelectedJob('');
     setFormErrors({});
   };
 
   const validateForm = () => {
     const errors = {};
     let isValid = true;
-    // Validate NIC
+    
     if (nic.length !== 12) {
       errors.nic = 'NIC must have 12 digits';
+      isValid = false;
     }
 
-    // Validate email
     const emailPattern = /\S+@\S+\.\S+/;
     if (!emailPattern.test(email)) {
       errors.email = 'Email must be in the format "example@gmail.com"';
+      isValid = false;
     }
 
-    // Check if any field is empty
-    if (!firstName || !lastName || !userName || !address || !nic || !dob || !gender || !mobileNumber || !email ||  !userCategory || jobRole.length === 0) {
+    if (!firstName || !lastName || !userName || !address || !nic || !dob || !gender || !mobileNumber || !email || !userCategory || !jobRole) {
       errors.required = 'All fields are required';
       isValid = false;
     }
@@ -158,7 +141,7 @@ export default function UserCreationForm() {
     <div className="content">
       <div className="form_group">
         <div> 
-          <h3>User Creation form </h3>
+          <h3>User Creation Form</h3>
         </div>
         <Form onSubmit={handleSubmit}>
           <Row className="mb-10">
@@ -218,11 +201,6 @@ export default function UserCreationForm() {
             <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
             {formErrors.email && <span className="error" style={{ color: 'red', fontSize: 'small' }}>{formErrors.email}</span>}
           </Form.Group>
-
-         {/* <Form.Group className="mb-10" controlId="formGridProfilePhoto">
-            <Form.Label>Profile Photo</Form.Label>
-            <Form.Control type="file" onChange={handleFileChange} />
-          </Form.Group> */}
           
           <Row className="mb-10">
             <Form.Group as={Col} controlId="formGridUserCategory">
@@ -265,31 +243,19 @@ export default function UserCreationForm() {
 
           <Row className="mb-10">          
             <Col>
-              <Button variant="primary" onClick={clear} id="resetButton">
+              <Button variant="primary" onClick={clearForm} id="resetButton">
                 Clear
               </Button>
             </Col>
             
             <Col>
-              <Button variant="secondary" type="submit"  id="submitButton">
+              <Button variant="secondary" type="submit" id="submitButton">
                 Submit
               </Button>
             </Col>
           </Row>
         </Form>
       </div>
-
-      {formSubmitted && randomPassword && (
-        <div>
-          <p>
-            User registered successfully! Random password generated:
-            {randomPassword}
-          </p>
-          <Button variant="primary" onClick={sendEmail}>
-            Send Email
-          </Button>
-        </div>
-      )}
     </div>
   );
 }
