@@ -27,7 +27,7 @@ export default function Task() {
       const editDataNew = { TaskStartTime: currentDateTime };
 
       try {
-        const urlTaskStatusStart = `https://localhost:7008/api/DeveloperTime/tasksStatusStart/${selectedTaskId}`;
+        const urlTaskStatusStart = `https://localhost:44339/api/DeveloperTime/tasksStatusStart/${selectedTaskId}`;
         const responseTaskStatusStart = await axios.put(urlTaskStatusStart, editDataNew);
         console.log('Start time submitted:', editDataNew);
       } catch (error) {
@@ -63,13 +63,13 @@ export default function Task() {
 
     try {
       // DeveloperId == 5
-      const url = `https://localhost:7008/api/DeveloperTime/taskTimes/${selectedTaskId}/5`;
+      const url = `https://localhost:44339/api/DeveloperTime/taskTimes/${selectedTaskId}/5`;
       const response = await axios.post(url, editData);
 
-      const urlTask = `https://localhost:7008/api/DeveloperTime/tasks/${selectedTaskId}`;
+      const urlTask = `https://localhost:44339/api/DeveloperTime/tasks/${selectedTaskId}`;
       const responseTask = await axios.put(urlTask, editData);
 
-      const newProject = `https://localhost:7008/api/DeveloperTime/projects/${selectedTaskId}`;
+      const newProject = `https://localhost:44339/api/DeveloperTime/projects/${selectedTaskId}`;
       const responseProject = await axios.put(newProject, editData);
 
       console.log(editData);
@@ -87,7 +87,7 @@ export default function Task() {
     };
 
     try {
-      const urlTaskStatus = `https://localhost:7008/api/DeveloperTime/tasksStatusStop/${selectedTaskId}`;
+      const urlTaskStatus = `https://localhost:44339/api/DeveloperTime/tasksStatusStop/${selectedTaskId}`;
       const responseTaskStatus = await axios.put(urlTaskStatus, editData);
 
       console.log(editData);
@@ -103,7 +103,7 @@ export default function Task() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://localhost:7008/api/DeveloperTask/TaskDescription/${selectedTaskId}`);
+        const response = await fetch(`https://localhost:44339/api/DeveloperTask/TaskDescription/${selectedTaskId}`);
         const data = await response.json();
         setTaskData(data);
         console.log(data);

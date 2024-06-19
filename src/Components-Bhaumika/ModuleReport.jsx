@@ -17,16 +17,16 @@ function ModuleReport() {
   
     const fetchBardata = async (projectId) => {
       try {
-        const responseremain = await axios.get(`https://localhost:7008/api/ModuleProgressReport/GetProjectRemainingTasks/${projectId}`);
+        const responseremain = await axios.get(`https://localhost:44339/api/ModuleProgressReport/GetProjectRemainingTasks/${projectId}`);
         setRemain(responseremain.data);
         console.log(inprogress);
 
-        const responsecomplete = await axios.get(`https://localhost:7008/api/ModuleProgressReport/GetProjectInProgressTasks/${projectId}`);
+        const responsecomplete = await axios.get(`https://localhost:44339/api/ModuleProgressReport/GetProjectInProgressTasks/${projectId}`);
         setInprogress(responsecomplete.data);
         console.log(remain);
 
 
-        const responseinprogress = await axios.get(`https://localhost:7008/api/ModuleProgressReport/GetProjectCompletedTasks/${projectId}`);
+        const responseinprogress = await axios.get(`https://localhost:44339/api/ModuleProgressReport/GetProjectCompletedTasks/${projectId}`);
         setComplete(responseinprogress.data);
         console.log(complete);
 
