@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { format } from 'date-fns';
+import Button from 'react-bootstrap/Button';
 
 export default function ProjectDescription() {
 
@@ -28,10 +29,34 @@ export default function ProjectDescription() {
       setIsLoading(false);
     }
   };
+
 useEffect(() => {
     getData();
 
   },[]);
+
+
+
+  var newSelectedId;
+  const resourceInfo = (id) => {
+    newSelectedId = id;
+    navigate('/ProjectFileViewPage',{state:{newSelectedId:newSelectedId}});
+  };
+
+  var newTimeSelectedId;
+  const timeReportInfo = (id) => {
+    newTimeSelectedId = id;
+    navigate('/ProjectReport',{state:{newTimeSelectedId:newTimeSelectedId}});
+  };
+
+  var newModuleSelectedId;
+  const moduleReportInfo = (id) => {
+    newModuleSelectedId = id;
+    navigate('/ProjectModuleReport',{state:{newModuleSelectedId:newModuleSelectedId}});
+  };
+
+
+
 
   
   if (isLoading) {
@@ -56,7 +81,11 @@ useEffect(() => {
       <p>Project Id: {item.projectId}</p>
       <p>Description: {item.projectDescription}</p>
       <p>Objectives: {item.objectives}</p>
+      <Button     onClick = {() =>resourceInfo (item.projectId)} variant="primary" size="sm" >
+      Resources
+      </Button><br/>
       </div>
+      <br/>
       <h5>Project Manager Information:</h5>
       <div className='Projectdetails'>
       <p>Manager Name: {item.projectManagerName}</p>
@@ -67,6 +96,16 @@ useEffect(() => {
       <p>Start Date: {item.p_StartDate ? format(new Date(item.p_StartDate ), 'yyyy-MM-dd') : '-'}</p>
       <p>Time Estimation: {item.duration}</p>
       <p>Due Date: {item.p_DueDate ? format(new Date(item.p_DueDate ), 'yyyy-MM-dd') : '-'}</p>
+
+      <div style={{ display: 'flex', gap: '5px' }}>
+      <Button onClick = {() =>timeReportInfo(item.projectId)} variant="primary" size="sm" >
+     Time Report
+        </Button>
+        <Button onClick = {() =>moduleReportInfo(item.projectId)} variant="primary" size="sm" >
+      Module Report
+        </Button>
+        </div>
+       
       </div>
     </div>
   
