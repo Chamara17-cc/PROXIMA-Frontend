@@ -12,7 +12,7 @@ function ModuleReport() {
 
   
     useEffect(() => {
-      fetchBardata(7); // Assuming project ID is 7, change as necessary
+      fetchBardata(11); // Assuming project ID is 7, change as necessary
     }, []);
   
     const fetchBardata = async (projectId) => {

@@ -20,7 +20,7 @@ function Content() {
     const fetchData = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetAllTeams/5');
+        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetAllTeams/11');
         setTeams(response.data);
         console.log(teams);
       } catch (error){
@@ -36,7 +36,7 @@ function Content() {
     const developerData = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/DeveloperDescription/5');
+        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/DeveloperDescription/11');
         setDeveloper(response.data);
         console.log(developer);
       } catch (error){
@@ -51,7 +51,7 @@ function Content() {
     const ProjectCount = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetDevelopeTotalProjectCount/5');
+        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetDevelopeTotalProjectCount/11');
         setProject(response.data);
         console.log(project);
       } catch (error){
@@ -67,7 +67,7 @@ function Content() {
     const TaskCount = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetDevelopeTotalTaskCount/5');
+        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetDevelopeTotalTaskCount/11');
         setTask(response.data);
         console.log(task);
       } catch (error){

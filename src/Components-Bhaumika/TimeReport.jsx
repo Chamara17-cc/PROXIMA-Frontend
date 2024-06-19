@@ -14,7 +14,7 @@ function TimeReport() {
    
   
     useEffect(() => {
-        fetchDigramData(7); // Assuming project ID is 7, change as necessary
+        fetchDigramData(11); // Assuming project ID is 7, change as necessary
       }, []);
     
       const fetchDigramData = async (projectId) => {

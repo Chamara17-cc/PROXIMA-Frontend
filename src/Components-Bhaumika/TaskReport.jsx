@@ -14,7 +14,7 @@ export default function TaskReport() {
     const [inprogressTask,setInprogressTask] = useState(0);
   
     useEffect(() => {
-        fetchDigramData(5); // Assuming Developer ID is 5, change as necessary
+        fetchDigramData(11); // Assuming Developer ID is 5, change as necessary
       }, []);
     
       const fetchDigramData = async (developerId) => {
