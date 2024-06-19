@@ -23,7 +23,7 @@ export default function ProjectFileView() {
 
     const GetBasicFileNames = async () => {
         try {
-          const response = await axios.get(`https://localhost:7008/api/DeveloperProjectFileView/TaskInfo/${projectid}`);
+          const response = await axios.get(`https://localhost:44339/api/DeveloperProjectFileView/TaskInfo/${projectid}`);
           setBasicNames(response.data);
         } catch (error) {
           setError(error.message); // Set error state for displaying error message
@@ -35,7 +35,7 @@ export default function ProjectFileView() {
     const [imgNames, setImgNames] = useState([]);
 
     const GetImgNames = async () => {
-      const url = `https://localhost:7008/api/DeveloperProjectFileView/Images/${projectid}`;
+      const url = `https://localhost:44339/api/DeveloperProjectFileView/Images/${projectid}`;
   
       try {
         const response = await axios.get(url);
@@ -51,7 +51,7 @@ export default function ProjectFileView() {
   const [audioNames, setAudioNames] = useState([]);
 
   const GetAudioNames = async () => {
-    const url = `https://localhost:7008/api/DeveloperProjectFileView/audio/${projectid}`;
+    const url = `https://localhost:44339/api/DeveloperProjectFileView/audio/${projectid}`;
 
     try {
       const response = await axios.get(url);
@@ -66,7 +66,7 @@ export default function ProjectFileView() {
     const [zipNames, setZipNames] = useState([]);
 
     const GetZipNames = async () => {
-      const url = `https://localhost:7008/api/DeveloperProjectFileView/zip/${projectid}`;
+      const url = `https://localhost:44339/api/DeveloperProjectFileView/zip/${projectid}`;
   
       try {
         const response = await axios.get(url);
@@ -81,7 +81,7 @@ export default function ProjectFileView() {
 
 
 const download = async (filePath, fileName) => {
-    const urlDownload = `https://localhost:7008/api/DeveloperProjectFileDownload/DeveloperProjectFileDownload/${filePath}/${fileName}`;
+    const urlDownload = `https://localhost:44339/api/DeveloperProjectFileDownload/DeveloperProjectFileDownload/${filePath}/${fileName}`;
     
     try {
       if (window.confirm('Do you want to download this item?')){
