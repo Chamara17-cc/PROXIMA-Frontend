@@ -27,9 +27,6 @@ function Projectlist() {
       }
     };
 
-
-
-
     fetchData();
   }, []);
 
