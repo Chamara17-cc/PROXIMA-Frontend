@@ -15,7 +15,7 @@ function Projectlist() {
     const fetchData = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:7008/api/DeveloperProject/5');
+        const response = await axios.get('https://localhost:44339/api/DeveloperProject/5');
         setProjects(response.data);
         console.log(projects);
       } catch (error){
