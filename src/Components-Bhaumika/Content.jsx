@@ -8,6 +8,9 @@ import './Content.css'
 function Content() {
 
   const [teams, setTeams] = useState([]);
+  const [developer, setDeveloper] = useState([]);
+  const [project, setProject] = useState([]);
+  const [task, setTask] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -30,9 +33,62 @@ function Content() {
     };
 
 
+    const developerData = async () => {
+      try {
+        //DeveloperId == 5
+        const response = await axios.get('https://localhost:7008/api/DeveloperTeam/DeveloperDescription/5');
+        setDeveloper(response.data);
+        console.log(developer);
+      } catch (error){
+        setError(error);
+        alert(error);
+        console.log("Error occured: " + error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const ProjectCount = async () => {
+      try {
+        //DeveloperId == 5
+        const response = await axios.get('https://localhost:7008/api/DeveloperTeam/GetDevelopeTotalProjectCount/5');
+        setProject(response.data);
+        console.log(project);
+      } catch (error){
+        setError(error);
+        alert(error);
+        console.log("Error occured: " + error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+
+    const TaskCount = async () => {
+      try {
+        //DeveloperId == 5
+        const response = await axios.get('https://localhost:7008/api/DeveloperTeam/GetDevelopeTotalTaskCount/5');
+        setTask(response.data);
+        console.log(task);
+      } catch (error){
+        setError(error);
+        alert(error);
+        console.log("Error occured: " + error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+
+
+
+
 
 
     fetchData();
+    developerData();
+   ProjectCount();
+   TaskCount();
   }, []);
 
 
@@ -47,15 +103,38 @@ function Content() {
 
 
     return (
-<div className='MainContent'>
+<div className='ContentMainContent'>
 
+  <div className='CardContent'>
+  <div className='MainTitle'><h2>Hi, {developer} ! </h2></div>
+
+  <div className='Cards' style={{ display: 'flex' , gap: '10px' }} >
+
+<div className='Card1'>
+<div className='tot'><h4>Total Projects</h4></div>
+<div className='count'><h1>{project}</h1></div>
+</div>
+<div className='Card2'>
+<div className='tot'><h4>Total Tasks</h4></div>
+<div className='count'><h1>{task}</h1></div>
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+
+
+<div className='TeamContent'>
 <div className='MainTitle'><h2>Teams</h2></div>
-
-<div>
+<div className='Newtable'>
       {loading && <p>Loading teams...</p>}
       {error && <p>Error: {error.message}</p>}
       {!loading && !error && (
-        <Table striped bordered hover>
+        <Table striped bordered hover  variant="dark" size='sm'>
           <thead>
             <tr>
               <th>Project ID</th>
@@ -80,14 +159,12 @@ function Content() {
         </Table>
       )}
     </div>
+    </div>
 
 
 
 </div>
 
-
-
- 
 )
 }
     export default Content;

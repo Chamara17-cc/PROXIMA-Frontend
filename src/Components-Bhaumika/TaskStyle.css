@@ -1,7 +1,7 @@
 .Task{
     background-color: white;
     color: black;
-    height:540px;
+    height:600px;
     width: 1150px;
     margin-right: 50px;
     border-radius: 15px;
@@ -9,9 +9,9 @@
 }
 
 .Description{
+    margin-left:50px ;
     padding-top: 50px;
-    padding-left: 0px;
-    margin-left: 0%;
+   
 
 }
 
@@ -43,6 +43,15 @@
    
 }
 
+.ButtonBoxMiddle{
+    margin-left: 0px;
+}
+
+.ButtonBoxBottom{
+    margin-left: 600px;
+    margin-top: 50px;
+
+}
 /* .Tik{
     margin-top: 0px;
     margin-left: 50px;
