@@ -9,7 +9,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
-
+import "./DataView.css";
 
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -415,7 +415,7 @@ export default function TaskDetailsCom() {
               </div>
 
 
-            ))}
+            ))}<br/>
             <Button style={{marginTop:'-20px'}} variant="danger" onClick={DeleteTask}>Delete Task</Button>
         
           
@@ -424,7 +424,9 @@ export default function TaskDetailsCom() {
         <Tab eventKey="resources" title="Resources">
         <div className="project-detail">
         <h3 className="card-topic">Task Information</h3>
+        
             <Form.Group as={Col} className="mb-3">
+            <div className="ViewItems">
               <Form.Label>Task Info Files: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -440,23 +442,27 @@ export default function TaskDetailsCom() {
                   Upload
                 </Button>
 
-                
-              </div><br/> 
+                </div>
+                </div>
+              <br/> 
               <Form.Group as={Col} className="mb-3">
               <Form.Label>Task Info Files: </Form.Label>
+              <div className="ViewItems">
 
               {basicNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
               </ul>
               ))}
                 
-             
+             </div>
             </Form.Group>
             </Form.Group>
-            
-            <br /><br />
+            </div>
+           
+            <div className="project-detail">
             <h3 className="card-topic">Task Resources</h3>
+            <div className="ViewItems">
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Images: </Form.Label>
               <div style={{ display: "flex" }}>
@@ -476,8 +482,8 @@ export default function TaskDetailsCom() {
                 
               </div>
             </Form.Group>
-
-
+          </div>
+          
             {/* <Form.Group as={Col} className="mb-3">
               <Form.Label>Videos: </Form.Label>
               <div style={{ display: "flex" }}>
@@ -497,7 +503,7 @@ export default function TaskDetailsCom() {
                 
               </div> 
             </Form.Group>*/}
-
+<div className="ViewItems">
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Audios: </Form.Label>
               <div style={{ display: "flex" }}>
@@ -517,8 +523,8 @@ export default function TaskDetailsCom() {
                 
               </div>
             </Form.Group>
-
-
+</div>
+<div className="ViewItems">
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Zip Files: </Form.Label>
               <div style={{ display: "flex" }}>
@@ -538,10 +544,14 @@ export default function TaskDetailsCom() {
                 
               </div>
             </Form.Group>
-        </div>
-
+            </div>
+            </div>
+        
+        
+        
+        <div className="project-detail">
         <h3 className="card-topic">Uploaded Resources</h3>
-          <div style={{ display: "flex" }}>
+          <div className="ViewItems" style={{ display: "flex" }}>
           
 
             
@@ -550,7 +560,7 @@ export default function TaskDetailsCom() {
               <Form.Label>Images: </Form.Label>
               {imgNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
               </ul>
               ))}
                 
@@ -572,7 +582,7 @@ export default function TaskDetailsCom() {
 
               {audioNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
               </ul>
               ))}
              
@@ -583,7 +593,7 @@ export default function TaskDetailsCom() {
 
               {zipNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
               </ul>
               ))}
              
@@ -591,13 +601,8 @@ export default function TaskDetailsCom() {
 
 
           </div>
+          </div>
           <Button style={{marginTop:'20px'}} variant="danger" onClick={DeleteFiles}>Delete Files</Button>
-        </Tab>
-
-        <Tab eventKey="time" title="Task Info">
-        <div className="project-detail">
-            Time info
-        </div>
         </Tab>
       </Tabs>
     </div>

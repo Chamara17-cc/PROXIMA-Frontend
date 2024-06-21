@@ -10,7 +10,7 @@ export default function PMtaskListPage() {
         <Topbar />
         <ProjectManagerSidebar />
         <div className="Content">
-          <h2>Project List</h2>
+          <h2>Task List</h2>
 
           <div>
             {/* content */}

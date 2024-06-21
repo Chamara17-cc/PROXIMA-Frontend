@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProjectListCSS.css";
 import { useNavigate } from 'react-router-dom';
+import { Spinner } from "react-bootstrap";
 
 
 export default function ProjectListComponent() {
@@ -10,7 +11,6 @@ export default function ProjectListComponent() {
 
   const navigate = useNavigate();
 
-  //const url = "https://localhost:44319/api/ViewProjectList";    //old
 
   const url = "https://localhost:44339/api/ViewProjectList";    //new
 
@@ -41,7 +41,7 @@ export default function ProjectListComponent() {
   if(load){
     return(
       <>
-        Loading...
+        <Spinner size="lg" animation="border" style={{marginLeft: "75px", marginTop: "35px"}} />
       </>
     );
   }
@@ -57,6 +57,10 @@ export default function ProjectListComponent() {
         </thead>
         
         <tbody>
+        
+          {(data.length === 0) ? (
+            <Spinner size="lg" animation="border" style={{marginLeft: "75px", marginTop: "35px", marginBottom: "35px"}} />
+          ): <></>}
         
           {data.map((project, index) => (
             <tr
@@ -75,6 +79,7 @@ export default function ProjectListComponent() {
         </tbody>
         
       </table>
+      
     </div>
   );
 }
