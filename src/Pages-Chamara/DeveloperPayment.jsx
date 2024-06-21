@@ -185,6 +185,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 
+
 function DeveloperPayment() {
   const [open, setOpen] = useState(false);
   const [year, setYear] = useState('');
@@ -195,6 +196,8 @@ function DeveloperPayment() {
   const [totalWorkedHours, setTotalWorkedHours] = useState('');
   const [totalPayment, setTotalPayment] = useState('');
   const [error, setError] = useState('');
+
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -252,7 +255,7 @@ function DeveloperPayment() {
     getMonths();
   }, []);
 
-  const handlePaymentRequest = async () => {
+  const handlePaymentRequest = async (userId) => {
         try {
           const rateResponse = await axios.get(`https://localhost:44339/api/DeveloperRate/register`);
           setRate(rateResponse.data.currentRate);
