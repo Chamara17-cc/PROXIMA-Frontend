@@ -1,32 +1,33 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './TaskStyle.css';
 import { format } from 'date-fns';
+import Button from 'react-bootstrap/Button';
 
 export default function Task() {
-
-
   const [taskData, setTaskData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [startTime, setStartTime] = useState(null); 
-  const [stopTime, setStopTime] = useState(null); 
+  const [startTime, setStartTime] = useState(null);
+  const [stopTime, setStopTime] = useState(null);
   const location = useLocation();
   const selectedTaskId = location.state.selectedTaskId;
 
   console.log("Taskid = " + selectedTaskId);
 
   const startTimer = async () => {
-    if (!startTime) { 
+    if (!startTime) {
       const currentDateTime = new Date().toISOString();
       setStartTime(currentDateTime);
       console.log('Start Time:', currentDateTime);
+      alert('Task marked as started!');
 
       const editDataNew = { TaskStartTime: currentDateTime };
 
       try {
-        const urlTaskStatusStart = `https://localhost:7008/api/DeveloperTime/tasksStatusStart/${selectedTaskId}`;
+        const urlTaskStatusStart = `https://localhost:44339/api/DeveloperTime/tasksStatusStart/${selectedTaskId}`;
         const responseTaskStatusStart = await axios.put(urlTaskStatusStart, editDataNew);
         console.log('Start time submitted:', editDataNew);
       } catch (error) {
@@ -38,18 +39,23 @@ export default function Task() {
     }
   };
 
-
   const stopTimer = () => {
-    if (startTime) { // Only allow stopping if started
+    if (startTime && !stopTime) { // Only allow stopping if started and not already stopped
       const currentDateTime = new Date().toISOString();
       setStopTime(currentDateTime);
       console.log('Stop Time:', currentDateTime);
+      alert('Task marked as stopped!');
     } else {
-      alert("Task not yet started. Please start the timer before stopping.");
+      alert("Task not yet started or already stopped. You cannot stop the timer again.");
     }
   };
 
   const submit = async () => {
+    if (!stopTime) {
+      alert('Please stop the timer before submitting!');
+      return; // Early exit if stopTime is not set
+    }
+
     const editData = {
       TaskStartTime: startTime,
       TaskCompleteTime: stopTime,
@@ -57,24 +63,23 @@ export default function Task() {
 
     try {
       // DeveloperId == 5
-      const url = `https://localhost:7008/api/DeveloperTime/taskTimes/${selectedTaskId}/5`;
+      const url = `https://localhost:44339/api/DeveloperTime/taskTimes/${selectedTaskId}/11`;
       const response = await axios.post(url, editData);
 
-      const urlTask = `https://localhost:7008/api/DeveloperTime/tasks/${selectedTaskId}`;
+      const urlTask = `https://localhost:44339/api/DeveloperTime/tasks/${selectedTaskId}`;
       const responseTask = await axios.put(urlTask, editData);
 
-      const newProject = `https://localhost:7008/api/DeveloperTime/projects/${selectedTaskId}`;
+      const newProject = `https://localhost:44339/api/DeveloperTime/projects/${selectedTaskId}`;
       const responseProject = await axios.put(newProject, editData);
 
       console.log(editData);
-      alert('Data edited successfully!');
-      window.location.reload();
+      alert('Data submitted successfully!');
+      window.location.reload(); // Reload to refresh component state
     } catch (error) {
       console.error('There was an error editing the data!', error);
       alert('An error occurred while saving data. Please check the console for details.');
     }
   };
-
   const completed = async () => {
     const editData = {
       TaskStartTime: startTime,
@@ -82,7 +87,7 @@ export default function Task() {
     };
 
     try {
-      const urlTaskStatus = `https://localhost:7008/api/DeveloperTime/tasksStatusStop/${selectedTaskId}`;
+      const urlTaskStatus = `https://localhost:44339/api/DeveloperTime/tasksStatusStop/${selectedTaskId}`;
       const responseTaskStatus = await axios.put(urlTaskStatus, editData);
 
       console.log(editData);
@@ -94,10 +99,11 @@ export default function Task() {
     }
   };
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://localhost:7008/api/DeveloperTask/TaskDescription/${selectedTaskId}`);
+        const response = await fetch(`https://localhost:44339/api/DeveloperTask/TaskDescription/${selectedTaskId}`);
         const data = await response.json();
         setTaskData(data);
         console.log(data);
@@ -130,16 +136,48 @@ export default function Task() {
     <div className='Task'>
       
       <div className='Description'>
-        <h3>{item.taskName}</h3>
+        <h2>Task Name : {item.taskName}</h2>
       </div>
       <div className='DueDate'>
       <h4>Due Date: {item.dueDate ? format(new Date(item.dueDate), 'yyyy-MM-dd') : '-'}</h4>
       </div>
-      <button onClick={startTimer}>Start</button>
-      <button onClick={stopTimer}>Stop</button>
-      <button onClick={submit}>Submit</button>
-      <button onClick={completed}>Task Completed</button>
-    
+      <div className='ButtonBox'>
+
+        <div className="ButtonBoxUpper" style={{ display: 'flex' , gap: '20px' }}>
+
+
+      <Button onClick={startTimer} variant="secondary" size="lg" >
+      Start
+        </Button>
+    <br/>
+    <br/>
+
+    <Button onClick={stopTimer} variant="secondary" size="lg" >
+    Stop
+        </Button>
+    <br/>
+    <br/>
+
+    </div>
+    <br/>
+
+<div className="ButtonBoxMiddle">
+    <Button onClick={submit} variant="primary" size="lg">
+    Submit
+        </Button>
+    <br/>
+    </div>
+    <br/>
+    </div>
+
+
+    <div className="ButtonBoxBottom">
+    <Button onClick={completed} variant="primary" size="lg" >
+    Task Completed
+        </Button>
+    <br/>
+    </div>
+
     </div>
   ))}
     </div>
