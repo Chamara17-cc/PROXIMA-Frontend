@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import "./FormStyle.css";
-import "./AdminProjectViewCSS.css";
+//import "./AdminProjectViewCSS.css";
 import axios from "axios";
 import "./ProjectListComponent";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import "./DataView.css";
 
 
 import Col from "react-bootstrap/Col";
@@ -384,15 +385,17 @@ export default function AdminProjectView() {
       >
         <Tab eventKey="project" title="Project Info">
           {projectData.map((pro) => (
+            <div className="mainCard">
             <div className="project-detail">
               <h3 className="card-topic">{pro.projectName}</h3>
-              <p className="ViewItems">{pro.projectDescription}</p>
+              <p className="description">{pro.projectDescription}</p>
               <p className="ViewItems">Project Id : {pro.projectId}</p>
               <p className="ViewItems">Technologies : {pro.technologies}</p>
               <p className="ViewItems">Project StartDate : {pro.p_StartDate}</p>
               <p className="ViewItems">Project DueDate : {pro.p_DueDate}</p>
-              <p className="ViewItems">Duration : {pro.duration}</p>
+              <p className="ViewItems">Duration : {pro.duration} days</p>
               <p className="ViewItems">Objectives : {pro.objectives}</p>
+            </div>
             </div>
           ))}
           <div>
@@ -434,7 +437,7 @@ export default function AdminProjectView() {
                     <td>{dev.lastName}</td>
                     <td>{dev.jobRoleName}</td>
                     <td>
-                      <Button onClick={() => HandleAssign(dev.userId)}>
+                      <Button variant="outline-primary" onClick={() => HandleAssign(dev.userId)}>
                         Assign Task
                       </Button>
                       &nbsp; &nbsp;
@@ -447,11 +450,13 @@ export default function AdminProjectView() {
                 ))}
               </tbody>
             </table>
+            <br/>
           </div>
-
-          <Button onClick={handleNavigate} variant="outline-primary">
+          
+          <Button onClick={handleNavigate} variant="danger">
             Add developers
           </Button>
+          
           
         </Tab>
         <Tab eventKey="client" title="Client Info">
@@ -475,6 +480,7 @@ export default function AdminProjectView() {
           <div className="project-detail">
             <h3 className="card-topic">Project Resources</h3>
             <Form.Group as={Col} className="mb-3">
+              <div className="ViewItems">
               <Form.Label>Basic Info: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -490,9 +496,11 @@ export default function AdminProjectView() {
                   Upload
                 </Button>
               </div>
+              </div>
             </Form.Group>
 
             <Form.Group as={Col} className="mb-3">
+              <div className="ViewItems">
               <Form.Label> Time Line Info: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -508,9 +516,11 @@ export default function AdminProjectView() {
                   Upload
                 </Button>
               </div>
+              </div>
             </Form.Group>
 
             <Form.Group as={Col} className="mb-3">
+            <div className="ViewItems">
               <Form.Label>Budget Info: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -526,9 +536,11 @@ export default function AdminProjectView() {
                   Upload
                 </Button>
               </div>
+              </div>
             </Form.Group>
 
             <Form.Group as={Col} className="mb-3">
+            <div className="ViewItems">
               <Form.Label>Client Declarement: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -543,18 +555,23 @@ export default function AdminProjectView() {
                 >
                   Upload
                 </Button>
+                </div>
               </div>
             </Form.Group>
           </div>
 
+
+          <div className="project-detail">
           <h3 className="card-topic">Uploaded Resources</h3>
-          <div style={{ display: "flex" }}>
+         
+          <div className="ViewItems" style={{ display: "flex" }}>
+            
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Basic Info: </Form.Label>
 
               {basicNames.map((file, index) => (
                 <ul>
-                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button className="downbutton" style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
                 </ul>
               ))}
             </Form.Group>
@@ -564,7 +581,7 @@ export default function AdminProjectView() {
 
               {timelineNames.map((file, index) => (
                 <ul>
-                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button className="downbutton" style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
                 </ul>
               ))}
             </Form.Group>
@@ -574,7 +591,7 @@ export default function AdminProjectView() {
 
               {budgetNames.map((file, index) => (
                 <ul>
-                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button className="downbutton" style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
                 </ul>
               ))}
             </Form.Group>
@@ -584,13 +601,14 @@ export default function AdminProjectView() {
 
               {clientDocNames.map((file, index) => (
                 <ul>
-                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button style={{borderRadius:"7px", padding:"0.5px", backgroundColor:"whitesmoke"}}>{file.fileName}</button></li>
+                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button className="downbutton">{file.fileName}</button></li>
                 </ul>
               ))}
             </Form.Group>
             
           </div>
           <p style={{color:"red"}}>*click on file to download</p>
+          </div>
         </Tab>
       </Tabs>
     </div>

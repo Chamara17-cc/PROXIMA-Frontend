@@ -51,6 +51,31 @@ const UserDetailView = () => {
     }
   };
 
+  const reactivateUser = async () => {
+    const confirmDeactivation = window.confirm("Are you sure you want to reactivate the user?");
+    if (!confirmDeactivation) {
+      return;
+    }
+
+    try {
+      const response= await axios.post('https://localhost:44339/api/User/reactivate-user', { userId });
+      alert("User reactivated successfully.");
+      setErrorMessage(null);
+      // Optionally, refetch the user data
+      
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+        window.alert(error.response.data.message);  // Display error message as a popup
+      } else {
+        const genericErrorMessage = 'Error reactivating user.';
+        setErrorMessage(genericErrorMessage);
+        window.alert(genericErrorMessage);  // Display generic error message as a popup
+      }
+      console.error('Error reactivating user:', error);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -132,6 +157,7 @@ const UserDetailView = () => {
       <div className="bottom-buttons">
         <Link to="/userList" className="btn btn-secondary">Back</Link>
         <button className="btn btn-danger" onClick={deactivateUser}>Deactivate</button>
+        <button className="btn btn-danger" onClick={reactivateUser}>Reactivate</button>
       </div>
     </div>
   );

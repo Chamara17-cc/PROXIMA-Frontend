@@ -12,7 +12,7 @@ export default function PMtaskCreationPage() {
         <ProjectManagerSidebar />
         <div className="Content">
             
-            <h2>Project List</h2>
+            <h2>Task Creation</h2>
             
             <div>
               {/* content */}

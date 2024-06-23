@@ -66,12 +66,15 @@ function App() {
               <Route path="/budget" element ={<Budgetplan/>}></Route>
               <Route path="/transaction" element ={<TransactionPage/>}></Route>
               <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
+              
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={['1', '2']} />}>
               <Route path="/userList" element={<ViewUserList />} />
               <Route path="/userProfilePage/:userId" element={<ViewUserDetail />} />
               <Route path="/financedigram" element={<FinanceDigram/>}></Route>
+              <Route path="/taskList" element={<TaskList/>}></Route>
+              <Route path="/taskDetailsPage" element={<TaskDetailsPage/>}></Route>
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={['2']} />}>
@@ -124,6 +127,8 @@ function App() {
         <Route path="/PMtaskListPage" element= {<PMtaskListPage />}></Route>
         <Route path="/PMaddDevelopersPage" element = {<PMaddDevelopersPage />}></Route>
         <Route path="PMtaskDetailsPage" element = {<PMtaskDetailsPage />}></Route>
+
+        <Route path="/taskList" element={<TaskList/>}></Route>
 
 
       </Routes>

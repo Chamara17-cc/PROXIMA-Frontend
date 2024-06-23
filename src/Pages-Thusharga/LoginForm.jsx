@@ -40,6 +40,11 @@ const LoginForm = () => {
       const userCategoryId = decodedToken['UserCategoryId'];
       console.log('UserCategoryId:', userCategoryId); 
 
+      const userId = decodedToken['UserID'];
+      console.log("userId: ", userId);
+
+      
+
       // Call the login function from the context
       login({
         userId: decodedToken['UserID'],
@@ -52,16 +57,16 @@ const LoginForm = () => {
       // Redirect based on user's role
       switch (userCategoryId) {
         case '1':
-          navigate('/adminDashboard');
+          navigate('/adminDashboard',{state: {userId}});
           break;
         case '2':
-          navigate('/ProjectManagerDashboard');
+          navigate('/ProjectManagerDashboard',{state: {userId}});
           break;
         case '3':
-          navigate('/developerDashboard');
+          navigate('/developerDashboard',{state: {userId}});
           break;
         case '4':
-          navigate('/clientDashboard');
+          navigate('/clientDashboard',{state: {userId}});
           break;
         default:
           navigate('/');

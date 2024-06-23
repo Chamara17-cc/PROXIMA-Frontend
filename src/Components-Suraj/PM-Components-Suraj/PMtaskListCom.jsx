@@ -48,6 +48,10 @@ export default function PMtaskListCom() {
 
   return (
     <div>
+      {(list.length !== 0) ? (
+        <h5>Developer Name: {list[0].developerFName} {list[0].developerLName}</h5>
+      ): (<p style={{color:"#ddd"}}>*no tasks assigned</p>)
+      }
         <table className="ProjectList">
         <thead>
           <th>Task Id</th>
