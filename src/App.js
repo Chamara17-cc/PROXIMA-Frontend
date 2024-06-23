@@ -24,6 +24,8 @@ import TaskDescriptionDeveloper from "./Pages-Baumika/TaskDescriptionDeveloper";
 import TaskRecord from "./Pages-Baumika/TaskRecord";
 import ProjectReport from "./Pages-Baumika/ProjectReport";
 import ProjectModuleReport from "./Pages-Baumika/ProjectModuleReport";
+import TeamDescriptionDeveloper from "./Pages-Baumika/TeamDescriptionDeveloper";
+import ProjectFileViewPage from "./Pages-Baumika/ProjectFileViewPage";
 
 
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
@@ -112,6 +114,8 @@ function App() {
         <Route path="/TaskRecord" element={<TaskRecord/>}></Route>
         <Route path="/ProjectReport" element={<ProjectReport/>}></Route>
         <Route path="/ProjectModuleReport" element={<ProjectModuleReport/>}></Route>
+        <Route path="/TeamDescriptionDeveloper" element={<TeamDescriptionDeveloper/>}></Route>
+        <Route path="/ProjectFileViewPage" element={<ProjectFileViewPage/>}></Route>
         
 
         <Route path="/PMprojectListPage" element={<PMprojectListPage/>}></Route>

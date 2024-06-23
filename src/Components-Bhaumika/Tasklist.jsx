@@ -3,6 +3,7 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns'; // Import date-fns for formatting
+import Button from 'react-bootstrap/Button';
 
 function Tasklist() {
   const [tasks, setTasks] = useState([]);
@@ -15,7 +16,7 @@ function Tasklist() {
     const fetchData = async () => {
       try {
         // DeveloperID == 5 (replace with appropriate logic)
-        const response = await axios.get('https://localhost:7008/api/DeveloperTask/GetAllTasks/5');
+        const response = await axios.get('https://localhost:44339/api/DeveloperTask/GetAllTasks/11');
         setTasks(response.data);
         console.log(tasks.dueDate);
       } catch (error) {
@@ -72,16 +73,18 @@ function Tasklist() {
                   {task.dueDate ? format(new Date(task.dueDate), 'yyyy-MM-dd') : '-'}
                 </td>
                 <td>
-                  <button
+                <Button 
                     onClick={() => handleTaskSelectionNew(task.taskId)}
-                    disabled={task.taskStatus === 3} 
+                    disabled={task.taskStatus === 3}
+                    variant="primary" size="sm" 
                   >
                     {task.taskStatus === 1
                       ? 'To Do'
                       : task.taskStatus === 2
                         ? 'In Progress'
                         : 'Done'}
-                  </button>
+                    </Button>
+      
                 </td>
               </tr>
             ))}

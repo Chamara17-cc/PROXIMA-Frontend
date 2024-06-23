@@ -14,16 +14,16 @@ function TimeReport() {
    
   
     useEffect(() => {
-        fetchDigramData(7); // Assuming project ID is 7, change as necessary
+        fetchDigramData(11); // Assuming project ID is 7, change as necessary
       }, []);
     
       const fetchDigramData = async (projectId) => {
         try {
-          const responseremain = await axios.get(`https://localhost:7008/api/TimeProgressReport/ProjectProgressReportRemain/${projectId}`);
+          const responseremain = await axios.get(`https://localhost:44339/api/TimeProgressReport/ProjectProgressReportRemain/${projectId}`);
           setRemain(responseremain.data);
           console.log(remain);
 
-          const responsecomplete = await axios.get(`https://localhost:7008/api/TimeProgressReport/ProjectProgressReportComplete/${projectId}`);
+          const responsecomplete = await axios.get(`https://localhost:44339/api/TimeProgressReport/ProjectProgressReportComplete/${projectId}`);
           setComplete(responsecomplete.data);
           console.log(complete);
           

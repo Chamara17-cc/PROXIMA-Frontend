@@ -348,15 +348,31 @@ export default function AdminProjectView() {
 
   const gotofinancereport=()=>{
     navigate ('/financedigram',{state:{projectId:selectedId}})
-  }
+  };
+
+
+  var newTimeSelectedId;
+  const timeReportInfo = (id) => {
+    newTimeSelectedId = id;
+    navigate('/ProjectReport',{state:{newTimeSelectedId:newTimeSelectedId}});
+  };
+
+  var newModuleSelectedId;
+  const moduleReportInfo = (id) => {
+    newModuleSelectedId = id;
+    navigate('/ProjectModuleReport',{state:{newModuleSelectedId:newModuleSelectedId}});
+  };
 
   return (
     <>
+     {projectData.map((pro) => (
     <div style={{display: 'flex', float:'right', marginTop:'-48px'}}>
+   
             <Button onClick={gotofinancereport}>Finance Info</Button> &nbsp;&nbsp;
-            <Button>Time Progress</Button> &nbsp;&nbsp;
-            <Button>Module Progress</Button>
+            <Button onClick = {() =>timeReportInfo(pro.projectId)} >Time Progress</Button> &nbsp;&nbsp;
+            <Button onClick = {() =>moduleReportInfo(pro.projectId)}  >Module Progress</Button>
           </div>
+            ))}
           
     <div className="Section">
       

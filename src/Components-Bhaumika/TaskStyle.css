@@ -1,7 +1,7 @@
 .Task{
     background-color: white;
     color: black;
-    height:540px;
+    height:600px;
     width: 1150px;
     margin-right: 50px;
     border-radius: 15px;
@@ -9,8 +9,9 @@
 }
 
 .Description{
+    margin-left:50px ;
     padding-top: 50px;
-    padding-left: 50px;
+   
 
 }
 
@@ -23,23 +24,34 @@
     width: 400px;
     height: 50px;
     border-radius: 10px;
-    color: #311B92;
+    border: 2px solid #311B92;
 
 }
 
-.Button{
-    margin-top: 50px;
-    margin-left: 50px;
-    padding-top: 10px;
-    padding-left: 50px;
-    background-color: #565E7B;
-    width: 300px;
-    height: 50px;
+.ButtonBox{
+    margin-top: 40px;
+    margin-left: 200px;
+    margin-right: 200px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #B39DDB;
     border-radius: 10px;
-    color: white;
+   
+    border: 2px solid #311B92;
+
    
 }
 
+.ButtonBoxMiddle{
+    margin-left: 0px;
+}
+
+.ButtonBoxBottom{
+    margin-left: 600px;
+    margin-top: 50px;
+
+}
 /* .Tik{
     margin-top: 0px;
     margin-left: 50px;
