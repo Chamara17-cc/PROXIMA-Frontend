@@ -49,6 +49,10 @@ import PMaddDevelopersPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMaddD
 import PMtaskDetailsPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskDetailsPage";
 import FinanceDigram from "./Pages-Chamara/FinanceDigram";
 import Payment from "./Pages-Chamara/Payment";
+import FullTaskListPage from "./Pages-Suraj/FullTaskListPage";
+import PMFullTaskViewPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMFullTaskViewPage";
+
+
 
 function App() {
   return (
@@ -129,6 +133,9 @@ function App() {
         <Route path="PMtaskDetailsPage" element = {<PMtaskDetailsPage />}></Route>
 
         <Route path="/taskList" element={<TaskList/>}></Route>
+        <Route path="/fullTaskListPage" element = {<FullTaskListPage/>}></Route>
+        <Route path="/pMFullTaskListPage" element = {<PMFullTaskViewPage/>}></Route>
+
 
 
       </Routes>
