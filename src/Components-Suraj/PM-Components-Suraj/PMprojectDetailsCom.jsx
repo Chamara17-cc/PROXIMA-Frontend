@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import "../DataView.css";
+import FullTaskListCom from "../FullTaskListCom";
 
 
 
@@ -308,6 +309,10 @@ export default function PMprojectDetailsCom() {
     }
   }
 
+  const FullTaskList = () => {
+    navigate("/PMFullTaskListPage", {state:{selectedId}})
+  }
+
 
 
   useEffect(() => {
@@ -400,6 +405,7 @@ export default function PMprojectDetailsCom() {
           <Button onClick={handleNavigate} variant="outline-primary">
             Add developers
           </Button>
+          <Button onClick={FullTaskList}>All Tasks</Button>
           
         </Tab>
         
