@@ -76,6 +76,10 @@ export default function AdminProjectView() {
 
   }
 
+  const FullTaskList = () => {
+    navigate("/FullTaskListPage", {state:{selectedId}})
+  }
+
 
 
   //--------------------------************** Client Info --------------*******************///////////////
@@ -436,11 +440,13 @@ export default function AdminProjectView() {
             </table>
             <br/>
           </div>
-          
+          <div style={{display:"flex"}}>
           <Button onClick={handleNavigate} variant="danger">
             Add developers
           </Button>
-          
+          &nbsp;&nbsp;
+          <Button onClick={FullTaskList}>Full Task List</Button>
+          </div>
           
         </Tab>
         <Tab eventKey="client" title="Client Info">
