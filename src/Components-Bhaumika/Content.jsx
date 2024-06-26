@@ -3,7 +3,7 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
 import './Content.css'
-
+import { getLoggedUserId } from '../Auth/ApiService';
 
 function Content() {
 
@@ -17,10 +17,11 @@ function Content() {
 
   
   useEffect(() => {
+    const userid = getLoggedUserId();
     const fetchData = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetAllTeams/11');
+        const response = await axios.get(`https://localhost:44339/api/DeveloperTeam/GetAllTeams/${userid}`);
         setTeams(response.data);
         console.log(teams);
       } catch (error){
@@ -36,7 +37,7 @@ function Content() {
     const developerData = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/DeveloperDescription/11');
+        const response = await axios.get(`https://localhost:44339/api/DeveloperTeam/DeveloperDescription/${userid}`);
         setDeveloper(response.data);
         console.log(developer);
       } catch (error){
@@ -51,7 +52,7 @@ function Content() {
     const ProjectCount = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetDevelopeTotalProjectCount/11');
+        const response = await axios.get(`https://localhost:44339/api/DeveloperTeam/GetDevelopeTotalProjectCount/${userid}`);
         setProject(response.data);
         console.log(project);
       } catch (error){
@@ -67,7 +68,7 @@ function Content() {
     const TaskCount = async () => {
       try {
         //DeveloperId == 5
-        const response = await axios.get('https://localhost:44339/api/DeveloperTeam/GetDevelopeTotalTaskCount/11');
+        const response = await axios.get(`https://localhost:44339/api/DeveloperTeam/GetDevelopeTotalTaskCount/${userid}`);
         setTask(response.data);
         console.log(task);
       } catch (error){

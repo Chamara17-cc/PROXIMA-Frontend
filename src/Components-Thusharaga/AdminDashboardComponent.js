@@ -31,7 +31,7 @@ function AdminDashboardComponent({ showRateUpdate }) {
   };
 
   return (
-    <div>
+    <div className='maincontent'>
     <div className='column1'>Hi, Welcome Back 
     {showRateUpdate && (
           <div className='Developerrate'>
@@ -39,6 +39,7 @@ function AdminDashboardComponent({ showRateUpdate }) {
           </div>
         )}
     </div>
+    <div className='body'>
     <div className="column2">
       <div className="box">Total Admins<br/>{totaladmins}</div>
       <div className="box">Total Project Managers<br/>{totalmanagers}</div>
@@ -54,6 +55,8 @@ function AdminDashboardComponent({ showRateUpdate }) {
     />
     </div>
     </div>
+    </div>
+    
   )
 }
 

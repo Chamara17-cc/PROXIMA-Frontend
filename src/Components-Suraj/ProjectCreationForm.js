@@ -1,6 +1,7 @@
 import React, {  useEffect, useState } from "react";
 import axios from "axios";
 import emailjs from 'emailjs-com';
+import { getLoggedUserId } from '../Auth/ApiService';
 
 
 import TextField from "@mui/material/TextField";
@@ -217,10 +218,11 @@ export default function ProjectCreationForm() {
     setTimeDuration(time);
   },[sdate, ddate])
 
+
   const handleSubmit = (event) => {
 
-    
-    
+    const userid=getLoggedUserId();
+    console.log(userid)
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -249,10 +251,10 @@ export default function ProjectCreationForm() {
         TimeLine: timeline,
         //AdminId
       };
-
+   
       console.log(data);
 
-      const url = "https://localhost:44339/api/CreateProject";
+      const url = `https://localhost:44339/api/CreateProject?id=${userid}`;
 
       axios
         .post(url, data)
@@ -318,7 +320,6 @@ export default function ProjectCreationForm() {
     setValidated(true); // Always set validated to true after attempting validation
   };
 
- 
 
   return (
     <>
