@@ -16,6 +16,9 @@ function FinanceDigram() {
     <Sidebar/>
     <Topbar/>
     <div className="Content">
+      <div className="title">
+      <b>Finance Summary</b>
+      </div>
       <div className="digrams">
       <div className='Piechart'>
         <div className="Dname">

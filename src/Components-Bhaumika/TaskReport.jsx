@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import './Report.css'
+import { getLoggedUserId } from '../Auth/ApiService';
 
 export default function TaskReport() {
 
@@ -14,7 +15,8 @@ export default function TaskReport() {
     const [inprogressTask,setInprogressTask] = useState(0);
   
     useEffect(() => {
-        fetchDigramData(11); // Assuming Developer ID is 5, change as necessary
+      const userid=getLoggedUserId();
+        fetchDigramData(userid); // Assuming Developer ID is 5, change as necessary
       }, []);
     
       const fetchDigramData = async (developerId) => {
