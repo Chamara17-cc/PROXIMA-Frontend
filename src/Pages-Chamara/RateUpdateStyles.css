@@ -1,0 +1,64 @@
+/* General styles for the dialog */
+.dialog {
+    background-color: #f5f5f5;
+    padding: 20px;
+  }
+  
+  /* Header style */
+  .Rateheader {
+    font-size: 30px;
+    font-weight: bold;
+    color: #3D97ED;
+    text-align: center;
+   text-decoration: underline;
+  }
+  
+  /* Error message style */
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  /* Button styles */
+  .dialog-button {
+    background-color: #3D97ED;
+    color: white;
+  }
+  
+  .dialog-button:hover {
+    background-color: #357ABD;
+  }
+  
+  /* Text field styles */
+  .dialog-textfield {
+    margin-bottom: 20px;
+  }
+  
+  /* Styles for action buttons */
+  .dialog-action-button {
+    color: #3D97ED;
+    border: none;
+    background: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    position: relative;
+  }
+  
+  .dialog-action-button:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    height: 2px;  /* Adjust the height to change the width of the underline */
+    background-color: #3e578b; /* Color of the underline */
+  }
+  
+  /* Container for action buttons to ensure they are properly aligned */
+  .actionbutton {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px;
+  }
+  

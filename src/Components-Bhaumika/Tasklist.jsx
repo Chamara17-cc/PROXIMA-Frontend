@@ -4,6 +4,8 @@ import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns'; // Import date-fns for formatting
 import Button from 'react-bootstrap/Button';
+import { getLoggedUserId } from '../Auth/ApiService';
+
 
 function Tasklist() {
   const [tasks, setTasks] = useState([]);
@@ -13,10 +15,11 @@ function Tasklist() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const userid= getLoggedUserId();
     const fetchData = async () => {
       try {
         // DeveloperID == 5 (replace with appropriate logic)
-        const response = await axios.get('https://localhost:44339/api/DeveloperTask/GetAllTasks/11');
+        const response = await axios.get(`https://localhost:44339/api/DeveloperTask/GetAllTasks/${userid}`);
         setTasks(response.data);
         console.log(tasks.dueDate);
       } catch (error) {

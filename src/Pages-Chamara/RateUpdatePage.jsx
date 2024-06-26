@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import './RateUpdateStyles.css'
 
 export default function PopupForm() {
   const [open, setOpen] = useState(false);
@@ -109,10 +110,12 @@ export default function PopupForm() {
               onChange={(e) => setRate(e.target.value)}
             />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Close</Button>
-            <Button onClick={handleSubmit}>Update</Button>
-          </DialogActions>
+          <div className="actionbutton">
+            <DialogActions>
+              <Button onClick={handleClose} className="dialog-action-button"> Close</Button>
+              <Button onClick={handleSubmit} className="dialog-action-button">Update</Button>
+            </DialogActions>
+          </div>
         </Dialog>
       </div>
     </div>

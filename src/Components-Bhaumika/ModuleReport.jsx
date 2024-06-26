@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import axios from 'axios';
 import './Report.css'
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 function ModuleReport() {
 
@@ -9,10 +11,12 @@ function ModuleReport() {
     const [inprogress,setInprogress] = useState(0);
     const [complete,setComplete] = useState(0);
     const colors = ['#FF6384', '#36A2EB', '#FFCE56'];
+    const location = useLocation();
 
+    const selectedId = location.state.newModuleSelectedId;
   
     useEffect(() => {
-      fetchBardata(11); // Assuming project ID is 7, change as necessary
+      fetchBardata(selectedId); // Assuming project ID is 7, change as necessary
     }, []);
   
     const fetchBardata = async (projectId) => {
