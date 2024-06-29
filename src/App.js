@@ -52,8 +52,7 @@ import Payment from "./Pages-Chamara/Payment";
 import FullTaskListPage from "./Pages-Suraj/FullTaskListPage";
 import PMFullTaskViewPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMFullTaskViewPage";
 import EditProfile from "./Pages-Thusharga/EditProfile";
-
-
+import UserManagemanet from "./Pages-Thusharga/UserManagement";
 
 
 function App() {
@@ -74,7 +73,7 @@ function App() {
               <Route path="/transaction" element ={<TransactionPage/>}></Route>
               <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
               <Route path="/userProfilePage/:userId" element={<ViewUserDetail />} />
-              <Route path="/userManagement" element={<UserManagement/>} />
+              <Route path="/userManagement" element={<UserManagemanet/>} />
 
               
         </Route>
