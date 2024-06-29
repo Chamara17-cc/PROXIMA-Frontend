@@ -210,7 +210,7 @@ export default function UserCreationForm() {
                 <option>Admin</option>
                 <option>Manager</option>
                 <option>Developer</option>
-                <option>Client</option>
+               
               </Form.Control>
             </Form.Group>
 
@@ -218,7 +218,7 @@ export default function UserCreationForm() {
               <Form.Label>Job Role</Form.Label>
               <Form.Control as="select" value={jobRole} onChange={(e) => setSelectedJob(e.target.value)}>
                 <option>Select Job Role</option>
-                <option>Client</option>
+                
                 <option>Software Engineer</option>
                 <option>UI/UX Designer</option>
                 <option>Network Engineer</option>

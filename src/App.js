@@ -51,6 +51,8 @@ import FinanceDigram from "./Pages-Chamara/FinanceDigram";
 import Payment from "./Pages-Chamara/Payment";
 import FullTaskListPage from "./Pages-Suraj/FullTaskListPage";
 import PMFullTaskViewPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMFullTaskViewPage";
+import EditProfile from "./Pages-Thusharga/EditProfile";
+
 
 
 
@@ -63,6 +65,7 @@ function App() {
         <Route path="/" element={<LoginForm/>}></Route>
         <Route path="/resetpassword" element={<ResetPassword/>}></Route>
         <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/editProfile/:userId" element={<EditProfile />} />
 
         <Route element={<ProtectedRoute allowedRoles={['1']} />}>
               <Route path="/adminDashboard" element={<AdminDashboard />} />
@@ -70,12 +73,14 @@ function App() {
               <Route path="/budget" element ={<Budgetplan/>}></Route>
               <Route path="/transaction" element ={<TransactionPage/>}></Route>
               <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
+              <Route path="/userProfilePage/:userId" element={<ViewUserDetail />} />
+              <Route path="/userManagement" element={<UserManagement/>} />
+
               
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={['1', '2']} />}>
               <Route path="/userList" element={<ViewUserList />} />
-              <Route path="/userProfilePage/:userId" element={<ViewUserDetail />} />
               <Route path="/financedigram" element={<FinanceDigram/>}></Route>
               <Route path="/taskList" element={<TaskList/>}></Route>
               <Route path="/taskDetailsPage" element={<TaskDetailsPage/>}></Route>
