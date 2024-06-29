@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
+import React, { useState , useRef} from "react";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import './styles/UserCreationForm.css';
 import { useNavigate } from 'react-router-dom';
 import apiRequest from '../Auth/ApiService';
@@ -18,65 +15,81 @@ export default function UserCreationForm() {
   const [gender, setGender] = useState('');
   const [mobileNumber, setContactNumber] = useState('');
   const [email, setEmail] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [imageSrc, setImageSrc] = useState('');
   const [userCategory, setUserCategory] = useState('');
   const [jobRole, setSelectedJob] = useState('');
   const [formErrors, setFormErrors] = useState({});
-  const [formSubmitted, setFormSubmitted] = useState(false); 
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [randomPassword, setRandomPassword] = useState("");
   const [userDetails, setUserDetails] = useState(null);
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);  
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (x) => {
+        setImageFile(file);
+        setImageSrc(x.target.result);
+      };
+      reader.readAsDataURL(file);
+    } 
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormSubmitted(true);
-  
+
     if (!validateForm()) {
       return;
     }
-  
-    const data = {
-      FirstName: firstName,
-      LastName: lastName,
-      UserName: userName,
-      Address: address,
-      NIC: nic,
-      DOB: dob,
-      Gender: gender,
-      ContactNumber: mobileNumber,
-      Email: email,
-      UserCategoryType: userCategory,
-      JobRoleType: jobRole
-    };
-  
+   
+    const formData = new FormData();
+    formData.append("UserName", userName);
+    formData.append("FirstName", firstName);
+    formData.append("LastName", lastName);
+    formData.append("Address", address);
+    formData.append("NIC", nic);
+    formData.append("DOB", dob);
+    formData.append("Gender", gender);
+    formData.append("ContactNumber", mobileNumber);
+    formData.append("Email", email);
+    formData.append("profileImageName", firstName); 
+    formData.append("UserCategoryType", userCategory);
+    formData.append("JobRoleType", jobRole);
+    if (imageFile) {
+      formData.append("ImageFile", imageFile);
+    }
+
     try {
-      const response = await apiRequest('https://localhost:44339/api/User/register', 'POST', data);
+      const response = await apiRequest('https://localhost:44339/api/User/register', 'POST', formData);
       console.log('API Response:', response);
-  
+
       const randomPassword = response;
       setRandomPassword(randomPassword);
-  
+
       const userDetails = {
-        UserName: data.UserName,
-        Email: data.Email,
+        UserName: userName,
+        Email: email,
       };
       setUserDetails(userDetails);
 
       alert("User registered successfully. Sending email with credentials...");
-      
-      // Call sendEmail after successful registration
-      sendEmail(randomPassword, userDetails.UserName, userDetails.Email);
-      clearForm();
 
+      sendEmail(randomPassword, userDetails.UserName, userDetails.Email);
+      clearForm(); 
     } catch (error) {
       console.error("User registration failed:", error);
       alert("Failed to register user. Please try again later.");
     }
   };
-  
+
   const sendEmail = (password, userName, userEmail) => {
     const serviceID = 'service_6hxgdeb';
     const templateID = 'template_0y9c7xm';
-    const publicKey = 'T4Kg7zhw6fdHfxh6K'; 
+    const publicKey = 'T4Kg7zhw6fdHfxh6K';
 
     const templateParams = {
       user_name: userName,
@@ -85,8 +98,7 @@ export default function UserCreationForm() {
     };
 
     console.log('Sending email with:', serviceID, templateID, templateParams, publicKey);
-    emailjs
-      .send(serviceID, templateID, templateParams, publicKey)
+    emailjs.send(serviceID, templateID, templateParams, publicKey)
       .then((response) => {
         console.log("SUCCESS!", response.status, response.text);
         alert("Email sent successfully!");
@@ -110,13 +122,18 @@ export default function UserCreationForm() {
     setNIC('');
     setUserCategory('');
     setSelectedJob('');
+    setImageFile(null);
+    setImageSrc('');
     setFormErrors({});
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null; // Clear the file input
+    }
   };
 
   const validateForm = () => {
     const errors = {};
     let isValid = true;
-    
+
     if (nic.length !== 12) {
       errors.nic = 'NIC must have 12 digits';
       isValid = false;
@@ -128,7 +145,7 @@ export default function UserCreationForm() {
       isValid = false;
     }
 
-    if (!firstName || !lastName || !userName || !address || !nic || !dob || !gender || !mobileNumber || !email || !userCategory || !jobRole) {
+    if (!firstName || !lastName || !userName || !address || !nic || !dob || !gender || !mobileNumber || !email || !imageSrc|| !userCategory || !jobRole) {
       errors.required = 'All fields are required';
       isValid = false;
     }
@@ -140,7 +157,7 @@ export default function UserCreationForm() {
   return (
     <div className="content">
       <div className="form_group">
-        <div> 
+        <div>
           <h3>User Creation Form</h3>
         </div>
         <Form onSubmit={handleSubmit}>
@@ -173,10 +190,11 @@ export default function UserCreationForm() {
               {formErrors.nic && <span className="error" style={{ color: 'red', fontSize: 'small' }}>{formErrors.nic}</span>}
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridDOB">
-              <Form.Label>Date of Birth</Form.Label>
-              <Form.Control type="date" value={dob} onChange={(e) => setDOB(e.target.value)} />
+            <Form.Group as={Col} controlId="formGridMobileNumber">
+              <Form.Label>Mobile Number</Form.Label>
+              <Form.Control type="text" placeholder="Enter mobile number" value={mobileNumber} onChange={(e) => setContactNumber(e.target.value)} />
             </Form.Group>
+
           </Row>
 
           <Row className="mb-10">
@@ -190,18 +208,29 @@ export default function UserCreationForm() {
               </Form.Control>
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridMobileNumber">
-              <Form.Label>Mobile Number</Form.Label>
-              <Form.Control type="text" placeholder="Enter mobile number" value={mobileNumber} onChange={(e) => setContactNumber(e.target.value)} />
+            <Form.Group as={Col} controlId="formGridDOB">
+              <Form.Label>Date of Birth</Form.Label>
+              <Form.Control type="date" value={dob} onChange={(e) => setDOB(e.target.value)} />
+            </Form.Group>
+          </Row>
+          <Row className="mb-10">
+            <Form.Group className="mb-10" controlId="formGridEmail">
+              <Form.Label>Email ID</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              {formErrors.email && <span className="error" style={{ color: 'red', fontSize: 'small' }}>{formErrors.email}</span>}
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formImageUpload">
+              <Form.Label>Profile Image</Form.Label>
+              <Form.Control type="file" accept="image/*" onChange={handleImageChange}  ref={fileInputRef}/>
+              {imageSrc && (
+                <div className="image-preview">
+                  <img src={imageSrc} className="profile-image" alt="profile" />
+                </div>
+              )}
             </Form.Group>
           </Row>
 
-          <Form.Group className="mb-10" controlId="formGridEmail">
-            <Form.Label>Email ID</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            {formErrors.email && <span className="error" style={{ color: 'red', fontSize: 'small' }}>{formErrors.email}</span>}
-          </Form.Group>
-          
           <Row className="mb-10">
             <Form.Group as={Col} controlId="formGridUserCategory">
               <Form.Label>User Category</Form.Label>
@@ -210,7 +239,6 @@ export default function UserCreationForm() {
                 <option>Admin</option>
                 <option>Manager</option>
                 <option>Developer</option>
-               
               </Form.Control>
             </Form.Group>
 
@@ -218,7 +246,6 @@ export default function UserCreationForm() {
               <Form.Label>Job Role</Form.Label>
               <Form.Control as="select" value={jobRole} onChange={(e) => setSelectedJob(e.target.value)}>
                 <option>Select Job Role</option>
-                
                 <option>Software Engineer</option>
                 <option>UI/UX Designer</option>
                 <option>Network Engineer</option>
@@ -241,13 +268,13 @@ export default function UserCreationForm() {
             </div>
           )}
 
-          <Row className="mb-10">          
+          <Row className="mb-10">
             <Col>
               <Button variant="primary" onClick={clearForm} id="resetButton">
                 Clear
               </Button>
             </Col>
-            
+
             <Col>
               <Button variant="secondary" type="submit" id="submitButton">
                 Submit
