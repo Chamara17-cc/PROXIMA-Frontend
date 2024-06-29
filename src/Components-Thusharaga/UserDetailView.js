@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import './styles/UserDetailView.css'
+import './styles/UserDetailView.css';
 
 const UserDetailView = () => {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isActive, setIsActive] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`https://localhost:44339/api/User/${userId}`);
         setUserData(response.data);
+        setIsActive(response.data.isActive);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -33,47 +33,38 @@ const UserDetailView = () => {
     }
 
     try {
-      const response= await axios.post('https://localhost:44339/api/User/deactivate-user', { userId });
+      const response = await axios.post('https://localhost:44339/api/User/deactivate-user', { userId });
       alert("User deactivated successfully.");
       setErrorMessage(null);
-      // Optionally, refetch the user data
-      
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        setErrorMessage(error.response.data.message);
-        window.alert(error.response.data.message);  // Display error message as a popup
-      } else {
-        const genericErrorMessage = 'Error deactivating user.';
-        setErrorMessage(genericErrorMessage);
-        window.alert(genericErrorMessage);  // Display generic error message as a popup
-      }
-      console.error('Error deactivating user:', error);
+      handleError(error, 'Error deactivating user.');
     }
   };
 
   const reactivateUser = async () => {
-    const confirmDeactivation = window.confirm("Are you sure you want to reactivate the user?");
-    if (!confirmDeactivation) {
+    const confirmReactivation = window.confirm("Are you sure you want to reactivate the user?");
+    if (!confirmReactivation) {
       return;
     }
 
     try {
-      const response= await axios.post('https://localhost:44339/api/User/reactivate-user', { userId });
+      const response = await axios.post('https://localhost:44339/api/User/reactivate-user', { userId });
       alert("User reactivated successfully.");
       setErrorMessage(null);
-      // Optionally, refetch the user data
-      
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        setErrorMessage(error.response.data.message);
-        window.alert(error.response.data.message);  // Display error message as a popup
-      } else {
-        const genericErrorMessage = 'Error reactivating user.';
-        setErrorMessage(genericErrorMessage);
-        window.alert(genericErrorMessage);  // Display generic error message as a popup
-      }
-      console.error('Error reactivating user:', error);
+      handleError(error, 'Error reactivating user.');
     }
+  };
+
+  const handleError = (error, genericErrorMessage) => {
+    if (error.response && error.response.data && error.response.data.message) {
+      setErrorMessage(error.response.data.message);
+      window.alert(error.response.data.message);
+    } else {
+      setErrorMessage(genericErrorMessage);
+      window.alert(genericErrorMessage);
+    }
+    console.error(genericErrorMessage, error);
   };
 
   if (loading) {
@@ -86,22 +77,11 @@ const UserDetailView = () => {
 
   return (
     <div className="profile-container">
-      
-      
-{/*     
-      {userData.profileImage && (
-        <img 
-          src={userData.profileImage} 
-          alt="Profile" 
-          className="profile-image" 
-        />
-      )} */}
-
-      {/* Profile Icon */}
-      <div className="profile-icon">
-        <FontAwesomeIcon icon={faUser} size="5x" color="#000000" />
+      <div>
+      {userData.imageSrc && (
+        <img src={userData.imageSrc} alt="Profile" className="card-img-top rounded-circle" />
+      )}
       </div>
-
       <div className="profile-details">
         <table className="user-details-table">
           <tbody>
@@ -152,12 +132,10 @@ const UserDetailView = () => {
           </tbody>
         </table>
       </div>
-
-     
       <div className="bottom-buttons">
-        <Link to="/userList" className="btn btn-secondary">Back</Link>
-        <button className="btn btn-danger" onClick={deactivateUser}>Deactivate</button>
-        <button className="btn btn-danger" onClick={reactivateUser}>Reactivate</button>
+        <Link to="/userManagement" className="btn btn-secondary">Back</Link>
+        <button className="btn btn-danger" onClick={deactivateUser} disabled={!isActive}>Deactivate</button>
+        <button className="btn btn-danger" onClick={reactivateUser} disabled={isActive}>Reactivate</button>
       </div>
     </div>
   );
