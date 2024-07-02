@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import RateUpdatePage from '../Pages-Chamara/RateUpdatePage';
 import './styles/AdminDashboardStyles.css';
-import { BarChart } from '@mui/x-charts/BarChart';
 import axios from 'axios';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 function AdminDashboardComponent({ showRateUpdate }) {
   const [monthlyIncome, setIncome] = useState('');
@@ -30,7 +30,10 @@ function AdminDashboardComponent({ showRateUpdate }) {
       console.error('Error fetching dashboard data:', error);
     }
   };
-
+  const data = [
+    { name: 'Monthly Income', value: monthlyIncome, fill: '#4CAF50' }, // Green for income
+    { name: 'Monthly Expense', value: monthlyExpense, fill: '#FF5722' }  // Orange for expense
+  ];
   return (
     <div className="maincontent">
       <div className="header">
@@ -104,13 +107,21 @@ function AdminDashboardComponent({ showRateUpdate }) {
         </div>
 
         <div className="column3">
-          <BarChart
-            xAxis={[{ scaleType: 'band', data: ['Monthly Income', 'Monthly Expense'] }]}
-            series={[{ data: [monthlyIncome, monthlyExpense] }]}
-            width={400}
-            height={300}
-            className="chartContainer"
-          />
+        <BarChart
+        width={400}
+        height={300}
+        data={data}
+        margin={{
+          top: 20, right: 30, left: 20, bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="value" />
+      </BarChart>
         </div>
       </div>
     </div>
