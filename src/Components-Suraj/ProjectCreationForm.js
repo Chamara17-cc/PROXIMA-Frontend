@@ -2,7 +2,7 @@ import React, {  useEffect, useState } from "react";
 import axios from "axios";
 import emailjs from 'emailjs-com';
 import { getLoggedUserId } from '../Auth/ApiService';
-
+import './ProjectCreationForm.css'
 
 import TextField from "@mui/material/TextField";
 
@@ -322,7 +322,9 @@ export default function ProjectCreationForm() {
 
 
   return (
-    <>
+    
+    <div className="content">
+    
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         {/* ------Project Initalization part----- has a validation */}
 
@@ -489,65 +491,57 @@ export default function ProjectCreationForm() {
         {/* --------------Dates--------- */}
 
         <div className="Section">
-          <h2 className="SectionHeading">Project Planing</h2>
-          <Row className="mb-3" style={{width:"65%"}}>
-            <Form.Group as={Col}>
-              <Form.Label>Start Date:</Form.Label>
-              <InputGroup hasValidation>
-                <TextField
-                  aria-required
-                  style={{
-                    backgroundColor: "whitesmoke",
-                    borderRadius: "10px",
-                    width:"300px"
-                  }}
-                  margin="dense"
-                  id="last_updated"
-                  type="date"
-                  fullWidth
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please select start date.
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
+          <h3 className="SectionHeading">Project Planing</h3>
+          <Row className="mb-3">
+  <Form.Group as={Col} md={6}>
+    <Form.Label>Start Date:</Form.Label>
+    <InputGroup hasValidation>
+      <TextField
+        aria-required
+        style={{
+          backgroundColor: "whitesmoke",
+          borderRadius: "10px",
+          width: "100%" // Use 100% to ensure it fits the column
+        }}
+        margin="dense"
+        id="startDate"
+        type="date"
+        fullWidth
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+      />
+      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">
+        Please select a start date.
+      </Form.Control.Feedback>
+    </InputGroup>
+  </Form.Group>
 
-            <Form.Group as={Col}>
-              <Form.Label>Due Date:</Form.Label>
+  <Form.Group as={Col} md={6}>
+    <Form.Label>Due Date:</Form.Label>
+    <InputGroup hasValidation>
+      <TextField
+        aria-required
+        style={{
+          backgroundColor: "whitesmoke",
+          borderRadius: "10px",
+          width: "100%" // Use 100% to ensure it fits the column
+        }}
+        margin="dense"
+        id="dueDate"
+        type="date"
+        fullWidth
+        value={dueDate}
+        onChange={(e) => setDueDate(e.target.value)}
+      />
+      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">
+        Please select a due date.
+      </Form.Control.Feedback>
+    </InputGroup>
+  </Form.Group>
+</Row>
 
-              <TextField
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width:"300px"}}
-                margin="dense"
-                id="last_updated"
-                type="date"
-                fullWidth
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              />
-
-              {/* <DatePicker
-                type="date"
-                
-                className="datepicker"
-                selected={selectedDueDate}
-                onChange={handleDueDateChange}
-                dateFormat="YYYY-MM-DD"
-                // You can customize the date format and other options
-              /> */}
-
-              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer
-        components={['DateTimePicker', 'DateTimePicker', 'DateTimePicker']}
-      >
-        
-        <DateTimePicker name="startDateTime" onChange={handleDueDateChange} dateFormat=""/>
-      </DemoContainer>
-    </LocalizationProvider> */}
-            </Form.Group>
-          </Row>
 
           <Form.Group className="mb-3">
             <Form.Label>Project Time Line</Form.Label>
@@ -564,7 +558,8 @@ export default function ProjectCreationForm() {
 
         <div className="Section">
           <Form.Group className="mb-3">
-            <Form.Label>Budget Allocation</Form.Label>
+          <h3 className="SectionHeading">Budget Allocation</h3>
+            <Form.Label >Budget Allocation</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter budget allocation"
@@ -584,6 +579,6 @@ export default function ProjectCreationForm() {
       
       
 
-    </>
+    </div>
   );
 }

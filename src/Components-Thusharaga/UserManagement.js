@@ -80,7 +80,7 @@ export default function UserManagement() {
         </thead>
         <tbody>
           {data.map((user, index) => (
-            <tr key={index} onClick={() => handleUserSelection(user.userId)}>
+            <tr key={index} className={user.isActive ? "" : "table-danger"} onClick={() => handleUserSelection(user.userId)}>
               <td>{user.userId}</td>
               <td>{user.userName}</td>
               <td>{user.email}</td>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
+import { Modal } from 'react-bootstrap';
 import './styles/UserDetailView.css';
+import UpdateUserRoleComponent from './UpdateUserRole';
 
 const UserDetailView = () => {
   const { userId } = useParams();
@@ -9,6 +11,7 @@ const UserDetailView = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isActive, setIsActive] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -33,7 +36,7 @@ const UserDetailView = () => {
     }
 
     try {
-      const response = await axios.post('https://localhost:44339/api/User/deactivate-user', { userId });
+      await axios.post('https://localhost:44339/api/User/deactivate-user', { userId });
       alert("User deactivated successfully.");
       window.location.reload();
       setErrorMessage(null);
@@ -49,7 +52,7 @@ const UserDetailView = () => {
     }
 
     try {
-      const response = await axios.post('https://localhost:44339/api/User/reactivate-user', { userId });
+      await axios.post('https://localhost:44339/api/User/reactivate-user', { userId });
       alert("User reactivated successfully.");
       window.location.reload();
       setErrorMessage(null);
@@ -69,6 +72,9 @@ const UserDetailView = () => {
     console.error(genericErrorMessage, error);
   };
 
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -80,9 +86,9 @@ const UserDetailView = () => {
   return (
     <div className="profile-container">
       <div>
-      {userData.imageSrc && (
-        <img src={userData.imageSrc} alt="Profile" className="card-img-top rounded-circle" />
-      )}
+        {userData.imageSrc && (
+          <img src={userData.imageSrc} alt="Profile" className="card-img-top rounded-circle" />
+        )}
       </div>
       <div className="profile-details">
         <table className="user-details-table">
@@ -136,9 +142,29 @@ const UserDetailView = () => {
       </div>
       <div className="bottom-buttons">
         <Link to="/userManagement" className="btn btn-secondary">Back</Link>
-        <button className="btn btn-danger" onClick={deactivateUser} disabled={!isActive}>Deactivate</button>
-        <button className="btn btn-danger" onClick={reactivateUser} disabled={isActive}>Reactivate</button>
+        {isActive ? (
+          <button className="btn btn-danger" onClick={deactivateUser}>Deactivate</button>
+        ) : (
+          <button className="btn btn-danger" onClick={reactivateUser}>Reactivate</button>
+        )}
+        {isActive && userData.userCategoryType !== "ADMIN" && (
+          <button
+            className="btn btn-primary"
+            onClick={handleShowModal}
+          >
+            Update Role
+          </button>
+        )}
       </div>
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Body>
+          <UpdateUserRoleComponent
+            userId={userId}
+            currentRole={userData.userCategoryType}
+            onClose={handleCloseModal}
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
