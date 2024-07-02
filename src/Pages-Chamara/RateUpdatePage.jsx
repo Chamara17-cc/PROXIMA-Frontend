@@ -76,9 +76,9 @@ export default function PopupForm() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} style={{ backgroundColor: '#3D97ED', color: 'white' }}>Developer rate</Button>
-      <div className="developer_rate">
-        <Dialog open={open} onClose={handleClose}>
+      <Button onClick={handleClickOpen} style={{ backgroundColor: '#20C997', color: 'white' }}><b>Developer rate</b></Button>
+      <div className="developerrate" >
+        <Dialog open={open} onClose={handleClose} >
           <DialogTitle className='Rateheader'>Hourly Rate</DialogTitle>
           <DialogContent>
             {error && <div style={{ color: 'red' }}>{error}</div>}
@@ -119,5 +119,6 @@ export default function PopupForm() {
         </Dialog>
       </div>
     </div>
+
   );
 }

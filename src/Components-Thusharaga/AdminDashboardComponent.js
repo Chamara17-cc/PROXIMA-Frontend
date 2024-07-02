@@ -45,8 +45,8 @@ function AdminDashboardComponent({ showRateUpdate }) {
       </div>
       
       <div className="body">
-        <div className="description">
-        <h3> <b>
+        <div className="description" >
+        <h3 > <b>
             Our company thrives with a robust team. Here's a quick overview of our dynamic workforce and the projects we handle:
             </b>
         </h3>

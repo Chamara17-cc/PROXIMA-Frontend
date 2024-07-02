@@ -61,4 +61,64 @@
     justify-content: flex-end;
     padding: 8px;
   }
+  .content{
+    border: 2px rgb(0, 0, 0);
+    border-radius: 5px;
+    background-color: rgb(167, 10, 10);
+  }
+  .developerrate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  
+  /* Dialog styles */
+  .MuiDialog-paper {
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+  }
+  
+  .Rateheader {
+    text-align: center;
+    font-size: 1.5em;
+    color: #007BFF; /* Bright blue color for the header */
+  }
+  
+  /* Error message styles */
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  /* Text field styles */
+  .MuiTextField-root {
+    margin-bottom: 20px;
+  }
+  
+  .MuiInputBase-input {
+    padding: 10px;
+    font-size: 1em;
+  }
+  
+  /* Action button styles */
+  .actionbutton {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .dialog-action-button {
+    background-color: #007BFF; /* Bright blue color for buttons */
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-transform: none;
+  }
+  
+  .dialog-action-button:hover {
+    background-color: #0056b3; /* Darker blue for hover effect */
+  }
   
