@@ -10,18 +10,18 @@
          "icon": "bi-person-fill",
         "childrens": [
             {
-                "title": "User Accounts",
+                "title": "User List",
                 "path": "/userList",
                 "roles": ["1", "2"]
             },
             {
-                "title": "Add New User",
+                "title": "User Registration",
                 "path": "/userCreation",
                 "roles": ["1"]
             },
             {
-                "title": "Deactivate User",
-                "path": "/userList",
+                "title": "User Management",
+                "path": "/userManagement",
                 "roles": ["1"]
             }
             

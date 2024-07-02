@@ -24,7 +24,9 @@ const apiRequest = async (url, method = 'GET', data = null) => {
     return response.data;
   } catch (error) {
     if (error.response && error.response.status === 401) {
+      // Access token has expired, attempt to refresh the token
       await refreshToken();
+      // Retry the original request with the new access token
       const newAccessToken = localStorage.getItem('accessToken');
       headers['Authorization'] = `Bearer ${newAccessToken}`;
       const retryResponse = await axios({
@@ -35,6 +37,7 @@ const apiRequest = async (url, method = 'GET', data = null) => {
       });
       return retryResponse.data;
     } else {
+      // Handle other errors
       console.error('API request failed', error);
       throw error;
     }
@@ -49,5 +52,5 @@ export const getLoggedUserId = () => {
     throw new Error('No access token found');
   }
   const decodedToken = jwtDecode(accessToken);
-  return decodedToken.UserID; // Assuming the user ID is stored in the `userId` field of the token
+  return decodedToken.UserID; 
 };
