@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button";
 
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import "../DataView.css";
+import FullTaskListCom from "../FullTaskListCom";
 
 
 
@@ -287,7 +289,7 @@ export default function PMprojectDetailsCom() {
     try {
       // const response = await axios.get(url2);
       // console.log(response)
-
+      if (window.confirm('Do you want to download this item?')){
       const response = await axios.get(urlDownload, {
         responseType: 'blob' // Specify blob response type for downloading
       });
@@ -298,11 +300,17 @@ export default function PMprojectDetailsCom() {
       link.download = fileName;
       link.click();
       alert("Downloaded");
-
+    }else{
+      console.log("Not downloaded");
+    }
 
     } catch (error) {
       console.log(error);  
     }
+  }
+
+  const FullTaskList = () => {
+    navigate("/PMFullTaskListPage", {state:{selectedId}})
   }
 
 
@@ -330,6 +338,7 @@ export default function PMprojectDetailsCom() {
       >
         <Tab eventKey="project" title="Project Info">
           {projectData.map((pro) => (
+            <div className="mainCard">
             <div className="project-detail">
               <h3 className="card-topic">{pro.projectName}</h3>
               <p className="ViewItems">{pro.projectDescription}</p>
@@ -339,6 +348,7 @@ export default function PMprojectDetailsCom() {
               <p className="ViewItems">Project DueDate : {pro.p_DueDate}</p>
               <p className="ViewItems">Duration : {pro.duration}</p>
               <p className="ViewItems">Objectives : {pro.objectives}</p>
+            </div>
             </div>
           ))}
           <div>
@@ -350,15 +360,13 @@ export default function PMprojectDetailsCom() {
         </Tab>
 
         <Tab eventKey="devTeam" title="Team Info">
-          {projectData.map((pro) => (
+        {projectData.map((pro) => (
             <div className="project-detail">
               <h3 className="card-topic">{pro.teamName}</h3>
+              <p className="ViewItems">Project Manager Name : {pro.projectManagerFName} {pro.projectManagerLName}</p>
             </div>
           ))}
           <div className="project-detail">
-            <p className="ViewItems">Project Manager Name: manager01</p>
-
-            <br />
 
             <h3 className="card-topic">Developers</h3>
             <table className="ProjectList">
@@ -397,6 +405,7 @@ export default function PMprojectDetailsCom() {
           <Button onClick={handleNavigate} variant="outline-primary">
             Add developers
           </Button>
+          <Button onClick={FullTaskList}>All Tasks</Button>
           
         </Tab>
         
@@ -404,6 +413,7 @@ export default function PMprojectDetailsCom() {
           <div className="project-detail">
             <h3 className="card-topic">Project Resources</h3>
             <Form.Group as={Col} className="mb-3">
+            <div className="ViewItems">
               <Form.Label>Basic Info: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -419,9 +429,11 @@ export default function PMprojectDetailsCom() {
                   Upload
                 </Button>
               </div>
+              </div>
             </Form.Group>
 
             <Form.Group as={Col} className="mb-3">
+            <div className="ViewItems">
               <Form.Label> Time Line Info: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -437,19 +449,20 @@ export default function PMprojectDetailsCom() {
                   Upload
                 </Button>
               </div>
+              </div>
             </Form.Group>
 
         
           </div>
-
+          <div className="project-detail">
           <h3 className="card-topic">Uploaded Resources</h3>
-          <div style={{ display: "flex" }}>
+          <div className="ViewItems" style={{ display: "flex" }}>
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Basic Info: </Form.Label>
 
               {basicNames.map((file, index) => (
                 <ul>
-                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button className="downbutton" style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
                 </ul>
               ))}
             </Form.Group>
@@ -459,7 +472,7 @@ export default function PMprojectDetailsCom() {
 
               {timelineNames.map((file, index) => (
                 <ul>
-                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                  <li onClick={() => download(file.localStoragePath, file.fileName)} key={file.fileId}><button className="downbutton" style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
                 </ul>
               ))}
             </Form.Group>
@@ -468,6 +481,7 @@ export default function PMprojectDetailsCom() {
 
             
             
+          </div>
           </div>
           <p style={{color:"red"}}>*click on file to download</p>
         </Tab>

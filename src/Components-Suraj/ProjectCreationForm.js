@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import axios from "axios";
+import emailjs from 'emailjs-com';
+import { getLoggedUserId } from '../Auth/ApiService';
+
 
 import TextField from "@mui/material/TextField";
 
@@ -13,8 +16,10 @@ import InputGroup from "react-bootstrap/InputGroup";
 import "react-datepicker/dist/react-datepicker.css";
 import "./datepickerStyle.css";
 
+
 import "./FormStyle.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { accordionActionsClasses } from "@mui/material";
 
 export default function ProjectCreationForm() {
   const navigate = useNavigate();
@@ -39,6 +44,12 @@ export default function ProjectCreationForm() {
   // const handlePIdChange = (value) => {
   //   setProjectId(value);
   // };
+
+
+  const loggedAdminId = 1;
+  
+
+
 
   //-------------get project manager'
 
@@ -187,6 +198,19 @@ export default function ProjectCreationForm() {
     return Math.floor(differenceInMs / oneDay);
   }
 
+
+  //email data
+
+  const SendEmail = async () => {
+    const urlEmail = `https://localhost:44339/api/EmailSend?adminId=${loggedAdminId}&PmId=${projectManagerID}&projectName=${projectName}`;
+    if (window.confirm('Do you want to send a Email?')){
+      axios.post(urlEmail, [])
+    .then(alert("Email sent"))
+    .catch(console.error());
+    }
+    
+  }
+
   
 
   useEffect(() => {
@@ -194,8 +218,11 @@ export default function ProjectCreationForm() {
     setTimeDuration(time);
   },[sdate, ddate])
 
+
   const handleSubmit = (event) => {
-    
+
+    const userid=getLoggedUserId();
+    console.log(userid)
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -224,10 +251,10 @@ export default function ProjectCreationForm() {
         TimeLine: timeline,
         //AdminId
       };
-
+   
       console.log(data);
 
-      const url = "https://localhost:44339/api/CreateProject";
+      const url = `https://localhost:44339/api/CreateProject?id=${userid}`;
 
       axios
         .post(url, data)
@@ -238,18 +265,61 @@ export default function ProjectCreationForm() {
 
           //---after successful submission
 
+          //Email sending part
+          SendEmail();
+
           setValidated(false);
           window.location.reload();
         })
         .catch((error) => {
           alert(error);
         });
+
+
+        
     }
+    // //Email send part
+    // emailjs.sendForm(
+    //   'service_ycu89qk',
+    //   'template_72pp792',
+    //   formData,
+    //   'GFEPTZpFNfrSjkjsD'
+    // )
+    //   .then((response) => {
+    //     console.log('SUCCESS!', response.status, response.text);
+    //     alert('Email sent successfully!');
+    //     setFormData({ name: '', email: '', message: '' }); // Clear form after submission
+    //   })
+    //   .catch((err) => {
+    //     console.log('FAILED...', err);
+    //     alert('Email sending failed! Please try again later.');
+    //   });
+
+    // const templateParams = {
+    //   UserName: 'UserName',
+    //   userName: 'abc',
+    //   adminName: 'abcd',
+    //   reply_to:'surajmshan@gmail.com'
+    // };
+
+    // emailjs
+    //   .send("service_ycu89qk", "template_72pp792", templateParams, "GFEPTZpFNfrSjkjsD")
+    //   .then((response) => {
+    //     console.log("SUCCESS!", response.status, response.text);
+    //     alert("Email sent successfully!");
+        
+    //   })
+    //   .catch((error) => {
+    //     console.error("FAILED...", error);
+    //     alert("Failed to send email. Please try again later.");
+    //   });
+  
+
+    
 
     setValidated(true); // Always set validated to true after attempting validation
   };
 
- 
 
   return (
     <>

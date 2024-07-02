@@ -1,7 +1,7 @@
-.MainContent{
+.ContentMainContent{
     background-color: white;
     color: black;
-    height:540px;
+    height:600px;
     width: 1150px;
     margin-right: 30px;
     border-radius: 15px;
@@ -60,4 +60,48 @@
 
 .Profiles{
     display: flex;
+}
+
+.Newtable{
+    width: 800px;
+    margin-left: 70px;
+
+
+}
+
+.TeamContent{
+    border: 1px #311B92 solid;
+    border-radius: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding-bottom: 20px;
+}
+.Card1{
+    border: 1px #311B92 solid;
+    background-color: #B39DDB;
+    border-radius: 20px;
+    width: 250px;
+    height: 120px;
+}
+.Card2{
+    border: 1px #311B92 solid;
+    background-color: #B39DDB;
+    border-radius: 20px;
+    width:250px;
+    height: 120px;
+}
+
+.Cards{
+    margin-left: 50px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.tot{
+    padding-top: 10px;
+margin-left: 40px;
+
+}
+.count{
+    margin-left: 100px;
 }

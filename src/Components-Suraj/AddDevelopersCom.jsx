@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import "./ProjectListCSS.css";
 import { useState } from "react";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Add } from "@mui/icons-material";
 
 export default function AddDevelopersCom() {
   const [developer, setDevelper] = useState([]);
@@ -152,6 +153,18 @@ export default function AddDevelopersCom() {
     //checkAvailability();
   });
 
+  //email data
+
+  const SendEmail = async () => {
+    const urlEmail = `https://localhost:44339/api/EmailSend/DeveloperAssign?projectId=${selectedId}`;
+    if (window.confirm('Do you want to send Emails?')){
+      axios.post(urlEmail, add)
+    .then(alert("Email sent"))
+    .catch(console.error());
+    }
+    
+  }
+
   const HandleSubmit = async () => {
     for (var i = 0; i < add.length; i++) {
       const data = {
@@ -167,6 +180,7 @@ export default function AddDevelopersCom() {
     }
 
     alert("Developers added: " + add);
+    SendEmail();
     console.log("clicked");
     navigate(-1);
   };
@@ -185,6 +199,11 @@ export default function AddDevelopersCom() {
         </thead>
 
         <tbody>
+
+        {(developer.length === 0) ? (
+            <Spinner size="lg" animation="border" style={{marginLeft: "75px", marginTop: "35px", marginBottom: "35px"}} />
+          ): <></>}
+
           {developer.map((dev, index) => (
             <tr key={dev.userId}>
               <td>{dev.userId}</td>

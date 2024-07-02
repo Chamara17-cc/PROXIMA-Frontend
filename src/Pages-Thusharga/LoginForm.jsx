@@ -27,6 +27,7 @@ const LoginForm = () => {
     };
 
     try {
+      //const response = await axios.post('https://localhost:7008/api/Auth/login', data);
       const response = await axios.post('https://localhost:44339/api/Auth/login', data);
       const { accessToken, refreshToken } = response.data; // Assuming your backend returns these fields
       localStorage.setItem('accessToken', accessToken); // Store the access token securely
@@ -38,6 +39,11 @@ const LoginForm = () => {
 
       const userCategoryId = decodedToken['UserCategoryId'];
       console.log('UserCategoryId:', userCategoryId); 
+
+      const userId = decodedToken['UserID'];
+      console.log("userId: ", userId);
+
+      
 
       // Call the login function from the context
       login({
@@ -51,16 +57,16 @@ const LoginForm = () => {
       // Redirect based on user's role
       switch (userCategoryId) {
         case '1':
-          navigate('/adminDashboard');
+          navigate('/adminDashboard',{state: {userId}});
           break;
         case '2':
-          navigate('/ProjectManagerDashboard');
+          navigate('/ProjectManagerDashboard',{state: {userId}});
           break;
         case '3':
-          navigate('/developerDashboard');
+          navigate('/developerDashboard',{state: {userId}});
           break;
         case '4':
-          navigate('/clientDashboard');
+          navigate('/clientDashboard',{state: {userId}});
           break;
         default:
           navigate('/');

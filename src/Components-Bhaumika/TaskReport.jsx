@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import './Report.css'
+import { getLoggedUserId } from '../Auth/ApiService';
 
 export default function TaskReport() {
 
@@ -14,20 +15,21 @@ export default function TaskReport() {
     const [inprogressTask,setInprogressTask] = useState(0);
   
     useEffect(() => {
-        fetchDigramData(5); // Assuming Developer ID is 5, change as necessary
+      const userid=getLoggedUserId();
+        fetchDigramData(userid); // Assuming Developer ID is 5, change as necessary
       }, []);
     
       const fetchDigramData = async (developerId) => {
         try {
-          const responseremaintask = await axios.get(`https://localhost:7008/api/DeveloperTaskProgressReport/GetRemainingTasks/${developerId}`);
+          const responseremaintask = await axios.get(`https://localhost:44339/api/DeveloperTaskProgressReport/GetRemainingTasks/${developerId}`);
           setRemainTask(responseremaintask.data);
           console.log(remainTask);
 
-          const responsecompletetask = await axios.get(`https://localhost:7008/api/DeveloperTaskProgressReport/GetCompletedTasks/${developerId}`);
+          const responsecompletetask = await axios.get(`https://localhost:44339/api/DeveloperTaskProgressReport/GetCompletedTasks/${developerId}`);
           setCompleteTask(responsecompletetask.data);
           console.log(completeTask);
 
-          const responseinprogresstask = await axios.get(`https://localhost:7008/api/DeveloperTaskProgressReport/GetInProgressTasks/${developerId}`);
+          const responseinprogresstask = await axios.get(`https://localhost:44339/api/DeveloperTaskProgressReport/GetInProgressTasks/${developerId}`);
           setInprogressTask(responseinprogresstask.data);
           console.log(inprogressTask);
 

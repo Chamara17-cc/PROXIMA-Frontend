@@ -5,25 +5,28 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import './Report.css'
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 function TimeReport() {
 
 
     const [remain,setRemain] = useState(0);
     const [complete,setComplete] = useState(0);
-   
-  
+    const location=useLocation();
+   const selectedId = location.state.newTimeSelectedId;
+
     useEffect(() => {
-        fetchDigramData(7); // Assuming project ID is 7, change as necessary
+        fetchDigramData(selectedId); // Assuming project ID is 7, change as necessary
       }, []);
     
       const fetchDigramData = async (projectId) => {
         try {
-          const responseremain = await axios.get(`https://localhost:7008/api/TimeProgressReport/ProjectProgressReportRemain/${projectId}`);
+          const responseremain = await axios.get(`https://localhost:44339/api/TimeProgressReport/ProjectProgressReportRemain/${projectId}`);
           setRemain(responseremain.data);
           console.log(remain);
 
-          const responsecomplete = await axios.get(`https://localhost:7008/api/TimeProgressReport/ProjectProgressReportComplete/${projectId}`);
+          const responsecomplete = await axios.get(`https://localhost:44339/api/TimeProgressReport/ProjectProgressReportComplete/${projectId}`);
           setComplete(responsecomplete.data);
           console.log(complete);
           

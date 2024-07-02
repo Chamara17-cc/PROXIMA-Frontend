@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Col, Form, Row, InputGroup } from 'react-bootstrap';
 import { useLocation, Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import './BudgetFormEditStyles.css'
 
 function BudgetFormEdit() {
   const [description, setDescription] = useState('');
@@ -232,11 +233,10 @@ function BudgetFormEdit() {
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
-        </Row>
-
-        <Row className="Datepicker">
+     
           <Form.Group as={Col} controlId="formGridCity">
             <Form.Label>Date</Form.Label>
+            <div className='datepicker'>
             <TextField
               required
               margin="dense"
@@ -252,8 +252,9 @@ function BudgetFormEdit() {
                   paddingBottom: "0px",
                 }
               }}
-              style={{ backgroundColor: "white", width: "220px", marginTop: "10px", marginLeft: "15px" }}
             />
+            </div>
+ 
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
               Please select a date.
@@ -270,22 +271,25 @@ function BudgetFormEdit() {
          
         </Row>
 
-        <Row>
+        {/* <Row>
         <Link to={'/budget'}> 
-        <Form.Group className="print-btn" controlId="formGridAddress1">
-          <Button variant="primary" type="submit" id="Print" >
+        <Form.Group className="reportpage" controlId="formGridAddress1">
+          <Button variant="primary" type="submit" id="report" style={{marginTop:'50px'}}>
             Report
           </Button>
         </Form.Group></Link>
-        
-
         <Form.Group className="submit-btn" controlId="formGridAddress1">
         <Button variant="primary" type="button" id="usubmit" onClick={handleSubmit}>
           Submit
         </Button>
         </Form.Group>
-        </Row>
-           
+        </Row> */}
+         <Row>
+         <div className="btn-group" role="group" aria-label="Basic example">
+                    <Link to={'/budget'}><button type="button" className="btn btn-secondary" style={{width:'80px',margin:'10px', backgroundColor: '#2A75BD'}}>Report</button></Link> 
+                    <button type="button" className="btn btn-secondary" onClick={handleSubmit}  style={{width:'80px',margin:'10px', backgroundColor:'#2A75BD'}}>Submit</button>
+          </div>
+          </Row>  
         
       </Form>
     </div>

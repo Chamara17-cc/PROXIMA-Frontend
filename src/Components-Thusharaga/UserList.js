@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import SearchBar from "../Compornents/Searchbar.jsx"; // Import the SearchBar component
-import apiRequest from '../Auth/ApiService'; // Import the apiRequest function
+import SearchBar from "../Compornents/Searchbar.jsx"; 
+import apiRequest from '../Auth/ApiService.js'; 
+import {jwtDecode} from 'jwt-decode';
+import './styles/UserList.css'
 
 export default function UserListComponent() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchData(); // Fetch data on component mount
+    fetchUserRoleFromToken();
   }, []);
+
+  const fetchUserRoleFromToken = () => {
+    const token = localStorage.getItem('accessToken'); 
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserRole(decodedToken.UserCategory); 
+    }
+  };
+
 
   const fetchData = async () => {
     try {
@@ -23,9 +36,7 @@ export default function UserListComponent() {
     }
   };
 
-  const handleUserSelection = (id) => {
-    navigate(`/userProfilePage/${id}`); // Pass the selected user's ID as part of the URL
-  };
+  
 
   const handleAddUser = () => {
     navigate('/userCreation');
@@ -36,7 +47,7 @@ export default function UserListComponent() {
       fetchData(); // If search term is empty, fetch all data
     } else {
       try {
-        const result = await apiRequest(`https://localhost:44339/api/User/search?id=${searchTerm}`);
+        const result = await apiRequest(`https://localhost:44339/api/User/search?term=${searchTerm}`);
         setData(result);
       } catch (error) {
         console.error("Error searching data:", error);
@@ -58,13 +69,16 @@ export default function UserListComponent() {
     <div className="container mt-5">
       <div className="d-flex justify-content-between mb-3">
         <h2>User List</h2>
-        <button 
-          style={{ backgroundColor: '#325472', borderColor: 'black' }} 
-          className="btn btn-primary" 
-          onClick={handleAddUser}
-        >
-          + Add New User
-        </button>
+        
+          <button 
+            style={{ backgroundColor: '#2d4296', borderColor: 'black' }} 
+            className="btn btn-primary" 
+            onClick={handleAddUser}
+            disabled= {userRole!= "ADMIN"}
+          >
+            + Add New User
+          </button>
+        
       </div>
       
       <SearchBar onSearch={handleSearch} />
@@ -80,7 +94,7 @@ export default function UserListComponent() {
         </thead>
         <tbody>
           {data.map((user, index) => (
-            <tr key={index} onClick={() => handleUserSelection(user.userId)}>
+            <tr key={index} >
               <td>{user.userId}</td>
               <td>{user.userName}</td>
               <td>{user.email}</td>
@@ -92,3 +106,4 @@ export default function UserListComponent() {
     </div>
   );
 }
+

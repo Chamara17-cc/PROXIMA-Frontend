@@ -1,56 +1,115 @@
 import React, { useState } from 'react';
 import './styles/LoginForm.css';
-import { FaEnvelope } from "react-icons/fa";
+import { FaEnvelope, FaUser } from "react-icons/fa";
+import apiRequest from '../Auth/ApiService';
+import emailjs from "emailjs-com";
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState(''); 
-  const [showPopup, setShowPopup] = useState(false);
+  const [userEmail, setEmail] = useState('');
+  const [userName, setUsername] = useState('');
+  const [randomPassword, setRandomPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add forgot password logic here
-    console.log("Email:", email);
-    // Add logic to send reset password link to the provided email
-    setShowPopup(true); 
+  const handleUserNameChange = (event) => {
+    setUsername(event.target.value);
   };
 
-  const closePopup = () => {
-    setShowPopup(false); 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = {
+      UserName: userName,
+      Email: userEmail // Ensure Email is sent to the API if needed
     };
+
+    console.log("Email:", userEmail);
+    console.log("UserName:", userName);
+
+    try {
+      const response = await apiRequest('https://localhost:44339/api/Account/password-forgot', 'POST', data);
+      console.log('API Response:', response);
+
+      const randomPassword = response; // Assuming response contains the random password
+      setRandomPassword(randomPassword);
+
+      alert("A random created password sent to your mail.");
+      
+      // Call sendEmail after successful registration
+      sendEmail(randomPassword, userName, userEmail);
+      clearForm();
+    } catch (error) {
+      console.error("Password reset failed:", error);
+      alert("Failed to reset password. Please try again later.");
+    }
+  };
+
+  const sendEmail = (password, userName, userEmail) => {
+    const serviceID = 'service_7scovdt';
+    const templateID = 'template_dli43nj';
+    const publicKey = '5nPPUyZWyibEji8jt';
+
+    const templateParams = {
+      user_name: userName,
+      user_password: password,
+      user_mail: userEmail
+    };
+
+    console.log('Sending email with:', serviceID, templateID, templateParams, publicKey);
+    emailjs
+      .send(serviceID, templateID, templateParams, publicKey)
+      .then((response) => {
+        console.log("SUCCESS!", response.status, response.text);
+        alert("Email sent successfully!");
+        navigate("/loginForm");
+      })
+      .catch((error) => {
+        console.error("FAILED...", error);
+        alert("Failed to send email. Please try again later.");
+      });
+  };
+
+  const clearForm = () => {
+    setEmail('');
+    setUsername('');
+  };
 
   return (
     <div className='wrapper1'>
       <div className='wrapper'>
         <form onSubmit={handleSubmit}>
           <div className="input-box">
-            <input 
-              type="email" 
-              placeholder="Enter email ID" 
-              value={email}
+            <input
+              type="email"
+              placeholder="Enter email ID"
+              value={userEmail}
               onChange={handleEmailChange}
-              required 
+              required
             />
-            <FaEnvelope className='icon' /> 
+            <FaEnvelope className='icon' />
           </div>
-          
-          <button type="submit">Submit</button> 
-          
+
+          <div className="input-box">
+            <input
+              type="text"
+              placeholder="Enter user name"
+              value={userName}
+              onChange={handleUserNameChange}
+              required
+            />
+            <FaUser className='icon' />
+          </div>
+          <button type="submit">Submit</button>
+
           <div className="remember-forgot">
-          <a href="/loginForm">Login</a>
-        </div>
-        </form>
-        {showPopup && (
-          <div className="popup">
-            <div className="popup-content">
-              <span className="close" onClick={closePopup}>&times;</span>
-              <p>Please check your E-mail ID.</p>
+            <div className="centered-text">
+              <a href="/loginForm">_________Login__________</a>
             </div>
           </div>
-        )}
+        </form>
       </div>
     </div>
   );

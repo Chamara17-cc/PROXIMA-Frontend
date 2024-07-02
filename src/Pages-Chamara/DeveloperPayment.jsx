@@ -184,6 +184,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
+import { getLoggedUserId } from '../Auth/ApiService';
+import './DeveloperPaymentStyles.css'; 
+
 
 function DeveloperPayment() {
   const [open, setOpen] = useState(false);
@@ -195,6 +198,8 @@ function DeveloperPayment() {
   const [totalWorkedHours, setTotalWorkedHours] = useState('');
   const [totalPayment, setTotalPayment] = useState('');
   const [error, setError] = useState('');
+  
+ 
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -252,17 +257,19 @@ function DeveloperPayment() {
     getMonths();
   }, []);
 
-  const handlePaymentRequest = async () => {
+  const handlePaymentRequest = async (userId) => {
+    const userid=getLoggedUserId();
+    console.log("userid", userid)
         try {
           const rateResponse = await axios.get(`https://localhost:44339/api/DeveloperRate/register`);
           setRate(rateResponse.data.currentRate);
     
-          const paymentResponse = await axios.get(`https://localhost:44339/api/Developer_Finance/Payment/11/register?month=${month}&year=${year}`);
+          const paymentResponse = await axios.get(`https://localhost:44339/api/Developer_Finance/Payment/${userid}/register?month=${month}&year=${year}`);
           console.log(paymentResponse.data)
           setTotalWorkedHours(paymentResponse.data.monthlyWorkedHours);
           setTotalPayment(paymentResponse.data.totalMonthPayment);
         } catch (error) {
-          const url = `https://localhost:44339/api/Developer_Finance/Developer/11/register?month=${month}&year=${year}`;
+          const url = `https://localhost:44339/api/Developer_Finance/Developer/${userid}/register?month=${month}&year=${year}`;
           try {
             await axios.post(url);
             handlePaymentRequest(); // Retry the payment request after the data is generated
@@ -279,7 +286,7 @@ function DeveloperPayment() {
       </Button>
       <div className="financialpage">
         <Dialog open={open} onClose={handleClose} maxWidth="100">
-          <DialogTitle className="financialpage"><b><u>Developer Financial Status</u></b></DialogTitle>
+          <DialogTitle className="financialpageheader"><b><u>Developer Financial Status</u></b></DialogTitle>
           <DialogContent>
             <div className="container">
               <table className="table table-borderless">
@@ -306,7 +313,7 @@ function DeveloperPayment() {
                         ))}
                       </select>
                     </th>
-                    <Button style={{ backgroundColor: '#3D97ED' }} onClick={handlePaymentRequest}>Payment Status</Button>
+                    <Button style={{ backgroundColor: '#3D97ED' }} onClick={handlePaymentRequest} className='btn'>Payment Status</Button>
                   </tr>
                 </thead>
                 <tbody>
@@ -314,15 +321,15 @@ function DeveloperPayment() {
                   </tr>
                 </tbody>
                 <thead>
-                  <tr>
-                    <th scope="col">Hourly Rate</th>
+                  <tr className='details'>
+                    <th scope="col" >Hourly Rate</th>
                     <th scope="col">Total Worked Hours</th>
                     <th scope="col">Total Payment</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>
+                    <td className='values'>
                       <div className="form-control" style={{ backgroundColor: '#f0f0f0', border: '1px solid #ced4da',
                          padding: '.375rem .75rem', borderRadius: '.25rem', color: '#000000' }}>
                         Rs: {rate}
