@@ -3,14 +3,14 @@
   background-color: #f5f5f5;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+} 
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  background-color: #fff3e0;
+  background-color: #D3D3D3;
   border-radius: 10px;
 }
 
@@ -111,7 +111,7 @@
   margin: 20px 0;
   font-size: 18px;
   font-weight: bold;
-  color: #402b61;
+  color: #1e104e;
   text-align: center;
 }
 
