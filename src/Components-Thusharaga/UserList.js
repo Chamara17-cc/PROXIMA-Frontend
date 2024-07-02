@@ -70,14 +70,15 @@ export default function UserListComponent() {
       <div className="d-flex justify-content-between mb-3">
         <h2>User List</h2>
         
+        {userRole === "ADMIN" && (
           <button 
             style={{ backgroundColor: '#2d4296', borderColor: 'black' }} 
             className="btn btn-primary" 
             onClick={handleAddUser}
-            disabled= {userRole!= "ADMIN"}
           >
             + Add New User
           </button>
+        )}
         
       </div>
       
@@ -94,7 +95,7 @@ export default function UserListComponent() {
         </thead>
         <tbody>
           {data.map((user, index) => (
-            <tr key={index} >
+            <tr key={index} className={user.isActive ? "" : "table-danger"} >
               <td>{user.userId}</td>
               <td>{user.userName}</td>
               <td>{user.email}</td>

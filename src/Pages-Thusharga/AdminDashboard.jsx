@@ -9,8 +9,6 @@ import { useLocation } from 'react-router-dom'
 function AdminDashboard() {
 
 
-  const location = useLocation();
-  const x = location.state.userId;
 
 
   return (
