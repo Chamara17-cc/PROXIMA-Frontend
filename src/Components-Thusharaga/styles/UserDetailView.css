@@ -10,10 +10,12 @@
 }
 
 .profile-details {
+  padding-top: 30px;
   text-align: center;
   margin-bottom: 20px;
   color: black;
   display: flex;
+  padding-bottom: 10px;
 }
 
 .profile-container img.card-img-top.rounded-circle {
@@ -68,6 +70,8 @@
   text-align: right;
   padding: 6px 15px;
   font-weight: bold;
+  
+  margin-top: 100px;
 }
 
 .user-details-table .value {

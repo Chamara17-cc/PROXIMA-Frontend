@@ -157,7 +157,7 @@ export default function UserCreationForm() {
   };
 
   return (
-    <div className="content">
+    <div className="content-component">
       <div className="form_group">
         <div>
           <h3>User Creation Form</h3>

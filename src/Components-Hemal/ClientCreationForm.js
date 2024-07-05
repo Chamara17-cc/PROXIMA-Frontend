@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import './styles/ClientCreationForm.css';
+import '../Components-Thusharaga/styles/UserCreationForm.css';
 import { useNavigate } from 'react-router-dom';
 import apiRequest from '../Auth/ApiService';
 import emailjs from "emailjs-com";
