@@ -3,12 +3,12 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import '../Components-Thusharaga/styles/UserCreationForm.css';
+import './styles/ClientCreationForm.css';
 import { useNavigate } from 'react-router-dom';
 import apiRequest from '../Auth/ApiService';
 import emailjs from "emailjs-com";
 
-export default function UserCreationForm() {
+export default function ClientCreationForm() {
   const [fullName, setFullName] = useState('');
   const [userName, setUserName] = useState('');
   const [address, setAddress] = useState('');
@@ -133,7 +133,7 @@ export default function UserCreationForm() {
   };
 
   return (
-    <div className="content">
+    <div className="content-component">
       <div className="form_group">
         <div> 
           <h3>Client Creation Form</h3>

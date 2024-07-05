@@ -1,5 +1,5 @@
 import React from 'react'
-import UserDetailView from '../Components-Hemal/ClientCreationForm'
+import ClientDetailView from '../Components-Hemal/ClientDetailView'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 import '../Pages/PageStructure.css'
@@ -13,7 +13,7 @@ function ViewClientDetail() {
      
       <div className="Content">
        
-      <UserDetailView/>
+      <ClientDetailView/>
      
       </div>
       

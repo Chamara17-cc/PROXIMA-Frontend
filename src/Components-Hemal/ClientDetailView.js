@@ -3,27 +3,27 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import '../Components-Thusharaga/styles/UserDetailView.css';
+import './styles/ClientDetailView.css';
 
-const UserDetailView = () => {
+const ClientDetailView = () => {
   const { clientId } = useParams();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`https://localhost:44339/api/Client/${clientId}`);
-        setUserData(response.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        setErrorMessage('Error fetching user data.');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(`https://localhost:44339/api/Client/${clientId}`);
+      setUserData(response.data);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setErrorMessage('Error fetching user data.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchUserData();
   }, [clientId]);
 
@@ -34,10 +34,10 @@ const UserDetailView = () => {
     }
 
     try {
-      await axios.post('https://localhost:44339/api/Client/deactivate-client', { clientId});
+      await axios.post('https://localhost:44339/api/Client/deactivate-client', { clientId });
       alert("User deactivated successfully.");
       setErrorMessage(null);
-      // Optionally, refetch the user data
+      // Refetch the user data
       fetchUserData();
     } catch (error) {
       handleErrorResponse(error, 'deactivating');
@@ -54,7 +54,7 @@ const UserDetailView = () => {
       await axios.post('https://localhost:44339/api/Client/reactivate-client', { clientId });
       alert("User reactivated successfully.");
       setErrorMessage(null);
-      // Optionally, refetch the user data
+      // Refetch the user data
       fetchUserData();
     } catch (error) {
       handleErrorResponse(error, 'reactivating');
@@ -148,4 +148,4 @@ const UserDetailView = () => {
   );
 };
 
-export default UserDetailView;
+export default ClientDetailView;

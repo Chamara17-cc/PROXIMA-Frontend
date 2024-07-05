@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SearchBar from "../Compornents/Searchbar.jsx"; // Ensure the import path is correct
 import apiRequest from '../Auth/ApiService'; // Ensure the import path is correct
 
-export default function UserListComponent() {
+export default function ClientListComponent() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -24,10 +24,9 @@ export default function UserListComponent() {
   };
 
   const handleUserSelection = (id) => {
-    console.log("Navigating to:", `/clientProfilePage/${id}`);
+    console.log(`Navigating to: /clientProfilePage/${id}`);
     navigate(`/clientProfilePage/${id}`);
   };
-  
 
   const handleAddUser = () => {
     navigate('/clientCreation');
@@ -75,9 +74,8 @@ export default function UserListComponent() {
         <thead className="thead-dark">
           <tr>
             <th>Client Id</th>
-            <th>Client Name</th>
+            <th>User Name</th>
             <th>Email</th>
-           
           </tr>
         </thead>
         <tbody>
@@ -86,7 +84,6 @@ export default function UserListComponent() {
               <td>{user.clientId}</td>
               <td>{user.userName}</td>
               <td>{user.email}</td>
-              
             </tr>
           ))}
         </tbody>

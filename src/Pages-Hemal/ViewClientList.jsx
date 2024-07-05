@@ -1,5 +1,6 @@
 
-import UserList from '../Components-Hemal/ClientList'
+
+import ClientList from '../Components-Hemal/ClientList'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 import '../Pages/PageStructure.css'
@@ -15,8 +16,8 @@ function ViewClientList() {
     <Topbar/>
     
     <div className="Content">
-      
-      <UserList/>
+   
+      <ClientList/>
    
     </div>
     
