@@ -1,47 +1,20 @@
-.addbutton{
-    position: absolute;
-    margin-left: 75%;
+.transactoncol{
+    background-color: #D3D3D3;
+    padding: 20px;
+    margin-bottom: 40px;
+    border: 3px solid black;
+    border-radius: 5px;
+    font-size: large;
 }
-.Projectlist{
-    margin-top: 10px;
-}
-.datepicker {
-    display: flex;
-    align-items: center;
-    width: 250px;
-    height: 40px;
-    margin: 15px;
-    margin-left: 15px;
-    margin-bottom: 30px;
+.selectionitem{
+     align-items:center;
+     padding: 5px;
 }
 .invoicereport{
-    margin-top: 80px;
+    margin-bottom: 10px;
+    
 }
-.print-btn{
+.printb{
+    left: 70%;
     margin-left: 900px;
 }
-.tpage{
-        margin: 0; /* Remove default margins */
-        padding: 10px 15px; /* Add padding for readability */
-        font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif; /* Professional sans-serif font */
-        font-size: 18px; /* Comfortable font size for data display */
-        line-height: 1.5; /* Improve readability with line spacing */
-        font-weight: normal; /* Bold font for emphasis */
-        color: #aaaac5; /* Light gray for text color */
-        background-color: #18213f; /* Darker background for contrast */
-        border-radius: 10px; /* Rounded corners for items */
-        margin-bottom: 10px; /* Spacing between items */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-.transactoncol{
-    background-color: #ffffff20;
-    padding: 30px;
-    border-radius: 10px;
-    height: 300px;
-}
-.transactype{
-    width: 200px;
-    height: 45px;
-    border-radius: 10px;
-}
-

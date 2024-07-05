@@ -8,7 +8,11 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import './RateUpdateStyles.css'
 
+
+
 export default function PopupForm() {
+
+
   const [open, setOpen] = useState(false);
   const [Date, setDate] = useState('');
   const [Rate, setRate] = useState(null);
@@ -79,6 +83,7 @@ export default function PopupForm() {
       <Button onClick={handleClickOpen} style={{ backgroundColor: '#20C997', color: 'white' }}><b>Developer rate</b></Button>
       <div className="developerrate" >
         <Dialog open={open} onClose={handleClose} >
+          <div className="rate">
           <DialogTitle className='Rateheader'>Hourly Rate</DialogTitle>
           <DialogContent>
             {error && <div style={{ color: 'red' }}>{error}</div>}
@@ -90,6 +95,7 @@ export default function PopupForm() {
               fullWidth
               value={Date}
               onChange={(e) => setDate(e.target.value)}
+              
             />
             <TextField
               margin="dense"
@@ -115,6 +121,7 @@ export default function PopupForm() {
               <Button onClick={handleClose} className="dialog-action-button"> Close</Button>
               <Button onClick={handleSubmit} className="dialog-action-button">Update</Button>
             </DialogActions>
+            </div>
           </div>
         </Dialog>
       </div>

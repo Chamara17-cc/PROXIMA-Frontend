@@ -36,7 +36,7 @@ function AdminDashboardComponent({ showRateUpdate }) {
   ];
   return (
     <div className="maincontent">
-      <div className="header">
+      <div className="headera">
         <div className="welcome">Hi! Welcome Back</div>
         <button className="developerRateButton">
           {showRateUpdate && (
@@ -48,7 +48,7 @@ function AdminDashboardComponent({ showRateUpdate }) {
       </div>
       
       <div className="body">
-        <div className="description" >
+        <div className="description2" >
         <h3 > <b>
             Our company thrives with a robust team. Here's a quick overview of our dynamic workforce and the projects we handle:
             </b>
@@ -94,7 +94,7 @@ function AdminDashboardComponent({ showRateUpdate }) {
           </p>
         </div>
         <br/>
-        <div className="description" >
+        <div className="description3" >
           <h3> <b>This bar chart illustrates the current monthly income and expense:</b></h3>
           <p style={{
               fontSize: '12px', 

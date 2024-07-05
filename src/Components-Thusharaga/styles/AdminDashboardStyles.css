@@ -5,13 +5,14 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 } 
 
-.header {
+.headera {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   background-color: #D3D3D3;
   border-radius: 10px;
+  height: 50px;
 }
 
 .welcome {
@@ -107,13 +108,19 @@
   padding: 10px;
 }
 
-.description {
+.description3 {
   margin: 20px 0;
   font-size: 18px;
   font-weight: bold;
   color: #1e104e;
   text-align: center;
 }
-
+.description2 {
+  margin: 20px 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e104e;
+  text-align: center;
+}
 
 

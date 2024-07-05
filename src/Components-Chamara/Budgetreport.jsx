@@ -11,6 +11,7 @@ import 'jspdf-autotable';
 import { useNavigate } from "react-router-dom";
 import Budgettable from "./Budgettable";
 import Budgetedit from "./Budgetedit";
+import TotalFinanceDigram from "./TotalFinanceDigram"
 
 
 export default function ProjectCreationForm() {
@@ -88,10 +89,10 @@ export default function ProjectCreationForm() {
   
 
   return (
-    <div>
+    <div className="budget">
      
       <div className="Pagename">
-        <p>Budget Estimation Report : {selectedProject}</p>
+        <p>Budget Estimation Report</p>
       </div>
       <Form>
         <Row className="mb-3">
@@ -119,24 +120,29 @@ export default function ProjectCreationForm() {
           {budgetData.length >0 ?(
                 <Row>
                     <div className="btn-group" role="group" aria-label="Basic example">
-                     <button type="button" className="btn btn-secondary" onClick={downloadPDF} style={{width:'80px',margin:'10px', backgroundColor: '#2A75BD'}}>Print</button>
+                     <button type="button" className="btn btn-secondary" onClick={downloadPDF} 
+                     style={{width:'80px',margin:'10px', backgroundColor: '#20C997'}}>Print</button>
                      <Budgetedit projectId={selectedProject} budgetData={budgetData}/>
-                    <button type="button" className="btn btn-secondary" onClick={()=>deletebudget(selectedProject)}  style={{width:'80px',margin:'10px', backgroundColor:'red'}}>Delete</button>
+                    <button type="button" className="btn btn-secondary" onClick={()=>deletebudget(selectedProject)}  
+                    style={{width:'80px',margin:'10px', backgroundColor:'red'}}>Delete</button>
                     </div>
                    </Row>
           ):
           (
             <Row>
                    <Form.Group className="submit" controlId="formGridAddress1">
-                   <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
+                   <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}
+                   style={{ backgroundColor: '#20C997', color: 'white' }}>
                      Create
                    </Button>
                   </Form.Group>
                  
 
             </Row>
-
           )}
+          <div className="yearfinance">
+            <TotalFinanceDigram/>
+          </div>
         </div>
        </div>
       </div>
