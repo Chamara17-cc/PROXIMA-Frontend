@@ -57,7 +57,7 @@ import ViewClientList from "./Pages-Hemal/ViewClientList";
 import FullTaskListPage from "./Pages-Suraj/FullTaskListPage";
 import PMFullTaskViewPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMFullTaskViewPage";
 import EditProfile from "./Pages-Thusharga/EditProfile";
-
+import PaymentPage from "./Pages-Hemal/PaymentPage";
 
 
 function App() {
@@ -149,9 +149,7 @@ function App() {
         <Route path="/taskList" element={<TaskList/>}></Route>
         <Route path="/fullTaskListPage" element = {<FullTaskListPage/>}></Route>
         <Route path="/pMFullTaskListPage" element = {<PMFullTaskViewPage/>}></Route>
-
-
-
+        <Route path="/paymentpage" element ={<PaymentPage/>}></Route>
       </Routes>
         <Routes>         
         </Routes>
