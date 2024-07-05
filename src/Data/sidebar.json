@@ -69,6 +69,10 @@
         "roles": ["1"],
         "childrens": [
             {
+                "title": "Client register",
+                "path": "/clientCreation"
+            },
+            {
                 "title": "Client list",
                 "path": "/clientlist"
             },

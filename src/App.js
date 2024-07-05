@@ -60,6 +60,8 @@ import EditProfile from "./Pages-Thusharga/EditProfile";
 
 
 
+
+
 function App() {
   return (
     <div className="main">
@@ -86,6 +88,7 @@ function App() {
               <Route path="/userManagement" element={<UserManagement/>} />
               <Route path="/userProfilePage/:userId" element={<ViewUserDetail />} />
 
+              
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={['1', '2']} />}>

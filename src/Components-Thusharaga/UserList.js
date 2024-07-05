@@ -87,8 +87,10 @@ export default function UserListComponent() {
       <table className="table table-striped mt-3">
         <thead className="thead-dark">
           <tr>
+            <th></th>
             <th>User Id</th>
             <th>User Name</th>
+            <th>First Name</th>
             <th>Email</th>
             <th>User Category</th>
           </tr>
@@ -96,8 +98,13 @@ export default function UserListComponent() {
         <tbody>
           {data.map((user, index) => (
             <tr key={index} className={user.isActive ? "" : "table-danger"} >
+              <td>{user.imageSrc && (
+                    <img src={user.imageSrc} alt="Profile" className="profile-dropdown-photo1" />
+                  )}
+              </td>
               <td>{user.userId}</td>
               <td>{user.userName}</td>
+              <td>{user.firstName}</td>
               <td>{user.email}</td>
               <td>{user.userCategoryType}</td> 
             </tr>
