@@ -323,12 +323,12 @@ export default function ProjectCreationForm() {
 
   return (
     
-    <div className="content">
+    <div className="content-project">
     
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         {/* ------Project Initalization part----- has a validation */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Project Initialization</h3> 
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -385,7 +385,7 @@ export default function ProjectCreationForm() {
 
         {/* -----------Develpment team info---------- has a validation */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Development Team Information</h3>
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -447,7 +447,7 @@ export default function ProjectCreationForm() {
 
         {/* -----------Client info---------- has a validation */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Client Information</h3>
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -490,7 +490,7 @@ export default function ProjectCreationForm() {
 
         {/* --------------Dates--------- */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Project Planing</h3>
           <Row className="mb-3">
   <Form.Group as={Col} md={6}>
@@ -556,7 +556,7 @@ export default function ProjectCreationForm() {
           
         </div>
 
-        <div className="Section">
+        <div className="Section-project">
           <Form.Group className="mb-3">
           <h3 className="SectionHeading">Budget Allocation</h3>
             <Form.Label >Budget Allocation</Form.Label>

@@ -5,13 +5,14 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 } 
 
-.header {
+.header-dashboard {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   background-color: #D3D3D3;
   border-radius: 10px;
+  height: 55px;
 }
 
 .welcome {
@@ -92,7 +93,7 @@
   justify-content: center;
 }
 
-.body {
+.body-dashboard {
   background-color: white;
   color: black;
   padding: 20px;
@@ -102,12 +103,12 @@
 
 
 .chartContainer {
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 5px;
   padding: 10px;
 }
 
-.description {
+.description-dashboard {
   margin: 20px 0;
   font-size: 18px;
   font-weight: bold;

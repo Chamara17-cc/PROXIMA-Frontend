@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import SearchBar from "../Compornents/Searchbar.jsx"; // Ensure the import path is correct
-import apiRequest from '../Auth/ApiService.js'; // Ensure the import path is correct
+import SearchBar from "../Compornents/Searchbar.jsx"; 
+import apiRequest from '../Auth/ApiService.js'; 
+import './styles/UserList.css'
 
 export default function UserManagement() {
   const [data, setData] = useState([]);
@@ -71,9 +72,11 @@ export default function UserManagement() {
 
       <table className="table table-striped mt-3">
         <thead className="thead-dark">
-          <tr>
+        <tr>
+            <th></th>
             <th>User Id</th>
             <th>User Name</th>
+            <th>First Name</th>
             <th>Email</th>
             <th>User Category</th>
           </tr>
@@ -81,8 +84,13 @@ export default function UserManagement() {
         <tbody>
           {data.map((user, index) => (
             <tr key={index} className={user.isActive ? "" : "table-danger"} onClick={() => handleUserSelection(user.userId)}>
+               <td>{user.imageSrc && (
+                    <img src={user.imageSrc} alt="Profile" className="profile-dropdown-photo1" />
+                  )}
+              </td>
               <td>{user.userId}</td>
               <td>{user.userName}</td>
+              <td>{user.firstName}</td>
               <td>{user.email}</td>
               <td>{user.userCategoryType}</td> 
             </tr>
