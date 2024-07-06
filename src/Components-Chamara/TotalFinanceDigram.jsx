@@ -1,32 +1,55 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const dataset = [
-  { month: 'Jan', london: 59, paris: 57 },
-  { month: 'Feb', london: 50, paris: 52 },
-  { month: 'Mar', london: 47, paris: 53 },
-  { month: 'Apr', london: 54, paris: 56 },
-  { month: 'May', london: 57, paris: 69 },
-  { month: 'June', london: 60, paris: 63 },
-  { month: 'July', london: 59, paris: 60 },
-  { month: 'Aug', london: 65, paris: 60 },
-  { month: 'Sept', london: 51, paris: 51 },
-  { month: 'Oct', london: 60, paris: 65 },
-  { month: 'Nov', london: 67, paris: 64 },
-  { month: 'Dec', london: 61, paris: 70 },
-];
-
 export default function BarsDataset() {
+  const [incomeExpenseData, setIncomeExpenseData] = useState([]);
+
+  const getCurrentYear = () => {
+    return new Date().getFullYear();
+  };
+
+  useEffect(() => {
+    var year = getCurrentYear();
+    getData(year);
+  }, []);
+
+  const getData = async (year) => {
+    try {
+      const response = await axios.get(`https://localhost:44339/api/TotalIncomeExpence?year=${year}`);
+      console.log(response.data);
+      setIncomeExpenseData(transformData(response.data));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const transformData = (data) => {
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    return data.map((item, index) => ({
+      month: monthNames[index],
+      income: item.income,
+      expense: item.expence
+    }));
+  };
+
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={dataset} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+      <BarChart data={incomeExpenseData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month" />
-        <YAxis label={{ value: 'rupees(Rs)', angle: -90, position: 'insideLeft' }} />
-        <Tooltip formatter={(value) => `${value}rs`} />
+        <YAxis 
+          label={{ 
+            value: 'Rupees(Rs)', 
+            angle: -90, 
+            position: 'insideLeft',
+            dx: -20 // Adjust this value to move the label more to the left
+          }} 
+        />
+        <Tooltip formatter={(value) => `${value}Rs`} />
         <Legend />
-        <Bar dataKey="london" fill="#8884d8" name="London" />
-        <Bar dataKey="paris" fill="#82ca9d" name="Paris" />
+        <Bar dataKey="income" fill="#8884d8" name="Income" />
+        <Bar dataKey="expense" fill="#82ca9d" name="Expense" />
       </BarChart>
     </ResponsiveContainer>
   );
