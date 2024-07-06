@@ -11,12 +11,17 @@ function Payment() {
   const [tableData, setTableData] = useState([]);
   const [data, setData] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [clients,setClients]= useState([]);
+  const[selectedClient,setSelectedClients] = useState(0);
 
   const getall = async () => {
     try {
       const response = await axios.get("https://localhost:44339/api/AdminClientPayment/GetClientPayments");
       const projects = await axios.get("https://localhost:44339/api/AdminClientPayment/GetClientProjects");
+      const clients= await axios.get("https://localhost:44339/api/ClientPayment/GetCLientId");
       setData(response.data);
+      console.log(clients.data);
+      setClients(clients.data);
       setTableData(response.data);
       setProjects(projects.data);
     } catch (e) {
@@ -47,14 +52,31 @@ function Payment() {
   }, []);
 
   useEffect(() => {
-    if (selectedProject !== 0) {
-      const x = data.filter(item => item.projectId == selectedProject);
+    if (selectedProject !== 0 && selectedClient !== 0) {
+      const x = data.filter(item => item.projectId == selectedProject && item.clientId == selectedClient);
       setTableData(x);
     } 
-    if(selectedProject ===0){
+    else if(selectedProject ===0 && selectedClient !== 0){
+      const x = data.filter(item => item.clientId == selectedClient);
+      setTableData(data);
+    }else if(selectedClient ===0 && selectedProject !== 0){
+      const x = data.filter(item => item.projectId == selectedProject);
+      setTableData(x);
+    }else{
+      console.log(data);
       setTableData(data);
     }
-  }, [selectedProject, data]);
+  }, [selectedProject,selectedClient]);
+
+  // useEffect(() => {
+  //   if (selectedClient !== 0) {
+  //     const x = data.filter(item => item.clientId == selectedClient && item.projectId == selectedProject);
+  //     setTableData(x);
+  //   } 
+  //   if(selectedClient ===0){
+  //     setTableData(data);
+  //   }
+  // }, [selectedClient]);
 
   const acceptedPayments = tableData.filter(item => item.mode === "accepted" || item.mode=="accept" ).length;
   const rejectedPayments = tableData.filter(item => item.mode === "rejected" || item.mode==="reject").length;
@@ -74,6 +96,9 @@ function Payment() {
           pendingPayments={pendingPayments}
           Total={Total}
         />
+         <div className="d-flex align-items-center justify-content-center mt-4">
+          <Dropdown1 clients={clients} onChange={setSelectedClients} />
+        </div>
         <div className="d-flex align-items-center justify-content-center mt-4">
           <Dropdown projects={projects} onChange={setSelectedProject} />
         </div>
@@ -98,6 +123,21 @@ const Dropdown = ({ projects, onChange }) => {
         {projects.map((project) => (
           <option key={project.projectId} value={project.projectId}>
             {project.projectName}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+const Dropdown1 = ({ clients, onChange }) => {
+  return (
+    <div>
+      <select onChange={(e) => onChange(e.target.value)} className="form-control">
+        <option value={0}>All Projects</option>
+        {clients.map((client) => (
+          <option key={client} value={client}>
+            {client}
           </option>
         ))}
       </select>
