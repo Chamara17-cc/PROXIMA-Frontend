@@ -81,7 +81,7 @@ function BudgetFormEdit() {
   };
 
   return (
-    <div>
+    <div className='budgetadd'>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridCity">
@@ -247,8 +247,8 @@ function BudgetFormEdit() {
               onChange={(e) => setDate(e.target.value)}
               inputProps={{
                 style: {
-                  height: "40px",
-                  paddingTop: "5px",
+                  height: "30px",
+                  paddingTop: "0px",
                   paddingBottom: "0px",
                 }
               }}
@@ -286,8 +286,8 @@ function BudgetFormEdit() {
         </Row> */}
          <Row>
          <div className="btn-group" role="group" aria-label="Basic example">
-                    <Link to={'/budget'}><button type="button" className="btn btn-secondary" style={{width:'80px',margin:'10px', backgroundColor: '#2A75BD'}}>Report</button></Link> 
-                    <button type="button" className="btn btn-secondary" onClick={handleSubmit}  style={{width:'80px',margin:'10px', backgroundColor:'#2A75BD'}}>Submit</button>
+                    <Link to={'/budget'}><button type="button" className="btn btn-secondary" style={{width:'80px',margin:'10px', backgroundColor: '#20C997'}}>Report</button></Link> 
+                    <button type="button" className="btn btn-secondary" onClick={handleSubmit}  style={{width:'80px',margin:'10px', backgroundColor:'#20C997'}}>Submit</button>
           </div>
           </Row>  
         

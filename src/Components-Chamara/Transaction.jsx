@@ -91,13 +91,13 @@ function Transaction() {
         <div className="tpage">
             <div className="transactoncol">
                 <Form>
-                    <Row className="mb-3">
+                    <Row className="selectionitem">
                         <Form.Group as={Col} controlId="formGridProject">
                             <Form.Label>
                                 <div className="Invoicename">
-                                    <p><b>Project</b> :</p>
+                                    <p><b>Project</b>:</p>
                                 </div>
-                                <select id="SelectProject" className="Projectlist" value={selectedProject} onChange={handleProjectChange}>
+                                <select id="SelectProject" className="Projectlist1" value={selectedProject} onChange={handleProjectChange}>
                                     <option value="">Select project here...</option>
                                     {projects.map(project => (
                                         <option key={project.projectId} value={project.projectId}>{project.projectName}</option>
@@ -141,7 +141,7 @@ function Transaction() {
                             </Form.Label>
                         </Form.Group>
                     </Row>
-                    <Row className="mb-3">
+                    <Row className="val-and-dis">
                         <Form.Group as={Col} controlId="formGridDescription">
                             <Form.Label><b>Description</b></Form.Label>
                             <Form.Control placeholder="Enter budget description" onChange={handleDescriptionChange}
@@ -156,7 +156,8 @@ function Transaction() {
                     <div className="addbutton">
                         <Row>
                             <Form.Group className="submit-btn" controlId="formGridAddress1">
-                                <Button variant="primary" type="button" id="usubmit" onClick={addValues}>
+                                <Button variant="primary" type="button" id="usubmit" onClick={addValues} className="addbtn" 
+                                style={{ backgroundColor: '#20C997', color: 'white' }}>
                                     Add
                                 </Button>
                             </Form.Group>
@@ -164,11 +165,14 @@ function Transaction() {
                     </div>
                 </Form>
             </div>
+            <div className="outerlyr">
             <div className="invoicereport">
                 <Invoice projectId={selectedProject} />  {/*import invoice report*/}
             </div>
-            <div className="print-btn">
-                <Button variant="primary" type="button" id="usubmit" onClick={downloadPDF}>Print</Button>
+            </div>
+            <div className="iprintbtn">
+                <Button variant="primary" type="button" id="usubmit" onClick={downloadPDF} 
+                style={{ backgroundColor: '#20C997', color: 'white'  }} className="printb">Print</Button>
             </div>
         </div>
     )

@@ -52,3 +52,12 @@
     justify-content: space-between;
     left: 700px;
 }
+.Projectlist{
+  height: 50px;
+}
+.budget{
+    background-color: #D3D3D3;
+    padding: 20px;
+    border-radius: 5px;
+    border: 3px solid black;
+}

@@ -1,4 +1,3 @@
-/* BudgetFormEditStyles.css */
 
 .container {
     margin: 20px;
@@ -22,7 +21,7 @@
   
   .datepicker input {
     font-size: 16px;
-    padding: 10px;
+    padding: 5px;
     border-radius: 4px;
     border: 1px solid #ced4da;
   }
@@ -82,5 +81,16 @@
     .Total .form-control {
       font-size: 14px;
     }
+  }
+  .datepicker{
+    height: 50px;
+    margin-left: 10px;
+  }
+  .budgetadd{
+    background-color: #D3D3D3;
+    padding: 20px;
+    border-radius: 5px;
+    border: 3px solid black;
+
   }
   

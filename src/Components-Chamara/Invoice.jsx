@@ -10,6 +10,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import "./Invoicestyles.css";
 import InvoiceEdit from './InvoiceEdit';
+import "./Invoicestyles.css"
 
 
 function Invoice(props) {
@@ -52,15 +53,15 @@ const deletetransac =async (transacId)=>{
             <TableHead>
               <TableRow>
                 <TableCell align="left" colSpan={3}>
-                <TableCell align="left">Invoice Report</TableCell>
+                <TableCell align="left"><b><u>Invoice Report</u></b></TableCell>
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={1}>Discription</TableCell>
-                <TableCell colSpan={2}>Date</TableCell>
-                <TableCell colSpan={3}>Value</TableCell>
-                <TableCell colSpan={4}>Total Income</TableCell>
-                <TableCell colSpan={5}>Total Expence</TableCell>
+                <TableCell colSpan={1}><b>Discription</b></TableCell>
+                <TableCell colSpan={2}><b>Date</b></TableCell>
+                <TableCell colSpan={3}><b>Value</b></TableCell>
+                <TableCell colSpan={4}><b>Total Income</b></TableCell>
+                <TableCell colSpan={5}><b>Total Expence</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -71,9 +72,9 @@ const deletetransac =async (transacId)=>{
                   <TableCell align='left' colSpan={3}>{item.value}</TableCell>
                   <TableCell align='left' colSpan={4}>{item.income}</TableCell>
                   <TableCell align='left' colSpan={5}>{item.expence}</TableCell>
-                  <TableCell align='left' colSpan={6}><InvoiceEdit transacId={item.transacId}/></TableCell>
+                  <TableCell align='left' colSpan={6}><InvoiceEdit transacId={item.transacId} discription={item.description} tvalue={item.value}/></TableCell>
                   <TableCell align='left' colSpan={7}><Button onClick={() => deletetransac(item.transacId)}  
-                    className='deletebutton'>Delete</Button></TableCell>
+                    className='deletebutton' style={{backgroundColor:'red'}}>Delete</Button></TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -281,11 +281,12 @@ function DeveloperPayment() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} style={{ backgroundColor: '#3D97ED', color: 'white' }}>
+      <Button onClick={handleClickOpen} style={{ backgroundColor: '#20C997', color: 'white' }}>
         Financial Status
       </Button>
       <div className="financialpage">
         <Dialog open={open} onClose={handleClose} maxWidth="100">
+          <div className='finpge'>
           <DialogTitle className="financialpageheader"><b><u>Developer Financial Status</u></b></DialogTitle>
           <DialogContent>
             <div className="container">
@@ -353,8 +354,9 @@ function DeveloperPayment() {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose}>Close</Button>
           </DialogActions>
+          </div>
         </Dialog>
       </div>
     </div>

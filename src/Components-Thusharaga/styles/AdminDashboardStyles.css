@@ -5,6 +5,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 } 
 
+
 .header-dashboard {
   display: flex;
   justify-content: space-between;
@@ -13,6 +14,7 @@
   background-color: #D3D3D3;
   border-radius: 10px;
   height: 55px;
+
 }
 
 .welcome {
@@ -108,6 +110,7 @@
   padding: 10px;
 }
 
+
 .description-dashboard {
   margin: 20px 0;
   font-size: 18px;
@@ -115,6 +118,5 @@
   color: #1e104e;
   text-align: center;
 }
-
 
 

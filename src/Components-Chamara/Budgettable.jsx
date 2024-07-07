@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import moment from 'moment';
 import { Margin } from '@mui/icons-material';
+import "./BudgettableStyles.css";
 
 const Budgettable = ({ budgetData }) => {
   

@@ -1,4 +1,5 @@
-.transacform {
+
+.budget-form {
     margin: 20px auto;
     max-width: 1000px;
     background-color: #f9f9f9;
@@ -7,28 +8,33 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#invoicetable {
+#invoicetable,
+#budgetTable {
     border-collapse: collapse;
     width: 100%;
 }
 
-#invoicetable th,
-#invoicetable td {
-    border: 1px solid #ddd;
+
+#budgetTable th,
+#budgetTable td {
+    border: 2px solid #ddd;
     padding: 8px;
 }
 
-#invoicetable th {
+
+#budgetTable th {
     background-color: #4CAF50;
     color: white;
     text-align: left;
 }
 
-#invoicetable tr:nth-child(even) {
+
+#budgetTable tr:nth-child(even) {
     background-color: #b6b4b4;
 }
 
-#invoicetable tr:hover {
+
+#budgetTable tr:hover {
     background-color: #ddd;
 }
 

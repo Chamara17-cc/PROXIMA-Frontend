@@ -5,6 +5,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
+import './Budgetedit.css'
+
 
 const Budgetedit = (props) => {
   const [open, setOpen] = useState(false);
@@ -86,9 +88,9 @@ const Budgetedit = (props) => {
 
   return (
     <div>
-      <button type="button" className="btn btn-secondary" onClick={handleClickOpen} style={{ width: '80px', margin: '10px', backgroundColor: '#2A75BD' }}>Edit</button>
-      <div className="budgetedit">
-        <Dialog open={open} onClose={handleClose} maxWidth='100'>
+      <button type="button" className="btn btn-secondary" onClick={handleClickOpen} style={{ width: '80px', margin: '10px', backgroundColor: '#20C997' }}>Edit</button>
+      <div className="budgetedit" >
+        <Dialog open={open} onClose={handleClose} maxWidth='100' className='budgeteditform'>
           <DialogTitle className='budgetedit'><b>Edit Budget</b></DialogTitle>
           <DialogContent>
             <div className="container">
@@ -105,7 +107,7 @@ const Budgetedit = (props) => {
                     </thead>
                     <tbody>
                       <tr>
-                        <td><input type="text" className="form-control" onChange={handleSelectionEdit} placeholder={data.selectionProcessCost}/></td>
+                        <td><input type="text" className="form-control" onChange={handleSelectionEdit} placeholder={data.selectionprocessCost}/></td>
                         <td><input type="text" className="form-control" onChange={handleLicenseEdit} placeholder={data.licenseCost}/></td>
                         <td><input type="text" className="form-control" onChange={handleServerEdit} placeholder={data.serversCost}/></td>
                         <td><input type="text" className="form-control" onChange={handleHardwareEdit} placeholder={data.hardwareCost}/></td>
