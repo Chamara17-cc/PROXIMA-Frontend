@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 import '../Pages/PageStructure.css'
-import AdminDashboardComponent from '../Components-Thusharaga/AdminDashboardComponent'
+import AdminDashboardComponent from '../Components-Thusharaga/AdminDashboardComponent.js'
 import { useLocation } from 'react-router-dom'
 
 

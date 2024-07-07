@@ -74,7 +74,8 @@ export default function ClientListComponent() {
         <thead className="thead-dark">
           <tr>
             <th>Client Id</th>
-            <th>Client Name</th>
+            <th>User Name</th>
+            <th>Full Name</th>
             <th>Email</th>
           </tr>
         </thead>
@@ -83,6 +84,7 @@ export default function ClientListComponent() {
             <tr key={index} onClick={() => handleUserSelection(user.clientId)}>
               <td>{user.clientId}</td>
               <td>{user.userName}</td>
+              <td>{user.clientName}</td>
               <td>{user.email}</td>
             </tr>
           ))}
