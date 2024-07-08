@@ -5,14 +5,14 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { Button } from "react-bootstrap";
-import "./TransactionStyles.css"
+import "./TransactionStyles.css"; // Ensure this file exists
 import TextField from '@mui/material/TextField';
-import Invoice from "./Invoice";
-import jsPDF from "jspdf";
-import 'jspdf-autotable';
+import Invoice from "./Invoice"; // Ensure this component exists
+
 
 function Transaction() {
     const [projects, setProjects] = useState([]);
+    const [transactions, setTransactions] = useState([]);
     const [selectedProject, setSelectedProject] = useState("");
     const [SelectedType, setSelectedType] = useState("");
     const [Description, setDescription] = useState("");
@@ -33,18 +33,36 @@ function Transaction() {
         }
     };
 
-    const handleProjectChange = (event) => {
-        setSelectedProject(event.target.value);
+    const fetchTransactions = async (projectId) => {
+        try {
+            const response = await axios.get(`https://localhost:44339/api/Transaction/Project/${projectId}/transactions`);
+            console.log("Transactions:", response.data); // Debugging: log fetched transactions
+            setTransactions(response.data);
+        } catch (error) {
+            console.error("Error fetching transactions:", error);
+        }
     };
+
+    const handleProjectChange = (event) => {
+        const projectId = event.target.value;
+        setSelectedProject(projectId);
+        if (projectId) {
+            fetchTransactions(projectId);
+        }
+    };
+
     const handleTypeChange = (event) => {
         setSelectedType(event.target.value);
     };
+
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
+
     const handleValueChange = (event) => {
         setValue(event.target.value);
     };
+
     const addValues = async () => {
         const transacdata = {
             Value: Value,
@@ -58,7 +76,7 @@ function Transaction() {
         try {
             const response = await axios.post(url, transacdata);
             alert("Value added successfully");
-            window.location.reload();                               //Refresh Page
+            window.location.reload(); // Refresh Page
         } catch (error) {
             if (error.response) {
                 alert(`Server responded with status ${error.response.status}: ${error.response.data}`);
@@ -69,24 +87,8 @@ function Transaction() {
             }
         }
     };
-    const downloadPDF = () => {
-        const doc = new jsPDF();
-        doc.autoTable({
-            html: '#invoicetable',
-            theme: 'grid',
-            styles: { fontSize: 10 },
-            headStyles: { fillColor: [22, 160, 133] },
-            columnStyles: {
-                0: { cellWidth: 40 }, // Description
-                1: { cellWidth: 30 }, // Date
-                2: { cellWidth: 20 }, // Value
-                3: { cellWidth: 30 }, // Total Income
-                4: { cellWidth: 30 }, // Total Expense
-            }
-        });
-        doc.save('Invoice.pdf');
-    };
 
+ 
     return (
         <div className="tpage">
             <div className="transactoncol">
@@ -170,10 +172,7 @@ function Transaction() {
                 <Invoice projectId={selectedProject} />  {/*import invoice report*/}
             </div>
             </div>
-            <div className="iprintbtn">
-                <Button variant="primary" type="button" id="usubmit" onClick={downloadPDF} 
-                style={{ backgroundColor: '#20C997', color: 'white'  }} className="printb">Print</Button>
-            </div>
+
         </div>
     )
 }

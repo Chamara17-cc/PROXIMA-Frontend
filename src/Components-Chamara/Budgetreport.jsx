@@ -76,16 +76,51 @@ export default function ProjectCreationForm() {
     }
   };
 
-  const downloadPDF=()=>{
-    const doc=new jsPDF();
+  const downloadPDF = () => {
+    const doc = new jsPDF();
     doc.autoTable({
-      html:'#budgetTable',
-      theme:'grid',
-      styles: {fontSize:10},
+      html: '#budgetTable',
+      theme: 'grid',
+      styles: { fontSize: 10 },
       headStyles: { fillColor: [22, 160, 133] }
-    })
+    });
+  
+    const pageHeight = doc.internal.pageSize.height; // Get page height
+  
+    // Add headers for the new table
+    const headers = [
+      ["Admin name", "Comment", "Approval", "Signature"]
+    ];
+  
+    // Add empty rows
+    const emptyRows = new Array(7).fill(["", "", "", ""]);
+  
+    // Add table with headers and empty rows
+    doc.autoTable({
+      head: headers,
+      body: emptyRows,
+      startY: doc.lastAutoTable.finalY + 10, // Start after the budget table
+      theme: 'grid',
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [22, 160, 133] }
+    });
+  
+    // Add signature and date
+    const posYSignature = doc.lastAutoTable.finalY + 20;
+    doc.setFontSize(10);
+    doc.text("Created Admin Signature", 15, posYSignature);
+    doc.line(15, posYSignature + 8, 50, posYSignature + 8);
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    doc.text(formattedDate, 15, posYSignature - 8);
+  
+    // Add 'Thank you' message
+    doc.setFont('Courier');
+    doc.setFontSize(30);
+    doc.text('Thank you', 70, pageHeight - 10);
     doc.save('budgetreport.pdf');
   };
+  
   
 
   return (
