@@ -11,6 +11,7 @@ import { Button } from 'react-bootstrap';
 import "./Invoicestyles.css";
 import InvoiceEdit from './InvoiceEdit';
 import "./Invoicestyles.css"
+import jsPDF from "jspdf";
 
 
 function Invoice(props) {
@@ -43,6 +44,57 @@ const deletetransac =async (transacId)=>{
     console.error('Error deleting transaction:', error);
   }
 };
+const downloadPDF = () => {
+  const doc = new jsPDF();
+  doc.text('Invoice Report', 14, 22);
+  
+  // Adding headers
+  const headers = [
+      { title: "Description", posX: 14, posY: 40 },
+      { title: "Date", posX: 50, posY: 40 },
+      { title: "Value", posX: 80, posY: 40 },
+      { title: "Total Income", posX: 110, posY: 40 },
+      { title: "Total Expense", posX: 140, posY: 40 }
+  ];
+  
+  headers.forEach(header => {
+      doc.setFontSize(12);
+      doc.setTextColor(255);
+      doc.setFillColor(0, 128, 0);
+      doc.rect(header.posX, header.posY - 6, 30, 10, 'F');
+      doc.text(header.title, header.posX + 1, header.posY);
+  });
+
+  // Adding data rows
+  let posY = 50;
+  transacdata.forEach(item => {
+      doc.setFontSize(10);
+      doc.setTextColor(0);
+
+      doc.text(item.description, 14, posY);
+      doc.text(new Date(item.date).toLocaleDateString(), 50, posY);
+      doc.text(item.value.toString(), 80, posY);
+      doc.text(item.income.toString(), 110, posY);
+      doc.text(item.expence.toString(), 140, posY);
+
+      posY += 10;
+  });
+  const pageHeight= doc.internal.pageSize.height  //get height
+  const posYSignature= posY+20; 
+   doc.setFontSize (10)
+   doc.text("Signature",15,posYSignature) ;
+   doc.line(15, posYSignature+8, 50, posYSignature+8);  
+   const today = new Date();
+  const formattedDate = today.toISOString().split('T')[0]; 
+  doc.text(formattedDate,15,posYSignature-8) ;  
+
+  doc.setFont('Courier'); 
+  doc.setFontSize(40); 
+  doc.text('Thank you', 70, pageHeight - 40);
+
+  doc.save('Invoice.pdf');
+};
+
    
   return (
     <div>
@@ -81,6 +133,10 @@ const deletetransac =async (transacId)=>{
           </Table>
         </TableContainer>
       </div>
+      <div className="iprintbtn">
+                <Button variant="primary" type="button" id="usubmit" onClick={downloadPDF} 
+                style={{ backgroundColor: '#20C997', color: 'white'  }} className="printb">Print</Button>
+            </div>
     </div>
   )
 }

@@ -323,19 +323,12 @@ function DeveloperPayment() {
                 </tbody>
                 <thead>
                   <tr className='details'>
-                    <th scope="col" >Hourly Rate</th>
                     <th scope="col">Total Worked Hours</th>
                     <th scope="col">Total Payment</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className='values'>
-                      <div className="form-control" style={{ backgroundColor: '#f0f0f0', border: '1px solid #ced4da',
-                         padding: '.375rem .75rem', borderRadius: '.25rem', color: '#000000' }}>
-                        Rs: {rate}
-                      </div>
-                    </td>
                     <td>
                       <div className="form-control" style={{ backgroundColor: '#f0f0f0', border: '1px solid #ced4da',
                          padding: '.375rem .75rem', borderRadius: '.25rem', color: '#000000' }}>
