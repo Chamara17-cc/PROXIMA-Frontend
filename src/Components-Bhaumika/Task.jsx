@@ -5,6 +5,7 @@ import axios from 'axios';
 import './TaskStyle.css';
 import { format } from 'date-fns';
 import Button from 'react-bootstrap/Button';
+import { getLoggedUserId } from '../Auth/ApiService';
 
 export default function Task() {
   const [taskData, setTaskData] = useState(null);
@@ -63,7 +64,8 @@ export default function Task() {
 
     try {
       // DeveloperId == 5
-      const url = `https://localhost:44339/api/DeveloperTime/taskTimes/${selectedTaskId}/11`;
+      const userid= getLoggedUserId();
+      const url = `https://localhost:44339/api/DeveloperTime/taskTimes/${selectedTaskId}/${userid}`;
       const response = await axios.post(url, editData);
 
       const urlTask = `https://localhost:44339/api/DeveloperTime/tasks/${selectedTaskId}`;
