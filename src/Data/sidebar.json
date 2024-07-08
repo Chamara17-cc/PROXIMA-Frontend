@@ -78,7 +78,7 @@
             },
             {
                 "title": "Payments",
-                "path": "/payments"   
+                "path": "/paymentpage"   
             },
             {
                 "title": "Send mail",
