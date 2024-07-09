@@ -56,7 +56,12 @@ import ViewClientList from "./Pages-Hemal/ViewClientList";
 
 import FullTaskListPage from "./Pages-Suraj/FullTaskListPage";
 import PMFullTaskViewPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMFullTaskViewPage";
+
+import UpdateProjectPage from "./Pages-Suraj/UpdateProjectPage";
+import UpdateTaskPage from "./Pages-Suraj/UpdateTaskPage";
+
 import EditProfile from "./Pages-Thusharga/EditProfile";
+
 
 
 
@@ -153,6 +158,8 @@ function App() {
         <Route path="/fullTaskListPage" element = {<FullTaskListPage/>}></Route>
         <Route path="/pMFullTaskListPage" element = {<PMFullTaskViewPage/>}></Route>
 
+          <Route path="/updateProjectPage" element={<UpdateProjectPage/>}></Route>
+          <Route path="/updateTaskPage" element={<UpdateTaskPage/>}></Route>
 
 
       </Routes>

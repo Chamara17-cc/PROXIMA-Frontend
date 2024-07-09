@@ -6,13 +6,16 @@ import "./AdminProjectViewCSS.css";
 import "./FormStyle.css";
 import "./ProjectListCSS.css";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import "./DataView.css";
 
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 export default function TaskDetailsCom() {
 
@@ -339,16 +342,48 @@ export default function TaskDetailsCom() {
       console.log(error);  
     }
   }
+
+
+
+  //-----------------------------
+
+  const navigate = useNavigate();
+
+  // const ClickUpdate = () => {
+  //   if (window.confirm("Do you want to update task details?")) {
+  //     navigate("/UpdateTaskPage", { state: { selectedTaskId } });
+  //   }
+  // };
+
+  const DeleteFile = async (id) => {
+    if (window.confirm("Do you want to Delete item?")){
+    const url = `https://localhost:44339/api/TaskFileDelete/deleteFile?fileId=${id}`;
+
+    try{
+      await axios.delete(url);
+      alert("File Deleted");
+    }
+    catch(error){
+      alert(error);
+
+    }
+  }
+}
+  
+
+
+
 //  *******************task deletion
 
   const DeleteTask = async () => {
     try{
       const url = `https://localhost:44339/api/TaskDeletion?TId=${selectedTaskId}`;       
       
-      if (window.confirm('Are you sure you want to delete this item?')) {
+      if (window.confirm('Are you sure you want to delete the task?')) {
         const response = await axios.delete(url);
         if(response.status === 204){
           alert("Deleted successfully");
+          navigate(-1);
         }
         else if(response.status === 200){
           alert("Task is Ongoing");
@@ -405,8 +440,8 @@ export default function TaskDetailsCom() {
                 <p className="ViewItems">Task Id: {task.taskId}</p>
                 <p className="ViewItems">Task Description: {task.taskDescription}</p>
                 <p className="ViewItems">Technologies: {task.technologies}</p>
-                <p className="ViewItems">Start Date: {task.createdDate}</p>
-                <p className="ViewItems">Due Date: {task.dueDate}</p>
+                <p className="ViewItems">Start Date: {task.createdDate.split("T")[0]}</p>
+                <p className="ViewItems">Due Date: {task.dueDate.split("T")[0]}</p>
                 <p className="ViewItems">Time Duration: {task.timeDuration} days</p>
                 <p className="ViewItems">Priority: {task.priority}</p>
                 <p className="ViewItems">Dependancies: {task.dependancies}</p>
@@ -416,8 +451,11 @@ export default function TaskDetailsCom() {
 
 
             ))}<br/>
-            <Button style={{marginTop:'-20px'}} variant="danger" onClick={DeleteTask}>Delete Task</Button>
-        
+
+            <div style={{display: "flex"}}>
+            <Button variant="danger" onClick={DeleteTask}>Delete Task</Button>
+            {/* <Button onClick={ClickUpdate}>Update Task</Button> */}
+        </div>
           
         </Tab>
 
@@ -451,7 +489,12 @@ export default function TaskDetailsCom() {
 
               {basicNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}>
+                  <button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button>
+                  &nbsp;&nbsp;
+                        <DeleteIcon onClick={()=>DeleteFile(file.fileId)} style={{color:"white"}}></DeleteIcon>
+
+                </li>
               </ul>
               ))}
                 
@@ -560,7 +603,11 @@ export default function TaskDetailsCom() {
               <Form.Label>Images: </Form.Label>
               {imgNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button>
+                &nbsp;&nbsp;
+                        <DeleteIcon onClick={()=>DeleteFile(file.fileId)} style={{color:"white"}}></DeleteIcon>
+
+                </li>
               </ul>
               ))}
                 
@@ -582,7 +629,11 @@ export default function TaskDetailsCom() {
 
               {audioNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button>
+                &nbsp;&nbsp;
+                        <DeleteIcon onClick={()=>DeleteFile(file.fileId)} style={{color:"white"}}></DeleteIcon>
+
+                </li>
               </ul>
               ))}
              
@@ -593,7 +644,10 @@ export default function TaskDetailsCom() {
 
               {zipNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button>
+                &nbsp;&nbsp;
+                        <DeleteIcon onClick={()=>DeleteFile(file.fileId)} style={{color:"white"}}></DeleteIcon>
+</li>
               </ul>
               ))}
              
