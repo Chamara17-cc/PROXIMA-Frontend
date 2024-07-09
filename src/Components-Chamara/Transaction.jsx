@@ -108,7 +108,7 @@ function Transaction() {
             <div className="transactoncol">
                 <Form noValidate validated={validated} onSubmit={addValues}>
                     <Row className="selectionitem">
-                        <Form.Group as={Col} controlId="formGridProject">
+                        <Form.Group as={Col} controlId="formGridProject" className="t1">
                             <Form.Label>
                                 <div className="Invoicename">
                                     <p><b>Project</b>:</p>
@@ -172,14 +172,14 @@ function Transaction() {
                                         inputProps={{
                                             max: getTodayDate(),
                                             style: {
-                                                height: "30px",
+                                                height: "25px",
                                                 paddingTop: "0px",
                                                 paddingBottom: "0px"
                                             }
                                         }}
                                         style={{ backgroundColor: "white", width: "220px", marginTop: "5px", marginLeft: "10px" }}
-                                        helperText={validated && date > getTodayDate() ? 'Cannot select a future date.' : 'Looks good!'}
-                                        error={validated && date > getTodayDate()}
+                                        helperText={validated && date > getTodayDate() ? 'Cannot select a future date.' : ''}
+                                        error={validated && (!date || date > getTodayDate())}
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Please select a valid date.
