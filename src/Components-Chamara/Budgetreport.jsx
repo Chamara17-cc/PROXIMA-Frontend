@@ -146,7 +146,7 @@ export default function ProjectCreationForm() {
       </Form>
      
       <div>
-      {budgetData.length>0 &&(
+      {budgetData.length>0 && selectedProject.value !=="" &&(
         <div className="budgetPDF">
           <Budgettable budgetData={budgetData} />
         </div>

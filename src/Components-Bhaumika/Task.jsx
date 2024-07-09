@@ -63,8 +63,8 @@ export default function Task() {
     };
 
     try {
-      // DeveloperId == 5
       const userid= getLoggedUserId();
+      // DeveloperId == 5
       const url = `https://localhost:44339/api/DeveloperTime/taskTimes/${selectedTaskId}/${userid}`;
       const response = await axios.post(url, editData);
 
@@ -138,22 +138,25 @@ export default function Task() {
     <div className='Task'>
       
       <div className='Description'>
-        <h2>Task Name : {item.taskName}</h2>
+        <h2>Task : {item.taskName}</h2>
       </div>
       <div className='DueDate'>
-      <h4>Due Date: {item.dueDate ? format(new Date(item.dueDate), 'yyyy-MM-dd') : '-'}</h4>
+      <h4>Task Due Date: {item.dueDate ? format(new Date(item.dueDate), 'yyyy-MM-dd') : '-'}</h4>
       </div>
       <div className='ButtonBox'>
 
         <div className="ButtonBoxUpper" style={{ display: 'flex' , gap: '20px' }}>
 
-
+<h4>Start the time recorder for this task :</h4>
       <Button onClick={startTimer} variant="secondary" size="lg" >
       Start
         </Button>
     <br/>
     <br/>
-
+    </div>
+    <br/>
+    <div className="ButtonBoxUpper" style={{ display: 'flex' , gap: '20px' }}>
+    <h4>Stop the time recorder for this task:</h4>
     <Button onClick={stopTimer} variant="secondary" size="lg" >
     Stop
         </Button>
@@ -163,17 +166,19 @@ export default function Task() {
     </div>
     <br/>
 
-<div className="ButtonBoxMiddle">
+<div className="ButtonBoxMiddle" style={{ display: 'flex' , gap: '20px' }}>
+<h4>Submit your working hours:</h4>
     <Button onClick={submit} variant="primary" size="lg">
     Submit
         </Button>
     <br/>
     </div>
-    <br/>
+  
     </div>
 
 
-    <div className="ButtonBoxBottom">
+    <div className="ButtonBoxBottom" style={{ display: 'flex' , gap: '10px' }}>
+    <h4>Click here to mark the task as completed:</h4>
     <Button onClick={completed} variant="primary" size="lg" >
     Task Completed
         </Button>
