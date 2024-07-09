@@ -1,8 +1,12 @@
 import React, {  useEffect, useState } from "react";
 import axios from "axios";
+
+
+
 import emailjs from 'emailjs-com';
 import { getLoggedUserId } from '../Auth/ApiService';
 import './ProjectCreationForm.css'
+
 
 import TextField from "@mui/material/TextField";
 
@@ -18,11 +22,8 @@ import "./datepickerStyle.css";
 
 
 import "./FormStyle.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import { accordionActionsClasses } from "@mui/material";
 
 export default function ProjectCreationForm() {
-  const navigate = useNavigate();
 
   //const [projectId, setProjectId] = useState("");
   const [projectName, setProjectName] = useState("");
@@ -340,7 +341,7 @@ export default function ProjectCreationForm() {
                   type="text"
                   placeholder="ProjectName"
                   id="projectName"
-                  style={{color:"black"}}
+                  style={{ color: "black", fontSize: "18px" }}
                   onChange={(e) => handlePNameChange(e.target.value)}
                 />
 
@@ -357,6 +358,7 @@ export default function ProjectCreationForm() {
             <Form.Control
               placeholder="Enter project description"
               id="description"
+              style={{ color: "black", fontSize: "18px" }}
               onChange={(e) => handleDescriptionChange(e.target.value)}
             />
           </Form.Group>
@@ -366,6 +368,7 @@ export default function ProjectCreationForm() {
             <Form.Control
               placeholder="Enter project objectives"
               id="objectives"
+              style={{ color: "black", fontSize: "18px" }}
               onChange={(e) => handleObjectiveChange(e.target.value)}
             />
           </Form.Group>
@@ -374,6 +377,7 @@ export default function ProjectCreationForm() {
             <Form.Label>Technologies</Form.Label>
             <Form.Control
               type="text"
+              style={{ color: "black", fontSize: "18px" }}
               placeholder="Enter technologies"
               id="technologies"
               onChange={(e) => handleTechnologyChange(e.target.value)}
@@ -434,6 +438,7 @@ export default function ProjectCreationForm() {
                   required
                   placeholder="Enter project team name"
                   id="projectTeamName"
+                  style={{ color: "black", fontSize: "18px" }}
                   onChange={(e) => handleTeamNameChange(e.target.value)}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -549,6 +554,7 @@ export default function ProjectCreationForm() {
               type="text"
               placeholder=""
               id="timeline"
+              style={{ color: "black", fontSize: "18px" }}
               onChange={(e) => handleTimelineChange(e.target.value)}
             />
           </Form.Group>
@@ -562,6 +568,7 @@ export default function ProjectCreationForm() {
             <Form.Label >Budget Allocation</Form.Label>
             <Form.Control
               type="text"
+              style={{ color: "black", fontSize: "18px" }}
               placeholder="Enter budget allocation"
               id="budgetAllocation"
               onChange={(e) => handleBudgetChange(e.target.value)}

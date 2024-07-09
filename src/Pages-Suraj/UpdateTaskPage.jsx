@@ -2,9 +2,9 @@ import React from 'react'
 import Topbar from "../Compornents/Topbar";
 import Sidebar from "../Compornents/Sidebar";
 import '../Pages/PageStructure.css'
-import TaskListCom from '../Components-Suraj/TaskListCom';
+import UpdateTaskCom from '../Components-Suraj/UpdateTaskCom';
 
-export default function TaskList() {
+export default function UpdateTaskPage() {
   return (
     <div>
         <div className="FullPage">
@@ -12,11 +12,11 @@ export default function TaskList() {
         <Topbar />
         <Sidebar />
         <div className="Content">
-            <h1>Task List</h1><br/>
-            
+            <h1>Update Task</h1><br/>
             {/*---- content --------*/}
             
-           <TaskListCom />
+            <UpdateTaskCom/>
+           
             
 
             <div>
