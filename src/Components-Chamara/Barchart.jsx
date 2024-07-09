@@ -24,8 +24,8 @@ export default function BasicBars(props) {
       }
     };
     const data = [
-      { name: 'Monthly Income', value: Income, fill: '#4CAF50' }, // Green for income
-      { name: 'Monthly Expense', value: Expence, fill: '#FF5722' }  // Orange for expense
+      { name: 'Total Income', value:Income, fill: '#4CAF50' }, // Green for income
+      { name: 'Total Expense', value: Expence, fill: '#FF5722' }  // Orange for expense
     ];
   return (
     <BarChart
@@ -36,6 +36,14 @@ export default function BasicBars(props) {
       top: 20, right: 30, left: 20, bottom: 5,
     }}
   >
+            <YAxis 
+          label={{ 
+            value: 'Rupees(Rs)', 
+            angle: -90, 
+            position: 'insideLeft',
+            dx: -17
+          }} 
+        />
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="name" />
     <YAxis />

@@ -28,8 +28,8 @@ export default function PieCharts(props) {
   };
 
   const data = [
-    { label: 'Used', value: used, color: '#0088FE' },
-    { label: 'Remaining', value: remaining, color: '#00C49F' },
+    { label: 'Used(Rs)', value: used, color: '#0088FE' },
+    { label: 'Remaining(Rs)', value: remaining, color: '#00C49F' },
   ];
 
   const TOTAL = data.map((item) => item.value).reduce((a, b) => a + b, 0);

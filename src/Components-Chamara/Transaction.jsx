@@ -4,20 +4,20 @@ import { useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { Button } from "react-bootstrap";
-import "./TransactionStyles.css"; // Ensure this file exists
+import { Button, InputGroup } from "react-bootstrap";
+import "./TransactionStyles.css"; 
 import TextField from '@mui/material/TextField';
-import Invoice from "./Invoice"; // Ensure this component exists
-
+import Invoice from "./Invoice"; 
 
 function Transaction() {
     const [projects, setProjects] = useState([]);
     const [transactions, setTransactions] = useState([]);
     const [selectedProject, setSelectedProject] = useState("");
-    const [SelectedType, setSelectedType] = useState("");
-    const [Description, setDescription] = useState("");
-    const [Value, setValue] = useState("");
-    const [Date, setDate] = useState("");
+    const [selectedType, setSelectedType] = useState("");
+    const [description, setDescription] = useState("");
+    const [value, setValue] = useState("");
+    const [date, setDate] = useState("");
+    const [validated, setValidated] = useState(false);
 
     useEffect(() => {
         fetchProjects();
@@ -63,12 +63,19 @@ function Transaction() {
         setValue(event.target.value);
     };
 
-    const addValues = async () => {
+    const addValues = async (event) => {
+        event.preventDefault();
+        setValidated(true);
+        if (!selectedProject || !selectedType || !description || !value || !date) {
+            alert("Please fill in all the fields");
+            return;
+        }
+
         const transacdata = {
-            Value: Value,
-            Type: SelectedType,
-            Description: Description,
-            Date: Date
+            Value: value,
+            Type: selectedType,
+            Description: description,
+            Date: date
         };
 
         const url = `https://localhost:44339/api/Transaction/Project/${selectedProject}/register`;
@@ -88,23 +95,42 @@ function Transaction() {
         }
     };
 
- 
+    const getTodayDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); 
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
     return (
         <div className="tpage">
             <div className="transactoncol">
-                <Form>
+                <Form noValidate validated={validated} onSubmit={addValues}>
                     <Row className="selectionitem">
                         <Form.Group as={Col} controlId="formGridProject">
                             <Form.Label>
                                 <div className="Invoicename">
                                     <p><b>Project</b>:</p>
                                 </div>
-                                <select id="SelectProject" className="Projectlist1" value={selectedProject} onChange={handleProjectChange}>
-                                    <option value="">Select project here...</option>
-                                    {projects.map(project => (
-                                        <option key={project.projectId} value={project.projectId}>{project.projectName}</option>
-                                    ))}
-                                </select>
+                                <InputGroup hasValidation>
+                                    <Form.Control
+                                        as="select"
+                                        id="SelectProject"
+                                        className="Projectlist1"
+                                        value={selectedProject}
+                                        onChange={handleProjectChange}
+                                        required
+                                    >
+                                        <option value="">Select project here...</option>
+                                        {projects.map(project => (
+                                            <option key={project.projectId} value={project.projectId}>{project.projectName}</option>
+                                        ))}
+                                    </Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please select a project.
+                                    </Form.Control.Feedback>
+                                </InputGroup>
                             </Form.Label>
                         </Form.Group>
                         <Form.Group as={Col} controlId="formGridType">
@@ -112,33 +138,52 @@ function Transaction() {
                                 <div className="Type">
                                     <p><b>Type</b> :</p>
                                 </div>
-                                <select id="SelectType" className="transactype" value={SelectedType} onChange={handleTypeChange}>
-                                    <option value="">Select Type...</option>
-                                    <option value="Income">Income</option>
-                                    <option value="Expence">Expence</option>
-                                </select>
+                                <InputGroup hasValidation>
+                                    <Form.Control
+                                        as="select"
+                                        id="SelectType"
+                                        className="transactype"
+                                        value={selectedType}
+                                        onChange={handleTypeChange}
+                                        required
+                                    >
+                                        <option value="">Select Type...</option>
+                                        <option value="Income">Income</option>
+                                        <option value="Expense">Expense</option>
+                                    </Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please select a type.
+                                    </Form.Control.Feedback>
+                                </InputGroup>
                             </Form.Label>
                         </Form.Group>
                         <Form.Group as={Col} controlId="formGridDate">
                             <Form.Label>
-                            <p><b>Date</b> :</p>
+                                <p><b>Date</b> :</p>
                                 <div className="datepicker">
                                     <TextField
+                                        required
                                         autoFocus
                                         margin="dense"
                                         id="last_updated"
                                         type="date"
-                                        value={Date}
+                                        value={date}
                                         onChange={(e) => setDate(e.target.value)}
                                         inputProps={{
+                                            max: getTodayDate(),
                                             style: {
                                                 height: "30px",
-                                                paddingTop: "0px",  // Adjust top padding 
-                                                paddingBottom: "0px" // Adjust bottom padding 
+                                                paddingTop: "0px",
+                                                paddingBottom: "0px"
                                             }
                                         }}
                                         style={{ backgroundColor: "white", width: "220px", marginTop: "5px", marginLeft: "10px" }}
+                                        helperText={validated && date > getTodayDate() ? 'Cannot select a future date.' : 'Looks good!'}
+                                        error={validated && date > getTodayDate()}
                                     />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please select a valid date.
+                                    </Form.Control.Feedback>
                                 </div>
                             </Form.Label>
                         </Form.Group>
@@ -146,20 +191,41 @@ function Transaction() {
                     <Row className="val-and-dis">
                         <Form.Group as={Col} controlId="formGridDescription">
                             <Form.Label><b>Description</b></Form.Label>
-                            <Form.Control placeholder="Enter budget description" onChange={handleDescriptionChange}
-                                style={{ fontSize: "16px" }} autoComplete="off" />
+                            <InputGroup hasValidation>
+                                <Form.Control
+                                    required
+                                    placeholder="Enter budget description"
+                                    onChange={handleDescriptionChange}
+                                    style={{ fontSize: "16px" }}
+                                    autoComplete="off"
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter a description.
+                                </Form.Control.Feedback>
+                            </InputGroup>
                         </Form.Group>
                         <Form.Group as={Col} controlId="formGridValue">
                             <Form.Label><b>Value</b></Form.Label>
-                            <Form.Control placeholder="Enter budget value" onChange={handleValueChange}
-                                style={{ fontSize: "16px" }} autoComplete="off" />
+                            <InputGroup hasValidation>
+                                <Form.Control
+                                    required
+                                    type="number"
+                                    placeholder="Enter budget value"
+                                    onChange={handleValueChange}
+                                    style={{ fontSize: "16px" }}
+                                    autoComplete="off"
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter a value.
+                                </Form.Control.Feedback>
+                            </InputGroup>
                         </Form.Group>
                     </Row>
                     <div className="addbutton">
                         <Row>
                             <Form.Group className="submit-btn" controlId="formGridAddress1">
-                                <Button variant="primary" type="button" id="usubmit" onClick={addValues} className="addbtn" 
-                                style={{ backgroundColor: '#20C997', color: 'white' }}>
+                                <Button variant="primary" type="submit" id="usubmit" className="addbtn1" 
+                                style={{ backgroundColor: '#20C997', color: 'white'}}>
                                     Add
                                 </Button>
                             </Form.Group>
@@ -168,11 +234,10 @@ function Transaction() {
                 </Form>
             </div>
             <div className="outerlyr">
-            <div className="invoicereport">
-                <Invoice projectId={selectedProject} />  {/*import invoice report*/}
+                <div className="invoicereport">
+                    <Invoice projectId={selectedProject} />  {/*import invoice report*/}
+                </div>
             </div>
-            </div>
-
         </div>
     )
 }
