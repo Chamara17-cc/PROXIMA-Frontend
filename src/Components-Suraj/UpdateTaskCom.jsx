@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import Button from "react-bootstrap/Button";
@@ -13,10 +13,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import InputGroup from "react-bootstrap/InputGroup";
 
-export default function TaskCreationCom() {
+export default function UpdateTaskCom() {
   const [validated, setValidated] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
@@ -30,62 +31,52 @@ export default function TaskCreationCom() {
   const [timeDuration, setTimeDuration] = useState();
 
   const selectedDevId = location.state.selectedDevId;
-
   const selectedId = location.state.selectedId;
+  const taskId = location.state.taskId; // Assume taskId is passed for editing
 
-  console.log("task page :" + selectedDevId + " " + selectedId);
-
-  const handleTNameChange = (value) => {
-    setTaskName(value);
-  };
-
-  const handleDescriptionChange = (value) => {
-    setDescription(value);
-  };
-
-  const handleTechChange = (value) => {
-    setTechnologies(value);
-  };
-
-  const handleDependancyChange = (value) => {
-    setDependancies(value);
-  };
-
-  const handlePriorityChange = (value) => {
-    setPriority(value);
-  };
-
-  const sdate = new Date(createdDate);
-  const ddate = new Date(dueDate);
+  useEffect(() => {
+    if (taskId) {
+      axios
+        .get(`https://localhost:44339/api/TaskCreation/${taskId}`)
+        .then((response) => {
+          const task = response.data;
+          setTaskName(task.taskName);
+          setDescription(task.taskDescription);
+          setTechnologies(task.technology);
+          setDependancies(task.dependancy);
+          setPriority(task.priority);
+          setCreatedDate(task.createdDate);
+          setDueDate(task.dueDate);
+          setTimeDuration(task.timeDuration);
+        })
+        .catch((error) => {
+          console.error("Error fetching task data: ", error);
+        });
+    }
+  }, [taskId]);
 
   function getDaysBetweenDates(startDate, endDate) {
-    // Ensure both dates are valid Date objects
     if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
-      return null; // Handle invalid dates
+      return null;
     }
-
-    const oneDay = 1000 * 60 * 60 * 24; // Milliseconds in one day
+    const oneDay = 1000 * 60 * 60 * 24;
     const differenceInMs = endDate.getTime() - startDate.getTime();
-
-    // Math.floor rounds down to the nearest whole day
     return Math.floor(differenceInMs / oneDay);
   }
 
+  const sdate = new Date(createdDate);
+  const ddate = new Date(dueDate);
   var time = getDaysBetweenDates(sdate, ddate);
 
-  // const currentDate = new Date().toISOString().split("T")[0];
-
-  const handleAssign = (event) => {
+  const handleSubmit = (event) => {
     setTimeDuration(time);
-    console.log(time);
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
       alert("Input the required fields");
     } else {
-      event.preventDefault(); // Prevent default form submission
-      // Form is valid, proceed with data submission
+      event.preventDefault();
       const data = {
         TaskName: taskName,
         TaskDescription: description,
@@ -93,40 +84,33 @@ export default function TaskCreationCom() {
         Dependancy: dependancies,
         Priority: priority,
         TimeDuration: time,
-        ProjectId: selectedId,
-        DeveloperId: selectedDevId,
         CreatedDate: createdDate,
         DueDate: dueDate,
       };
 
-      console.log(data);
+      const url = `https://localhost:44339/api/TaskCreation/${taskId ? taskId : ""}`;
 
-      const url = "https://localhost:44339/api/TaskCreation";
+      const request = taskId
+        ? axios.put(url, data)
+        : axios.post(url, { ...data, ProjectId: selectedId, DeveloperId: selectedDevId });
 
-      axios
-        .post(url, data)
+      request
         .then((response) => {
-          console.log("**");
-
-          alert("Task created");
-          console.log(response.data);
-
+          alert(`Task ${taskId ? "updated" : "created"} successfully`);
           setValidated(false);
-
-          window.location.reload();
+          navigate("/task-list"); // Navigate to the task list or any other page
         })
         .catch((error) => {
           alert(error);
           console.log(error);
         });
     }
-
     setValidated(true);
   };
 
   return (
     <div>
-      <Form noValidate validated={validated} onSubmit={handleAssign}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <div className="Section">
           <h3 className="SectionHeading">Task Initialization</h3>
           <Row className="mb-3">
@@ -137,13 +121,11 @@ export default function TaskCreationCom() {
                   autoFocus
                   required
                   type="text"
-                  style={{ color: "black", fontSize: "18px" }}
-
                   placeholder="Task Name"
                   id="taskName"
-                  onChange={(e) => handleTNameChange(e.target.value)}
+                  value={taskName}
+                  onChange={(e) => setTaskName(e.target.value)}
                 />
-
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
                   Please enter task name.
@@ -158,11 +140,10 @@ export default function TaskCreationCom() {
               <Form.Control
                 required
                 placeholder="Enter task description"
-                style={{ color: "black", fontSize: "18px" }}
-
                 type="text"
                 id="description"
-                onChange={(e) => handleDescriptionChange(e.target.value)}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
@@ -178,48 +159,47 @@ export default function TaskCreationCom() {
                 <Form.Control
                   required
                   placeholder="Enter technologies used"
-                  style={{ color: "black", fontSize: "18px" }}
-
                   type="text"
                   id="technologies"
-                  onChange={(e) => handleTechChange(e.target.value)}
+                  value={technologies}
+                  onChange={(e) => setTechnologies(e.target.value)}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
-                  Please enter task name.
+                  Please enter task technologies.
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
 
-            <Row className="mb-3" style={{width:"70%"}}>
-            <Form.Group as={Col}>
-              <Form.Label>Created Date:</Form.Label>
-              <TextField
-                required
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width:"300px"}}
-                margin="dense"
-                id="last_updated"
-                type="date"
-                fullWidth
-                value={createdDate}
-                onChange={(e) => setCreatedDate(e.target.value)}
-              />
-            </Form.Group>
+            <Row className="mb-3" style={{ width: "70%" }}>
+              <Form.Group as={Col}>
+                <Form.Label>Created Date:</Form.Label>
+                <TextField
+                  required
+                  style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width: "300px" }}
+                  margin="dense"
+                  id="createdDate"
+                  type="date"
+                  fullWidth
+                  value={createdDate}
+                  onChange={(e) => setCreatedDate(e.target.value)}
+                />
+              </Form.Group>
 
-            <Form.Group as={Col}>
-              <Form.Label>Due Date:</Form.Label>
-              <TextField
-                required
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width:"300px"}}
-                margin="dense"
-                id="last_updated"
-                type="date"
-                fullWidth
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              />
-            </Form.Group>
-          </Row>
+              <Form.Group as={Col}>
+                <Form.Label>Due Date:</Form.Label>
+                <TextField
+                  required
+                  style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width: "300px" }}
+                  margin="dense"
+                  id="dueDate"
+                  type="date"
+                  fullWidth
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                />
+              </Form.Group>
+            </Row>
 
             <Form.Group className="mb-3">
               <Form.Label>Dependancies:</Form.Label>
@@ -227,11 +207,10 @@ export default function TaskCreationCom() {
                 <Form.Control
                   required
                   placeholder="Enter dependancies"
-                  style={{ color: "black", fontSize: "18px" }}
-
                   type="text"
                   id="dependancies"
-                  onChange={(e) => handleDependancyChange(e.target.value)}
+                  value={dependancies}
+                  onChange={(e) => setDependancies(e.target.value)}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">
@@ -248,10 +227,9 @@ export default function TaskCreationCom() {
                 required
                 placeholder="Enter priority level"
                 type="number"
-                style={{ color: "black", fontSize: "18px" }}
-
                 id="priority"
-                onChange={(e) => handlePriorityChange(e.target.value)}
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
@@ -260,16 +238,8 @@ export default function TaskCreationCom() {
             </InputGroup>
           </Form.Group>
 
-         
-{/* 
-          ----------------------File upload part-----------------------
-          <Form.Group as={Col} className="mb-3">
-            <Form.Label>Upload:</Form.Label>
-            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-          </Form.Group> */}
+          <Button type="submit">{taskId ? "Update Task" : "Create Task"}</Button>
         </div>
-
-        <Button type="submit">Assign</Button>
       </Form>
     </div>
   );

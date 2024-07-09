@@ -51,6 +51,8 @@ import FinanceDigram from "./Pages-Chamara/FinanceDigram";
 import Payment from "./Pages-Chamara/Payment";
 import FullTaskListPage from "./Pages-Suraj/FullTaskListPage";
 import PMFullTaskViewPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMFullTaskViewPage";
+import UpdateProjectPage from "./Pages-Suraj/UpdateProjectPage";
+import UpdateTaskPage from "./Pages-Suraj/UpdateTaskPage";
 
 
 
@@ -136,6 +138,8 @@ function App() {
         <Route path="/fullTaskListPage" element = {<FullTaskListPage/>}></Route>
         <Route path="/pMFullTaskListPage" element = {<PMFullTaskViewPage/>}></Route>
 
+          <Route path="/updateProjectPage" element={<UpdateProjectPage/>}></Route>
+          <Route path="/updateTaskPage" element={<UpdateTaskPage/>}></Route>
 
 
       </Routes>

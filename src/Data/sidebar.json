@@ -38,10 +38,6 @@
             {
                 "title": "Create Project",
                 "path":"/projectcreation"
-            },
-            {
-                "title": "Task Assign",
-                "path": "/taskcreation"
             }
         ]
     },

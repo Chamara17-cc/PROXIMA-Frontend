@@ -12,3 +12,8 @@
     text-decoration: underline;
     color: #b3b5bd;
 }
+
+.formField{
+    color: black; 
+    font-size: 18px; 
+}
