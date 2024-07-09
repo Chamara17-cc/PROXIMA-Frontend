@@ -1,19 +1,30 @@
-.addbutton{
-    position: absolute;
-    margin-left: 80%;
+.transactoncol{
+    background-color: #D3D3D3;
+    padding: 20px;
+    margin-bottom: 40px;
+    border: 3px solid black;
+    border-radius: 5px;
+    font-size: large;
 }
-.Projectlist{
-    margin-top: 10px;
-}
-.datepicker {
-    display: flex;
-    align-items: center;
-    width: 250px;
-    height: 40px;
-    margin: 15px;
-    margin-left: 15px;
-    margin-bottom: 30px;
+.selectionitem{
+     align-items:center;
+     padding: 5px;
 }
 .invoicereport{
-    margin-top: 80px;
+    margin-bottom: 10px;
+    
+}
+.printb{
+    left: 70%;
+    margin-left: 900px;
+}
+.addbtn1{
+    left: 40%;
+}
+
+.t1{
+    height: 40px;
+}
+.Invoicename{
+    height: 20px;
 }

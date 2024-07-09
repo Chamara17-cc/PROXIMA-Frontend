@@ -1,10 +1,10 @@
 import React from 'react'
+import ClientDetailView from '../Components-Hemal/ClientDetailView'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 import '../Pages/PageStructure.css'
-import ManagerDashboardComponent from '../Components-Thusharaga/ManagerDashboardComponent'
 
-function SecondLevelUserDashboard() {
+function ViewClientDetail() {
   return (
     <div className="FullPage">
       
@@ -13,13 +13,12 @@ function SecondLevelUserDashboard() {
      
       <div className="Content">
        
-        <ManagerDashboardComponent/>
+      <ClientDetailView/>
      
       </div>
       
     </div>
-
-  )
+      )
 }
 
-export default SecondLevelUserDashboard
+export default ViewClientDetail

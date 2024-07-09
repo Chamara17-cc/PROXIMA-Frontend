@@ -3,7 +3,8 @@
     {
         "title": "Dashboard",
         "icon": "bi-gear-fill",
-        "path" :"/DeveloperDashboard"
+        "path" :"/DeveloperDashboard",
+        "roles" : ["3"]
     },
       
     {
@@ -20,11 +21,7 @@
         "title": "Progress",
         "icon": "bi bi-person-lines-fill",
         "path" :"/DeveloperProgress"
-    },
-   
-    {
-        "title": "TaskRecord",
-        "icon": "bi bi-person-lines-fill",
-        "path" :"/taskRecord"
+    
     }
+
 ]

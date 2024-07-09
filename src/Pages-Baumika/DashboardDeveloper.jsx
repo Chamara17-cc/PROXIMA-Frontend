@@ -13,8 +13,9 @@ function DashboardDeveloper() {
       <DeveloperSidebar/>
 
       <div className="Content">
-    <Header/>
-    <Content/>
+      <Header/>
+   
+     <Content/>
   
 
 

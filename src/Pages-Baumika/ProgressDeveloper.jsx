@@ -2,8 +2,8 @@ import React from 'react'
 import Topbar from '../Compornents/Topbar';
 import DeveloperSidebar from '../Components-Bhaumika/DeveloperSidebar';
 import ProgressHeader from '../Components-Bhaumika/ProgressHeader';
-import SampleContent from '../Components-Bhaumika/SampleContent';
-
+import TaskReport from '../Components-Bhaumika/TaskReport';
+import './ReportPage.css'
 
 function ProgressDeveloper() {
   return (
@@ -16,9 +16,12 @@ function ProgressDeveloper() {
       <div className="Content">
 
            <ProgressHeader/>
-           <SampleContent/>
+
+           <div className='MainContent'>
+
+           <TaskReport/>
             
-            
+               </div>
         </div>
     
     

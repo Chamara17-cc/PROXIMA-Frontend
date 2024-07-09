@@ -6,13 +6,16 @@ import "./AdminProjectViewCSS.css";
 import "./FormStyle.css";
 import "./ProjectListCSS.css";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
-
+import "./DataView.css";
 
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 export default function TaskDetailsCom() {
 
@@ -204,55 +207,55 @@ export default function TaskDetailsCom() {
 
             // ---------------Upload Video --------------------------------
 
-    const [video, setVideo] = useState("");
+    // const [video, setVideo] = useState("");
 
-    const HandleVideoChange = (event) => {
-      setVideo(event.target.files[0]);
-      console.log("Video selected");
-    }
+    // const HandleVideoChange = (event) => {
+    //   setVideo(event.target.files[0]);
+    //   console.log("Video selected");
+    // }
 
-    const UploadVideo = async () => {
-      if(!video){
-        alert("select an Video");
-        return;
-      }
+  //   const UploadVideo = async () => {
+  //     if(!video){
+  //       alert("select an Video");
+  //       return;
+  //     }
 
-      const formData = new FormData();
-    formData.append("file", video);
+  //     const formData = new FormData();
+  //   formData.append("file", video);
 
-    const url1 = `https://localhost:44339/api/TaskVideoUpload/VideoUpload?ProID=${proId}TId=${selectedTaskId}`;
+  //   const url1 = `https://localhost:44339/api/TaskVideoUpload/VideoUpload?ProID=${proId}TId=${selectedTaskId}`;
 
     
-      axios.post(url1, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(() => {
-        alert("Upload Successful");
-        setVideo(null);
-      })
-     .catch ((error) => {
-      alert("Select an Video");
-      console.error("Error uploading file:", error);
-    });
-    }
+  //     axios.post(url1, formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     }).then(() => {
+  //       alert("Upload Successful");
+  //       setVideo(null);
+  //     })
+  //    .catch ((error) => {
+  //     alert("Select an Video");
+  //     console.error("Error uploading file:", error);
+  //   });
+  //   }
 
 
-    //------view video info
+  //   //------view video info
 
-  const [videoNames, setVideoNames] = useState([]);
+  // const [videoNames, setVideoNames] = useState([]);
 
-  const GetVideoNames = async () => {
-    const url = `https://localhost:44339/api/TaskFilesView/video?PId=${proId}&TId=${selectedTaskId}`;
+  // const GetVideoNames = async () => {
+  //   const url = `https://localhost:44339/api/TaskFilesView/video?PId=${proId}&TId=${selectedTaskId}`;
 
-    try {
-      const response = await axios.get(url);
-      setVideoNames(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     const response = await axios.get(url);
+  //     setVideoNames(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
 
 
@@ -313,22 +316,26 @@ export default function TaskDetailsCom() {
   const download = async (filePath, fileName) => {
     const urlDownload = `https://localhost:44339/api/ProjectFileDownload/DownloadProjectFile?FilePath=${filePath}&FileName=${fileName}`;
     
-    
 
     try {
       // const response = await axios.get(url2);
       // console.log(response)
-
-      const response = await axios.get(urlDownload, {
-        responseType: 'blob' // Specify blob response type for downloading
-      });
-      console.log("downloaded");
-      const blob = new Blob([response.data], { type: response.data.type });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = fileName;
-      link.click();
-      alert("Downloaded");
+      if (window.confirm('Do you want to download this item?')){
+        const response = await axios.get(urlDownload, {
+          responseType: 'blob' 
+        });
+        console.log("downloaded");
+        const blob = new Blob([response.data], { type: response.data.type });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+        alert("Downloaded");
+      }
+      else{
+        console.log("Not download");
+      }
+      
 
 
     } catch (error) {
@@ -336,14 +343,88 @@ export default function TaskDetailsCom() {
     }
   }
 
+
+
+  //-----------------------------
+
+  const navigate = useNavigate();
+
+  // const ClickUpdate = () => {
+  //   if (window.confirm("Do you want to update task details?")) {
+  //     navigate("/UpdateTaskPage", { state: { selectedTaskId } });
+  //   }
+  // };
+
+  const DeleteFile = async (id) => {
+    if (window.confirm("Do you want to Delete item?")){
+    const url = `https://localhost:44339/api/TaskFileDelete/deleteFile?fileId=${id}`;
+
+    try{
+      await axios.delete(url);
+      alert("File Deleted");
+    }
+    catch(error){
+      alert(error);
+
+    }
+  }
+}
+  
+
+
+
+//  *******************task deletion
+
+  const DeleteTask = async () => {
+    try{
+      const url = `https://localhost:44339/api/TaskDeletion?TId=${selectedTaskId}`;       
+      
+      if (window.confirm('Are you sure you want to delete the task?')) {
+        const response = await axios.delete(url);
+        if(response.status === 204){
+          alert("Deleted successfully");
+          navigate(-1);
+        }
+        else if(response.status === 200){
+          alert("Task is Ongoing");
+        }
+        
+      } else {
+        console.log('Deletion cancelled');
+      }
+      
+    }
+    catch(error){
+      alert("Please Delete All Uploaded Resources");
+      console.log(error);
+    }
+  }
+
+  const DeleteFiles = async () => {
+  try{
+    const url2 = `https://localhost:44339/api/TaskFileDelete?id=${selectedTaskId}`;     // file delete related to task
+
+    if (window.confirm('Are you sure you want to delete all uploaded files?')) {
+      const deletedFile = await axios.delete(url2);
+        if(deletedFile.status !== 204){
+          alert("Error Occured");
+          return;
+        }
+    }
+  } catch(error){
+    alert(error);
+  }   
+  }
+
+  
+
     useEffect(() => {
         GetTaskDetails();
         GetBasicFileNames();
         GetImgNames();
         GetAudioNames();
-        GetVideoNames();
         GetZipNames();
-    },[basicNames, imgNames, audioNames, videoNames, zipNames]);
+    },[basicNames, imgNames, audioNames, zipNames]);
 
 
 
@@ -359,22 +440,31 @@ export default function TaskDetailsCom() {
                 <p className="ViewItems">Task Id: {task.taskId}</p>
                 <p className="ViewItems">Task Description: {task.taskDescription}</p>
                 <p className="ViewItems">Technologies: {task.technologies}</p>
-                <p className="ViewItems">Start Date: {task.createdDate}</p>
-                <p className="ViewItems">Due Date: {task.dueDate}</p>
+                <p className="ViewItems">Start Date: {task.createdDate.split("T")[0]}</p>
+                <p className="ViewItems">Due Date: {task.dueDate.split("T")[0]}</p>
                 <p className="ViewItems">Time Duration: {task.timeDuration} days</p>
                 <p className="ViewItems">Priority: {task.priority}</p>
                 <p className="ViewItems">Dependancies: {task.dependancies}</p>
                 <p className="ViewItems">Task status: {task.taskStatus}</p>
+               
               </div>
-            ))}
-        
+
+
+            ))}<br/>
+
+            <div style={{display: "flex"}}>
+            <Button variant="danger" onClick={DeleteTask}>Delete Task</Button>
+            {/* <Button onClick={ClickUpdate}>Update Task</Button> */}
+        </div>
           
         </Tab>
 
         <Tab eventKey="resources" title="Resources">
         <div className="project-detail">
         <h3 className="card-topic">Task Information</h3>
+        
             <Form.Group as={Col} className="mb-3">
+            <div className="ViewItems">
               <Form.Label>Task Info Files: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -390,23 +480,32 @@ export default function TaskDetailsCom() {
                   Upload
                 </Button>
 
-                
-              </div><br/> 
+                </div>
+                </div>
+              <br/> 
               <Form.Group as={Col} className="mb-3">
               <Form.Label>Task Info Files: </Form.Label>
+              <div className="ViewItems">
 
               {basicNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}>
+                  <button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button>
+                  &nbsp;&nbsp;
+                        <DeleteIcon onClick={()=>DeleteFile(file.fileId)} style={{color:"white"}}></DeleteIcon>
+
+                </li>
               </ul>
               ))}
                 
-             
+             </div>
             </Form.Group>
             </Form.Group>
-            
-            <br /><br />
+            </div>
+           
+            <div className="project-detail">
             <h3 className="card-topic">Task Resources</h3>
+            <div className="ViewItems">
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Images: </Form.Label>
               <div style={{ display: "flex" }}>
@@ -426,9 +525,9 @@ export default function TaskDetailsCom() {
                 
               </div>
             </Form.Group>
-
-
-            <Form.Group as={Col} className="mb-3">
+          </div>
+          
+            {/* <Form.Group as={Col} className="mb-3">
               <Form.Label>Videos: </Form.Label>
               <div style={{ display: "flex" }}>
                 <Form.Control
@@ -445,9 +544,9 @@ export default function TaskDetailsCom() {
                 </Button>
 
                 
-              </div>
-            </Form.Group>
-
+              </div> 
+            </Form.Group>*/}
+<div className="ViewItems">
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Audios: </Form.Label>
               <div style={{ display: "flex" }}>
@@ -467,8 +566,8 @@ export default function TaskDetailsCom() {
                 
               </div>
             </Form.Group>
-
-
+</div>
+<div className="ViewItems">
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Zip Files: </Form.Label>
               <div style={{ display: "flex" }}>
@@ -476,10 +575,10 @@ export default function TaskDetailsCom() {
                   type="file"
                   size="sm"
                   style={{ width: "250px" }}
-                 // onChange={HandleZipChange}
+                  onChange={HandleZipChange}
                 />
                 <Button
-                 // onClick={UploadZip}
+                  onClick={UploadZip}
                   style={{ marginLeft: "60px", marginBottom: "4px" }}
                 >
                   Upload
@@ -488,10 +587,14 @@ export default function TaskDetailsCom() {
                 
               </div>
             </Form.Group>
-        </div>
-
+            </div>
+            </div>
+        
+        
+        
+        <div className="project-detail">
         <h3 className="card-topic">Uploaded Resources</h3>
-          <div style={{ display: "flex" }}>
+          <div className="ViewItems" style={{ display: "flex" }}>
           
 
             
@@ -500,14 +603,18 @@ export default function TaskDetailsCom() {
               <Form.Label>Images: </Form.Label>
               {imgNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button>
+                &nbsp;&nbsp;
+                        <DeleteIcon onClick={()=>DeleteFile(file.fileId)} style={{color:"white"}}></DeleteIcon>
+
+                </li>
               </ul>
               ))}
                 
              
             </Form.Group>
 
-            <Form.Group as={Col} className="mb-3">
+            {/* <Form.Group as={Col} className="mb-3">
               <Form.Label>Videos: </Form.Label>
               {videoNames.map((file, index) => (
                 <ul>
@@ -515,14 +622,18 @@ export default function TaskDetailsCom() {
               </ul>
               ))}
              
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Audios: </Form.Label>
 
               {audioNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button>
+                &nbsp;&nbsp;
+                        <DeleteIcon onClick={()=>DeleteFile(file.fileId)} style={{color:"white"}}></DeleteIcon>
+
+                </li>
               </ul>
               ))}
              
@@ -533,7 +644,10 @@ export default function TaskDetailsCom() {
 
               {zipNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button className="downbutton" onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button>
+                &nbsp;&nbsp;
+                        <DeleteIcon onClick={()=>DeleteFile(file.fileId)} style={{color:"white"}}></DeleteIcon>
+</li>
               </ul>
               ))}
              
@@ -541,12 +655,8 @@ export default function TaskDetailsCom() {
 
 
           </div>
-        </Tab>
-
-        <Tab eventKey="time" title="Task Info">
-        <div className="project-detail">
-            Time info
-        </div>
+          </div>
+          <Button style={{marginTop:'20px'}} variant="danger" onClick={DeleteFiles}>Delete Files</Button>
         </Tab>
       </Tabs>
     </div>

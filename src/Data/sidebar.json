@@ -3,22 +3,26 @@
     {
         "title": "Dashboard",
         "icon": "bi-gear-fill",
-        "path" :"/"
+        "path" :"/adminDashboard",
+        "roles" : ["1"]
     },
       {  "title": "User",
          "icon": "bi-person-fill",
         "childrens": [
             {
-                "title": "User Accounts",
-                "path": "/userlist"
+                "title": "User List",
+                "path": "/userList",
+                "roles": ["1", "2"]
             },
             {
-                "title": "Add New User",
-                "path": "/usercreation"
+                "title": "User Registration",
+                "path": "/userCreation",
+                "roles": ["1"]
             },
             {
-                 "title": "Deactivate User",
-                "path": "/userlist"
+                "title": "User Management",
+                "path": "/userManagement",
+                "roles": ["1"]
             }
             
         ]
@@ -32,7 +36,7 @@
                 "path": "/projectlist"
             },
             {
-                "title": "New Projects",
+                "title": "Create Project",
                 "path":"/projectcreation"
             }
         ]
@@ -40,22 +44,30 @@
     {
         "title": "Finance",
         "icon": "bi bi-bank2",
+        "roles": ["1"],
         "childrens": [
             {
                 "title": "New budget",
-                "path": "/budget"
+                "path": "/budget",
+                "roles": ["1"]
             },
             {
-                "title": "Transaction",
-                "path": "/transaction" 
-                
+                "title": "Invoice",
+                "path": "/transaction",
+                "roles": ["1"]  
             }
+     
         ]
     },
     {
         "title": "Client",
         "icon": "bi bi-person-lines-fill",
+        "roles": ["1"],
         "childrens": [
+            {
+                "title": "Client register",
+                "path": "/clientCreation"
+            },
             {
                 "title": "Client list",
                 "path": "/clientlist"
@@ -69,15 +81,5 @@
                 "path": "/sendemail"   
             }
         ]
-    },  {
-        "title": "DeveloperDashboard",
-        "icon": "bi-gear-fill",
-        "path" :"/DeveloperDashboard"
-    },  
-    {
-        "title": "ProjectManagerDashboard",
-        "icon": "bi-gear-fill",
-        "path" :"/ProjectManagerDashboard"
     }
 ]
-

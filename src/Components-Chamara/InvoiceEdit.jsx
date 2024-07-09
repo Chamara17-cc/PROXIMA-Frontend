@@ -12,10 +12,11 @@ export default function InvoiceEdit(props) {
   const [date, setDate] = useState('');
   const [type, setType] = useState('');
   const [value, setValue] = useState('');
-  const [discription,setDescription]=useState('');
+  const [description, setDescription] = useState('');
 
-  const {transacId}=props
-  console.log(transacId)
+  const { transacId, discription , tvalue } = props;
+  
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -23,94 +24,91 @@ export default function InvoiceEdit(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDiscriptionEdit=(event)=>{
-  setDescription (event.target.value); 
-  };
-  const handleDateEdit=(event)=>{
-    setDate (event.target.value); 
-    };
-  const handleTypeChange=(event)=>{
-    setType (event.target.value); 
-    };
-  const handleValueEdit=(event)=>{
-    setValue (event.target.value); 
-    };
-  const handleEdit =async (transacId) => {
-    const editdata = {
-      Value: value,
-      Type: type,
-      Description: discription,
-      Date: date
-    };
 
-    console.log(editdata)
-    const url = `https://localhost:44339/api/Transaction/Transaction/${transacId}`;
-    axios.put(url, editdata)
+  const handleDescriptionEdit = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleDateEdit = (event) => {
+    setDate(event.target.value);
+  };
+
+  const handleTypeChange = (event) => {
+    setType(event.target.value);
+  };
+
+  const handleValueEdit = (event) => {
+    setValue(event.target.value);
+  };
+
+  const handleEdit = async (transacId) => {
+    const editData = {};
+    if (value) editData.Value = value;
+    if (type) editData.Type = type;
+    if (description) editData.Description = description;
+    if (date) editData.Date = date;
+
+    console.log(editData);
+    const url = `https://localhost:44339/api/Transaction/Transaction/${transacId}/register?value=${value}&type=${type}&description=${description}`;
+    axios.put(url, editData)
       .then((result) => {
         alert("Data edited");
         window.location.reload();
-        
       })
       .catch((error) => {
         if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
           console.error("Request made, but server responded with error:");
           console.error("Status Code:", error.response.status);
           console.error("Response Data:", error.response.data);
           console.error("Response Headers:", error.response.headers);
         } else if (error.request) {
-          // The request was made but no response was received
           console.error("Request made, but no response received:", error.request);
         } else {
-          // Something happened in setting up the request that triggered an Error
           console.error("Error setting up the request:", error.message);
         }
         alert("An error occurred while processing the request. Please check the console for details.");
       });
-  }
-
- 
+  };
+  
 
   return (
     <div>
-      <Button onClick={handleClickOpen} style={{backgroundColor:'#3D97ED' , color:'white'}}>Edit</Button>
+      <Button onClick={handleClickOpen} style={{ backgroundColor: '#20C997', color: 'white' }}>Edit</Button>
       <div className="invoiceedit">
         <Dialog open={open} onClose={handleClose} maxWidth='100'>
-          <DialogTitle className='invoiceedit'>Edit Transaction</DialogTitle>
+          <DialogTitle className='invoiceedit'><b>Edit Transaction</b></DialogTitle>
           <DialogContent>
-          <div class="container">
-  <table class="table table-borderless">
-    <thead>
-      <tr>
-        <th scope="col">Description</th>
-        <th scope="col">Date</th>
-        <th scope="col">Type</th>
-        <th scope="col">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><input type="text" class="form-control" onChange={handleDiscriptionEdit}/></td>
-        <td><input type="date" class="form-control" onChange={handleDateEdit}/></td>
-        <td>
-          <select id="SelectProject" class="form-select" value={type} onChange={handleTypeChange}>
-            <option value="" >Select Type...</option>
-            <option value="Income">Income</option>
-            <option value="Expense">Expense</option>
-          </select>
-        </td>
-        <td><input type="text" class="form-control" onChange={handleValueEdit}/></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-
+            <div className="container"> 
+                  <table className="table table-borderless">
+                    <thead>
+                      <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><input type="text" className="form-control" onChange={handleDescriptionEdit} placeholder={discription} /></td>
+                        <td><input type="date" className="form-control" onChange={handleDateEdit} /></td>
+                        <td>
+                          <select id="SelectProject" className="form-select" value={type} onChange={handleTypeChange}>
+                            <option value="" >Select Type...</option>
+                            <option value="Income">Income</option>
+                            <option value="Expense">Expense</option>
+                          </select>
+                        </td>
+                        <td><input type="text" className="form-control" onChange={handleValueEdit} placeholder={tvalue}  /></td>
+                      </tr>
+                    </tbody>
+                  </table>
+             
+            </div>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Close</Button>
-            <Button onClick={()=>handleEdit(transacId)}>Edit</Button>
+            <Button onClick={() => handleEdit(transacId)}>Edit</Button>
           </DialogActions>
         </Dialog>
       </div>

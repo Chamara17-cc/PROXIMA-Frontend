@@ -1,8 +1,8 @@
 import React from 'react'
 import Topbar from '../Compornents/Topbar';
 import DeveloperSidebar from '../Components-Bhaumika/DeveloperSidebar';
-import TaskHeader from '../Components-Bhaumika/TaskHeader';
 import TaskDescription from '../Components-Bhaumika/TaskDescription';
+import TaskHeader from '../Components-Bhaumika/TaskHeader';
 
 
 
@@ -15,8 +15,8 @@ export default function TaskDescriptionDeveloper() {
 
       <div className="Content">
 
-            <TaskHeader/>
           
+            <TaskHeader/>
             <TaskDescription/>
 
         </div>

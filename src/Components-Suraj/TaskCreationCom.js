@@ -137,6 +137,8 @@ export default function TaskCreationCom() {
                   autoFocus
                   required
                   type="text"
+                  style={{ color: "black", fontSize: "18px" }}
+
                   placeholder="Task Name"
                   id="taskName"
                   onChange={(e) => handleTNameChange(e.target.value)}
@@ -156,6 +158,8 @@ export default function TaskCreationCom() {
               <Form.Control
                 required
                 placeholder="Enter task description"
+                style={{ color: "black", fontSize: "18px" }}
+
                 type="text"
                 id="description"
                 onChange={(e) => handleDescriptionChange(e.target.value)}
@@ -174,6 +178,8 @@ export default function TaskCreationCom() {
                 <Form.Control
                   required
                   placeholder="Enter technologies used"
+                  style={{ color: "black", fontSize: "18px" }}
+
                   type="text"
                   id="technologies"
                   onChange={(e) => handleTechChange(e.target.value)}
@@ -185,12 +191,44 @@ export default function TaskCreationCom() {
               </InputGroup>
             </Form.Group>
 
+            <Row className="mb-3" style={{width:"70%"}}>
+            <Form.Group as={Col}>
+              <Form.Label>Created Date:</Form.Label>
+              <TextField
+                required
+                style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width:"300px"}}
+                margin="dense"
+                id="last_updated"
+                type="date"
+                fullWidth
+                value={createdDate}
+                onChange={(e) => setCreatedDate(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col}>
+              <Form.Label>Due Date:</Form.Label>
+              <TextField
+                required
+                style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width:"300px"}}
+                margin="dense"
+                id="last_updated"
+                type="date"
+                fullWidth
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
+            </Form.Group>
+          </Row>
+
             <Form.Group className="mb-3">
               <Form.Label>Dependancies:</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   required
                   placeholder="Enter dependancies"
+                  style={{ color: "black", fontSize: "18px" }}
+
                   type="text"
                   id="dependancies"
                   onChange={(e) => handleDependancyChange(e.target.value)}
@@ -210,6 +248,8 @@ export default function TaskCreationCom() {
                 required
                 placeholder="Enter priority level"
                 type="number"
+                style={{ color: "black", fontSize: "18px" }}
+
                 id="priority"
                 onChange={(e) => handlePriorityChange(e.target.value)}
               />
@@ -220,41 +260,13 @@ export default function TaskCreationCom() {
             </InputGroup>
           </Form.Group>
 
-          <Row className="mb-3">
-            <Form.Group as={Col}>
-              <Form.Label>Created Date:</Form.Label>
-              <TextField
-                required
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px" }}
-                margin="dense"
-                id="last_updated"
-                type="date"
-                fullWidth
-                value={createdDate}
-                onChange={(e) => setCreatedDate(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group as={Col}>
-              <Form.Label>Due Date:</Form.Label>
-              <TextField
-                required
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px" }}
-                margin="dense"
-                id="last_updated"
-                type="date"
-                fullWidth
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              />
-            </Form.Group>
-          </Row>
-
-          {/*----------------------File upload part----------------------- */}
+         
+{/* 
+          ----------------------File upload part-----------------------
           <Form.Group as={Col} className="mb-3">
             <Form.Label>Upload:</Form.Label>
             <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-          </Form.Group>
+          </Form.Group> */}
         </div>
 
         <Button type="submit">Assign</Button>

@@ -1,24 +1,26 @@
 import React from 'react'
-import UserCreationSuccessComponent from '../Components-Thusharaga/UserCreationSuccessComponent'
 import Sidebar from '../Compornents/Sidebar'
 import Topbar from '../Compornents/Topbar'
 import '../Pages/PageStructure.css'
+import EditProfileComponent from '../Components-Thusharaga/EditProfile'
 
-
-function UserCreationSuccess() {
+function EditProfile() {
   return (
+   
     <div className="FullPage">
       
       <Sidebar/>
       <Topbar/>
      
       <div className="Content">
-        <UserCreationSuccessComponent/>
+     
+        <EditProfileComponent/>
+     
       </div>
       
     </div>
 
-  )
+    )
 }
 
-export default UserCreationSuccess
+export default EditProfile

@@ -6,22 +6,20 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 //import BudgetEstForm from './BudgetEstForm'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import jsPDF from "jspdf";
+import 'jspdf-autotable';
 import { useNavigate } from "react-router-dom";
+import Budgettable from "./Budgettable";
+import Budgetedit from "./Budgetedit";
+import TotalFinanceDigram from "./TotalFinanceDigram"
 
 
 export default function ProjectCreationForm() {
 
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState("");
-  const [budgetData, setBudgetData] = useState([]);
+  const [budgetData, setBudgetData] = useState({});
+  const [budgetid,setBudgetId]=useState([]);
   
   const navigate= useNavigate();
   useEffect(() => {
@@ -36,8 +34,8 @@ export default function ProjectCreationForm() {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get(`https://localhost:44339/api/Budget`);
-      console.log("Projects:", response.data); // Debugging: log fetched projects
+      const response = await axios.get(`https://localhost:44339/api/Budget/register`);
+      console.log("Projects:", response.data); 
       setProjects(response.data);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -46,9 +44,11 @@ export default function ProjectCreationForm() {
 
   const fetchBudgetData = async (projectid) => {
     try {
-      const response = await axios.get(`https://localhost:44339/api/Budget/Projects/${projectid}`);
+      const response = await axios.get(`https://localhost:44339/api/Budget/register/Projects/${projectid}`);
       console.log("Budget data:", response.data);
       setBudgetData(response.data);
+      setBudgetId(response.data.budgetId);
+      console.log("Id",response.data.budgetId)
     } catch (error) {
       console.error("Error fetching budget data:", error);
     }
@@ -56,17 +56,78 @@ export default function ProjectCreationForm() {
 
   const handleProjectChange = (event) => {
     setSelectedProject(event.target.value);
+    console.log("selectedone",selectedProject)
+    console.log(projects.selectedProject)
   };
 
   const gotoEditpage = (projectid)=>{
     navigate('/budgetformedit', { state:  {projectId  : selectedProject  }});
-  }
+  };
+  const deletebudget =async (selectedProject)=>{
+    try{
+      if(window.confirm("Are you sure you need to delete this item")){
+      await axios.delete(`https://localhost:44339/api/Budget?projectid=${selectedProject}`);
+     // setBudgetData(budgetData.filter(item => item.selectedProject !== selectedProject));
+      alert("Deleted Successfully");
+      window.location.reload();
+      }
+    }catch(error){
+      console.error('Error deleting transaction:', error);
+    }
+  };
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    doc.autoTable({
+      html: '#budgetTable',
+      theme: 'grid',
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [22, 160, 133] }
+    });
+  
+    const pageHeight = doc.internal.pageSize.height; // Get page height
+  
+    // Add headers for the new table
+    const headers = [
+      ["Admin name", "Comment", "Approval", "Signature"]
+    ];
+  
+    // Add empty rows
+    const emptyRows = new Array(7).fill(["", "", "", ""]);
+  
+    // Add table with headers and empty rows
+    doc.autoTable({
+      head: headers,
+      body: emptyRows,
+      startY: doc.lastAutoTable.finalY + 10, // Start after the budget table
+      theme: 'grid',
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [22, 160, 133] }
+    });
+  
+    // Add signature and date
+    const posYSignature = doc.lastAutoTable.finalY + 20;
+    doc.setFontSize(10);
+    doc.text("Created Admin Signature", 15, posYSignature);
+    doc.line(15, posYSignature + 8, 50, posYSignature + 8);
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    doc.text(formattedDate, 15, posYSignature - 8);
+  
+    // Add 'Thank you' message
+    doc.setFont('Courier');
+    doc.setFontSize(30);
+    doc.text('Thank you', 70, pageHeight - 10);
+    doc.save('budgetreport.pdf');
+  };
+  
+  
 
   return (
-    <div>
+    <div className="budget">
      
       <div className="Pagename">
-        <p>Budget Estimation Report : {selectedProject}</p>
+        <p>Budget Estimation Report</p>
       </div>
       <Form>
         <Row className="mb-3">
@@ -85,83 +146,41 @@ export default function ProjectCreationForm() {
       </Form>
      
       <div>
-      {Object.keys(budgetData).length > 0 && (
-      <div className="budgetpdf">  {/*Budget Pdf form*/ }
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="left" colSpan={3}>
-                  {budgetData.description}
-                </TableCell>
-                <TableCell align="left">Date: {budgetData.date}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Expense</TableCell>
-                <TableCell colSpan={4}>Amount</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {budgetData.map((item,index) => (
-                <><TableRow key={index}>
-                  <TableCell>Selection Process Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.selectionprocessCost}</TableCell>
-                </TableRow><TableRow key={index}>
-                    <TableCell>License Cost</TableCell>
-                    <TableCell align="left" colSpan={4}>{item.licenseCost}</TableCell>
-                  </TableRow>
-                  <TableRow key={index}>
-                  <TableCell>Server Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.serversCost}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Hardware Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.hardwareCost}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Connection Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.connectionCost}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Developer Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.developerCost}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Other Expenses</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.otherExpenses}</TableCell>
-                </TableRow>
-                <TableRow key={index}>
-                  <TableCell>Total Cost</TableCell>
-                  <TableCell align="left" colSpan={4}>{item.totalCost}</TableCell>
-                </TableRow>
-                </>
-                
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    )}
-    <div className="btn12">
-    <Row>
-        
-        <Form.Group className="print-btn" controlId="formGridAddress1">
-          <Button variant="primary" type="submit" id="Print" >
-            Print
-          </Button>
-        </Form.Group>
+      {budgetData.length>0 && selectedProject.value !=="" &&(
+        <div className="budgetPDF">
+          <Budgettable budgetData={budgetData} />
+        </div>
+      )}
+    <div className="btns">
+          {budgetData.length >0 ?(
+                <Row>
+                    <div className="btn-group" role="group" aria-label="Basic example">
+                     <button type="button" className="btn btn-secondary" onClick={downloadPDF} 
+                     style={{width:'80px',margin:'10px', backgroundColor: '#20C997'}}>Print</button>
+                     <Budgetedit projectId={selectedProject} budgetData={budgetData}/>
+                    <button type="button" className="btn btn-secondary" onClick={()=>deletebudget(selectedProject)}  
+                    style={{width:'80px',margin:'10px', backgroundColor:'red'}}>Delete</button>
+                    </div>
+                   </Row>
+          ):
+          (
+            <Row>
+                   <Form.Group className="submit" controlId="formGridAddress1">
+                   <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}
+                   style={{ backgroundColor: '#20C997', color: 'white' }}>
+                     Create
+                   </Button>
+                  </Form.Group>
+                 
 
-        <Form.Group className="submit-btn" controlId="formGridAddress1">
-        <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
-          Edit
-        </Button>
-        </Form.Group>
-        </Row>
-        
-           
-    </div>
+            </Row>
+          )}
+          <div className="yearfinance">
+            <TotalFinanceDigram/>
+          </div>
+        </div>
+       </div>
       </div>
      
-    </div>
   );
 }

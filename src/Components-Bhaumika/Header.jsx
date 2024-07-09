@@ -1,5 +1,6 @@
 import React from 'react'
 import './Header.css'
+import DeveloperPayment from '../Pages-Chamara/DeveloperPayment'
 
 
 function Header() {
@@ -8,9 +9,11 @@ function Header() {
   <dev><h1>Dashboard</h1></dev>
             
             <div className='header-right'>
-            <a className='active' href='#'>Summary</a>
-            <a className='active' href='#'>Financial Status</a>
+            
             </div>
+            <div className="developerpayment">
+               <DeveloperPayment/>  
+                 </div> 
             
             </div>
     )

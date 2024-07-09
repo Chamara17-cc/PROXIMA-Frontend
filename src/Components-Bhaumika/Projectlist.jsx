@@ -2,20 +2,21 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
-
+import { getLoggedUserId } from '../Auth/ApiService';
 
 function Projectlist() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const navigate = useNavigate();
 
+  
   useEffect(() => {
+    const userid=getLoggedUserId();
     const fetchData = async () => {
       try {
-        //DeveloperId == 10 In here
-        const response = await axios.get('https://localhost:7044/api/DeveloperProject/10');
+        //DeveloperId == 5
+        const response = await axios.get(`https://localhost:44339/api/DeveloperProject/${userid}`);
         setProjects(response.data);
         console.log(projects);
       } catch (error){
@@ -26,9 +27,6 @@ function Projectlist() {
         setLoading(false);
       }
     };
-
-
-
 
     fetchData();
   }, []);

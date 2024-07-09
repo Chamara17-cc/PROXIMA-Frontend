@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import axios from "axios";
+
+
+
+import emailjs from 'emailjs-com';
+import { getLoggedUserId } from '../Auth/ApiService';
+import './ProjectCreationForm.css'
+
 
 import TextField from "@mui/material/TextField";
 
@@ -13,11 +20,10 @@ import InputGroup from "react-bootstrap/InputGroup";
 import "react-datepicker/dist/react-datepicker.css";
 import "./datepickerStyle.css";
 
+
 import "./FormStyle.css";
-import { useNavigate } from "react-router-dom";
 
 export default function ProjectCreationForm() {
-  const navigate = useNavigate();
 
   //const [projectId, setProjectId] = useState("");
   const [projectName, setProjectName] = useState("");
@@ -39,6 +45,12 @@ export default function ProjectCreationForm() {
   // const handlePIdChange = (value) => {
   //   setProjectId(value);
   // };
+
+
+  const loggedAdminId = 1;
+  
+
+
 
   //-------------get project manager'
 
@@ -187,11 +199,31 @@ export default function ProjectCreationForm() {
     return Math.floor(differenceInMs / oneDay);
   }
 
-  var time = getDaysBetweenDates(sdate, ddate);
+
+  //email data
+
+  const SendEmail = async () => {
+    const urlEmail = `https://localhost:44339/api/EmailSend?adminId=${loggedAdminId}&PmId=${projectManagerID}&projectName=${projectName}`;
+    if (window.confirm('Do you want to send a Email?')){
+      axios.post(urlEmail, [])
+    .then(alert("Email sent"))
+    .catch(console.error());
+    }
+    
+  }
+
+  
+
+  useEffect(() => {
+    var time = getDaysBetweenDates(sdate, ddate);
+    setTimeDuration(time);
+  },[sdate, ddate])
+
 
   const handleSubmit = (event) => {
-    setTimeDuration(time);
-    console.log(time);
+
+    const userid=getLoggedUserId();
+    console.log(userid)
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -220,10 +252,10 @@ export default function ProjectCreationForm() {
         TimeLine: timeline,
         //AdminId
       };
-
+   
       console.log(data);
 
-      const url = "https://localhost:44339/api/CreateProject";
+      const url = `https://localhost:44339/api/CreateProject?id=${userid}`;
 
       axios
         .post(url, data)
@@ -234,26 +266,71 @@ export default function ProjectCreationForm() {
 
           //---after successful submission
 
+          //Email sending part
+          SendEmail();
+
           setValidated(false);
           window.location.reload();
         })
         .catch((error) => {
           alert(error);
         });
+
+
+        
     }
+    // //Email send part
+    // emailjs.sendForm(
+    //   'service_ycu89qk',
+    //   'template_72pp792',
+    //   formData,
+    //   'GFEPTZpFNfrSjkjsD'
+    // )
+    //   .then((response) => {
+    //     console.log('SUCCESS!', response.status, response.text);
+    //     alert('Email sent successfully!');
+    //     setFormData({ name: '', email: '', message: '' }); // Clear form after submission
+    //   })
+    //   .catch((err) => {
+    //     console.log('FAILED...', err);
+    //     alert('Email sending failed! Please try again later.');
+    //   });
+
+    // const templateParams = {
+    //   UserName: 'UserName',
+    //   userName: 'abc',
+    //   adminName: 'abcd',
+    //   reply_to:'surajmshan@gmail.com'
+    // };
+
+    // emailjs
+    //   .send("service_ycu89qk", "template_72pp792", templateParams, "GFEPTZpFNfrSjkjsD")
+    //   .then((response) => {
+    //     console.log("SUCCESS!", response.status, response.text);
+    //     alert("Email sent successfully!");
+        
+    //   })
+    //   .catch((error) => {
+    //     console.error("FAILED...", error);
+    //     alert("Failed to send email. Please try again later.");
+    //   });
+  
+
+    
 
     setValidated(true); // Always set validated to true after attempting validation
   };
 
- 
 
   return (
-    <>
+    
+    <div className="content-project">
+    
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         {/* ------Project Initalization part----- has a validation */}
 
-        <div className="Section">
-          <h3 className="SectionHeading">Project Initialization</h3>
+        <div className="Section-project">
+          <h3 className="SectionHeading">Project Initialization</h3> 
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label htmlFor="projectName">Project Name:</Form.Label>
@@ -264,6 +341,7 @@ export default function ProjectCreationForm() {
                   type="text"
                   placeholder="ProjectName"
                   id="projectName"
+                  style={{ color: "black", fontSize: "18px" }}
                   onChange={(e) => handlePNameChange(e.target.value)}
                 />
 
@@ -280,6 +358,7 @@ export default function ProjectCreationForm() {
             <Form.Control
               placeholder="Enter project description"
               id="description"
+              style={{ color: "black", fontSize: "18px" }}
               onChange={(e) => handleDescriptionChange(e.target.value)}
             />
           </Form.Group>
@@ -289,6 +368,7 @@ export default function ProjectCreationForm() {
             <Form.Control
               placeholder="Enter project objectives"
               id="objectives"
+              style={{ color: "black", fontSize: "18px" }}
               onChange={(e) => handleObjectiveChange(e.target.value)}
             />
           </Form.Group>
@@ -297,22 +377,19 @@ export default function ProjectCreationForm() {
             <Form.Label>Technologies</Form.Label>
             <Form.Control
               type="text"
+              style={{ color: "black", fontSize: "18px" }}
               placeholder="Enter technologies"
               id="technologies"
               onChange={(e) => handleTechnologyChange(e.target.value)}
             />
           </Form.Group>
 
-          {/*----------------------File upload part----------------------- */}
-          <Form.Group as={Col} className="mb-3">
-            <Form.Label>Upload:</Form.Label>
-            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-          </Form.Group>
+         
         </div>
 
         {/* -----------Develpment team info---------- has a validation */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Development Team Information</h3>
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -361,6 +438,7 @@ export default function ProjectCreationForm() {
                   required
                   placeholder="Enter project team name"
                   id="projectTeamName"
+                  style={{ color: "black", fontSize: "18px" }}
                   onChange={(e) => handleTeamNameChange(e.target.value)}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -374,7 +452,7 @@ export default function ProjectCreationForm() {
 
         {/* -----------Client info---------- has a validation */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Client Information</h3>
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -417,65 +495,58 @@ export default function ProjectCreationForm() {
 
         {/* --------------Dates--------- */}
 
-        <div className="Section">
-          <h2 className="SectionHeading">Project Planing</h2>
+        <div className="Section-project">
+          <h3 className="SectionHeading">Project Planing</h3>
           <Row className="mb-3">
-            <Form.Group as={Col}>
-              <Form.Label>Start Date</Form.Label>
-              <InputGroup hasValidation>
-                <TextField
-                  aria-required
-                  style={{
-                    backgroundColor: "whitesmoke",
-                    borderRadius: "10px",
-                  }}
-                  margin="dense"
-                  id="last_updated"
-                  type="date"
-                  fullWidth
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please select start date.
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
+  <Form.Group as={Col} md={6}>
+    <Form.Label>Start Date:</Form.Label>
+    <InputGroup hasValidation>
+      <TextField
+        aria-required
+        style={{
+          backgroundColor: "whitesmoke",
+          borderRadius: "10px",
+          width: "100%" // Use 100% to ensure it fits the column
+        }}
+        margin="dense"
+        id="startDate"
+        type="date"
+        fullWidth
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+      />
+      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">
+        Please select a start date.
+      </Form.Control.Feedback>
+    </InputGroup>
+  </Form.Group>
 
-            <Form.Group as={Col}>
-              <Form.Label>Due Date</Form.Label>
+  <Form.Group as={Col} md={6}>
+    <Form.Label>Due Date:</Form.Label>
+    <InputGroup hasValidation>
+      <TextField
+        aria-required
+        style={{
+          backgroundColor: "whitesmoke",
+          borderRadius: "10px",
+          width: "100%" // Use 100% to ensure it fits the column
+        }}
+        margin="dense"
+        id="dueDate"
+        type="date"
+        fullWidth
+        value={dueDate}
+        onChange={(e) => setDueDate(e.target.value)}
+      />
+      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">
+        Please select a due date.
+      </Form.Control.Feedback>
+    </InputGroup>
+  </Form.Group>
+</Row>
 
-              <TextField
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px" }}
-                margin="dense"
-                id="last_updated"
-                type="date"
-                fullWidth
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              />
-
-              {/* <DatePicker
-                type="date"
-                
-                className="datepicker"
-                selected={selectedDueDate}
-                onChange={handleDueDateChange}
-                dateFormat="YYYY-MM-DD"
-                // You can customize the date format and other options
-              /> */}
-
-              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer
-        components={['DateTimePicker', 'DateTimePicker', 'DateTimePicker']}
-      >
-        
-        <DateTimePicker name="startDateTime" onChange={handleDueDateChange} dateFormat=""/>
-      </DemoContainer>
-    </LocalizationProvider> */}
-            </Form.Group>
-          </Row>
 
           <Form.Group className="mb-3">
             <Form.Label>Project Time Line</Form.Label>
@@ -483,73 +554,38 @@ export default function ProjectCreationForm() {
               type="text"
               placeholder=""
               id="timeline"
+              style={{ color: "black", fontSize: "18px" }}
               onChange={(e) => handleTimelineChange(e.target.value)}
             />
           </Form.Group>
 
-          {/*----------------------File upload part----------------------- */}
-          <Form.Group as={Col} className="mb-3">
-            <Form.Label>Upload</Form.Label>
-            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-          </Form.Group>
+          
         </div>
 
-        <div className="Section">
+        <div className="Section-project">
           <Form.Group className="mb-3">
-            <Form.Label>Budget Allocation</Form.Label>
+          <h3 className="SectionHeading">Budget Allocation</h3>
+            <Form.Label >Budget Allocation</Form.Label>
             <Form.Control
               type="text"
+              style={{ color: "black", fontSize: "18px" }}
               placeholder="Enter budget allocation"
               id="budgetAllocation"
               onChange={(e) => handleBudgetChange(e.target.value)}
             />
           </Form.Group>
-          
-
-          {/*----------------------File upload part----------------------- */}
-          <Form.Group as={Col} className="mb-3">
-            <Form.Label>Upload</Form.Label>
-            <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-          </Form.Group>
+    
         </div>
 
-        {/* -------------------------Legal and complaince------------ */}
-        <div className="Section">
-          <Row className="mb-3">
-            <h3 className="SectionHeading">Legal & Complaince</h3>
-            {/*----------------------File upload part----------------------- */}
-            <Form.Group as={Col} controlId="formFileSm" className="mb-3">
-              <Form.Label>Client Sign-off</Form.Label>
-              <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-            </Form.Group>
+       
 
-            {/*----------------------File upload part----------------------- */}
-            <Form.Group as={Col} controlId="formFileSm" className="mb-3">
-              <Form.Label>Contractual Agreement</Form.Label>
-              <Form.Control type="file" size="sm" style={{ width: "250px" }} />
-            </Form.Group>
-          </Row>
-        </div>
-
-        {/* -------------------------Resource upload------------ */}
-        <div className="Section">
-          {/*----------------------File upload part----------------------- */}
-          <Form.Group controlId="formFileMultiple" className="mb-3">
-            <Form.Label>Other Resources</Form.Label>
-            <Form.Control
-              type="file"
-              multiple
-              style={{ width: "250px" }}
-            />{" "}
-            {/* Multiple file upload */}
-          </Form.Group>
-        </div>
+        
 
         <Button type="submit">Submit form</Button>
       </Form>
       
       
 
-    </>
+    </div>
   );
 }
