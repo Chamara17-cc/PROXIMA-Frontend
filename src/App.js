@@ -29,7 +29,7 @@ import ProjectFileViewPage from "./Pages-Baumika/ProjectFileViewPage";
 
 
 import BudgetEditPage from "./Pages-Chamara/BudgetEditPage";
-
+import UserManagement from "./Pages-Thusharga/UserManagement";
 import UserCreation from "./Pages-Thusharga/UserCreation";
 import ViewUserList from "./Pages-Thusharga/ViewUserList";
 import LoginForm from "./Pages-Thusharga/LoginForm";
@@ -49,10 +49,21 @@ import PMaddDevelopersPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMaddD
 import PMtaskDetailsPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMtaskDetailsPage";
 import FinanceDigram from "./Pages-Chamara/FinanceDigram";
 import Payment from "./Pages-Chamara/Payment";
+
+import ClientCreation from "./Pages-Hemal/ClientCreation";
+import ViewClientDetail from "./Pages-Hemal/ViewClientDetail";
+import ViewClientList from "./Pages-Hemal/ViewClientList";
+
 import FullTaskListPage from "./Pages-Suraj/FullTaskListPage";
 import PMFullTaskViewPage from "./Pages-Suraj/Pages-ProjectManager-Suraj/PMFullTaskViewPage";
+
 import UpdateProjectPage from "./Pages-Suraj/UpdateProjectPage";
 import UpdateTaskPage from "./Pages-Suraj/UpdateTaskPage";
+
+import EditProfile from "./Pages-Thusharga/EditProfile";
+
+
+
 
 
 
@@ -65,6 +76,7 @@ function App() {
         <Route path="/" element={<LoginForm/>}></Route>
         <Route path="/resetpassword" element={<ResetPassword/>}></Route>
         <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/editProfile/:userId" element={<EditProfile />} />
 
         <Route element={<ProtectedRoute allowedRoles={['1']} />}>
               <Route path="/adminDashboard" element={<AdminDashboard />} />
@@ -72,12 +84,20 @@ function App() {
               <Route path="/budget" element ={<Budgetplan/>}></Route>
               <Route path="/transaction" element ={<TransactionPage/>}></Route>
               <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
+
+
+              <Route path="/clientCreation" element={<ClientCreation/>}></Route>
+              <Route path="/clientList" element={<ViewClientList/>}></Route>
+              <Route path="/clientProfilePage/:clientId" element={<ViewClientDetail/>}></Route>
+
+              <Route path="/userManagement" element={<UserManagement/>} />
+              <Route path="/userProfilePage/:userId" element={<ViewUserDetail />} />
+
               
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={['1', '2']} />}>
-              <Route path="/userList" element={<ViewUserList />} />
-              <Route path="/userProfilePage/:userId" element={<ViewUserDetail />} />
+              <Route path="/userList" element={<ViewUserList />} />             
               <Route path="/financedigram" element={<FinanceDigram/>}></Route>
               <Route path="/taskList" element={<TaskList/>}></Route>
               <Route path="/taskDetailsPage" element={<TaskDetailsPage/>}></Route>

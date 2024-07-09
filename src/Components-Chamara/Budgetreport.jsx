@@ -11,6 +11,7 @@ import 'jspdf-autotable';
 import { useNavigate } from "react-router-dom";
 import Budgettable from "./Budgettable";
 import Budgetedit from "./Budgetedit";
+import TotalFinanceDigram from "./TotalFinanceDigram"
 
 
 export default function ProjectCreationForm() {
@@ -75,23 +76,58 @@ export default function ProjectCreationForm() {
     }
   };
 
-  const downloadPDF=()=>{
-    const doc=new jsPDF();
+  const downloadPDF = () => {
+    const doc = new jsPDF();
     doc.autoTable({
-      html:'#budgetTable',
-      theme:'grid',
-      styles: {fontSize:10},
+      html: '#budgetTable',
+      theme: 'grid',
+      styles: { fontSize: 10 },
       headStyles: { fillColor: [22, 160, 133] }
-    })
+    });
+  
+    const pageHeight = doc.internal.pageSize.height; // Get page height
+  
+    // Add headers for the new table
+    const headers = [
+      ["Admin name", "Comment", "Approval", "Signature"]
+    ];
+  
+    // Add empty rows
+    const emptyRows = new Array(7).fill(["", "", "", ""]);
+  
+    // Add table with headers and empty rows
+    doc.autoTable({
+      head: headers,
+      body: emptyRows,
+      startY: doc.lastAutoTable.finalY + 10, // Start after the budget table
+      theme: 'grid',
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [22, 160, 133] }
+    });
+  
+    // Add signature and date
+    const posYSignature = doc.lastAutoTable.finalY + 20;
+    doc.setFontSize(10);
+    doc.text("Created Admin Signature", 15, posYSignature);
+    doc.line(15, posYSignature + 8, 50, posYSignature + 8);
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    doc.text(formattedDate, 15, posYSignature - 8);
+  
+    // Add 'Thank you' message
+    doc.setFont('Courier');
+    doc.setFontSize(30);
+    doc.text('Thank you', 70, pageHeight - 10);
     doc.save('budgetreport.pdf');
   };
   
+  
 
   return (
-    <div>
+    <div className="budget">
      
       <div className="Pagename">
-        <p>Budget Estimation Report : {selectedProject}</p>
+        <p>Budget Estimation Report</p>
       </div>
       <Form>
         <Row className="mb-3">
@@ -119,52 +155,29 @@ export default function ProjectCreationForm() {
           {budgetData.length >0 ?(
                 <Row>
                     <div className="btn-group" role="group" aria-label="Basic example">
-                     <button type="button" className="btn btn-secondary" onClick={downloadPDF} style={{width:'80px',margin:'10px', backgroundColor:'shade blue'}}>Print</button>
+                     <button type="button" className="btn btn-secondary" onClick={downloadPDF} 
+                     style={{width:'80px',margin:'10px', backgroundColor: '#20C997'}}>Print</button>
                      <Budgetedit projectId={selectedProject} budgetData={budgetData}/>
-                    <button type="button" className="btn btn-secondary" onClick={()=>deletebudget(selectedProject)}  style={{width:'80px',margin:'10px', backgroundColor:'red'}}>Delete</button>
+                    <button type="button" className="btn btn-secondary" onClick={()=>deletebudget(selectedProject)}  
+                    style={{width:'80px',margin:'10px', backgroundColor:'red'}}>Delete</button>
                     </div>
-                     {/* <Form.Group className="print-btn" controlId="formGridAddress1">
-                     <Button variant="primary" type="submit" id="Print" onClick={downloadPDF} >
-                    Print
-                   </Button>
-                  </Form.Group>
-            
-                   <Form.Group className="submit-btn" controlId="formGridAddress1">
-                    <div className="edit">
-                        <Budgetedit projectId={selectedProject} budgetData={budgetData}/>
-                    </div>
-                   </Form.Group>
-     
-                   <button 
-                  onClick={()=>deletebudget(selectedProject)}
-                  style={{ 
-                    backgroundColor: 'red', 
-                    color: 'white', 
-                    border: 'none', 
-                    padding: '8px 20px', 
-                    cursor: 'pointer', 
-                    borderRadius: '5px',
-                    width:'80px',
-                    marginTop:'-37px'
-                    
-                  }}
-                >
-                  Delete
-                </button>
-    */}
-
                    </Row>
           ):
           (
             <Row>
-                   <Form.Group className="submit-btn" controlId="formGridAddress1">
-                   <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}>
+                   <Form.Group className="submit" controlId="formGridAddress1">
+                   <Button variant="primary" type="button" id="usubmit"  onClick={gotoEditpage}
+                   style={{ backgroundColor: '#20C997', color: 'white' }}>
                      Create
                    </Button>
-                   </Form.Group>
-            </Row>
+                  </Form.Group>
+                 
 
+            </Row>
           )}
+          <div className="yearfinance">
+            <TotalFinanceDigram/>
+          </div>
         </div>
        </div>
       </div>

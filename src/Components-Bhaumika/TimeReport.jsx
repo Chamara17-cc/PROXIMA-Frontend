@@ -5,16 +5,19 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import './Report.css'
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 function TimeReport() {
 
 
     const [remain,setRemain] = useState(0);
     const [complete,setComplete] = useState(0);
-   
-  
+    const location=useLocation();
+   const selectedId = location.state.newTimeSelectedId;
+
     useEffect(() => {
-        fetchDigramData(11); // Assuming project ID is 7, change as necessary
+        fetchDigramData(selectedId); // Assuming project ID is 7, change as necessary
       }, []);
     
       const fetchDigramData = async (projectId) => {

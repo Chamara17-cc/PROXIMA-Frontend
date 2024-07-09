@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import moment from 'moment';
 import { Margin } from '@mui/icons-material';
+import "./BudgettableStyles.css";
 
 const Budgettable = ({ budgetData }) => {
   
@@ -20,7 +21,7 @@ const Budgettable = ({ budgetData }) => {
         <TableHead>
           <TableRow>
             <TableCell align="left" colSpan={3}>
-            <b> Project Name: {item.projectName}</b>
+            <b > Project Name: {item.projectName}</b>
             </TableCell>
             <TableCell align="left">Date: {moment(item.date).format('YYYY-MM-DD')}</TableCell>
           </TableRow>

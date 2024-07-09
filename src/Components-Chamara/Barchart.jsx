@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BarChart } from '@mui/x-charts/BarChart';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import axios from 'axios';
 
 export default function BasicBars(props) {
@@ -23,12 +23,25 @@ export default function BasicBars(props) {
         console.error('Error fetching diagram data:', error);
       }
     };
+    const data = [
+      { name: 'Monthly Income', value: Income, fill: '#4CAF50' }, // Green for income
+      { name: 'Monthly Expense', value: Expence, fill: '#FF5722' }  // Orange for expense
+    ];
   return (
     <BarChart
-      xAxis={[{ scaleType: 'band', data: ['Income', 'Expence'] }]}
-      series={[{ data: [Income, Expence] }]}
-      width={400}
-      height={400}
-    />
+    width={400}
+    height={500}
+    data={data}
+    margin={{
+      top: 20, right: 30, left: 20, bottom: 5,
+    }}
+  >
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    <Bar dataKey="value" />
+  </BarChart>
   );
 }

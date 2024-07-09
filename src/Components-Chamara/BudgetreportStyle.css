@@ -24,7 +24,7 @@
  margin-left: 10%; */
    
 }
-.submit-btn{
+.submit{
     position: relative;
     margin-left: 80%;
     margin-top: 0px;
@@ -51,4 +51,13 @@
     width: 200px;
     justify-content: space-between;
     left: 700px;
+}
+.Projectlist{
+  height: 50px;
+}
+.budget{
+    background-color: #D3D3D3;
+    padding: 20px;
+    border-radius: 5px;
+    border: 3px solid black;
 }

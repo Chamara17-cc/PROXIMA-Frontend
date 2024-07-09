@@ -2,6 +2,12 @@ import React, {  useEffect, useState } from "react";
 import axios from "axios";
 
 
+
+import emailjs from 'emailjs-com';
+import { getLoggedUserId } from '../Auth/ApiService';
+import './ProjectCreationForm.css'
+
+
 import TextField from "@mui/material/TextField";
 
 import Button from "react-bootstrap/Button";
@@ -213,10 +219,11 @@ export default function ProjectCreationForm() {
     setTimeDuration(time);
   },[sdate, ddate])
 
+
   const handleSubmit = (event) => {
 
-    
-    
+    const userid=getLoggedUserId();
+    console.log(userid)
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -245,10 +252,10 @@ export default function ProjectCreationForm() {
         TimeLine: timeline,
         //AdminId
       };
-
+   
       console.log(data);
 
-      const url = "https://localhost:44339/api/CreateProject";
+      const url = `https://localhost:44339/api/CreateProject?id=${userid}`;
 
       axios
         .post(url, data)
@@ -314,14 +321,15 @@ export default function ProjectCreationForm() {
     setValidated(true); // Always set validated to true after attempting validation
   };
 
- 
 
   return (
-    <>
+    
+    <div className="content-project">
+    
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         {/* ------Project Initalization part----- has a validation */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Project Initialization</h3> 
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -381,7 +389,7 @@ export default function ProjectCreationForm() {
 
         {/* -----------Develpment team info---------- has a validation */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Development Team Information</h3>
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -444,7 +452,7 @@ export default function ProjectCreationForm() {
 
         {/* -----------Client info---------- has a validation */}
 
-        <div className="Section">
+        <div className="Section-project">
           <h3 className="SectionHeading">Client Information</h3>
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -487,66 +495,58 @@ export default function ProjectCreationForm() {
 
         {/* --------------Dates--------- */}
 
-        <div className="Section">
-          <h2 className="SectionHeading">Project Planing</h2>
-          <Row className="mb-3" style={{width:"65%"}}>
-            <Form.Group as={Col}>
-              <Form.Label>Start Date:</Form.Label>
-              <InputGroup hasValidation>
-                <TextField
-                  aria-required
-                  style={{
-                    backgroundColor: "whitesmoke",
-                    borderRadius: "10px",
-                    width:"300px"
-                  }}
-                  margin="dense"
-                  id="last_updated"
-                  type="date"
-                  fullWidth
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please select start date.
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
+        <div className="Section-project">
+          <h3 className="SectionHeading">Project Planing</h3>
+          <Row className="mb-3">
+  <Form.Group as={Col} md={6}>
+    <Form.Label>Start Date:</Form.Label>
+    <InputGroup hasValidation>
+      <TextField
+        aria-required
+        style={{
+          backgroundColor: "whitesmoke",
+          borderRadius: "10px",
+          width: "100%" // Use 100% to ensure it fits the column
+        }}
+        margin="dense"
+        id="startDate"
+        type="date"
+        fullWidth
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+      />
+      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">
+        Please select a start date.
+      </Form.Control.Feedback>
+    </InputGroup>
+  </Form.Group>
 
-            <Form.Group as={Col}>
-              <Form.Label>Due Date:</Form.Label>
+  <Form.Group as={Col} md={6}>
+    <Form.Label>Due Date:</Form.Label>
+    <InputGroup hasValidation>
+      <TextField
+        aria-required
+        style={{
+          backgroundColor: "whitesmoke",
+          borderRadius: "10px",
+          width: "100%" // Use 100% to ensure it fits the column
+        }}
+        margin="dense"
+        id="dueDate"
+        type="date"
+        fullWidth
+        value={dueDate}
+        onChange={(e) => setDueDate(e.target.value)}
+      />
+      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">
+        Please select a due date.
+      </Form.Control.Feedback>
+    </InputGroup>
+  </Form.Group>
+</Row>
 
-              <TextField
-                style={{ backgroundColor: "whitesmoke", borderRadius: "10px", width:"300px"}}
-                margin="dense"
-                id="last_updated"
-                type="date"
-                fullWidth
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              />
-
-              {/* <DatePicker
-                type="date"
-                
-                className="datepicker"
-                selected={selectedDueDate}
-                onChange={handleDueDateChange}
-                dateFormat="YYYY-MM-DD"
-                // You can customize the date format and other options
-              /> */}
-
-              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer
-        components={['DateTimePicker', 'DateTimePicker', 'DateTimePicker']}
-      >
-        
-        <DateTimePicker name="startDateTime" onChange={handleDueDateChange} dateFormat=""/>
-      </DemoContainer>
-    </LocalizationProvider> */}
-            </Form.Group>
-          </Row>
 
           <Form.Group className="mb-3">
             <Form.Label>Project Time Line</Form.Label>
@@ -562,9 +562,10 @@ export default function ProjectCreationForm() {
           
         </div>
 
-        <div className="Section">
+        <div className="Section-project">
           <Form.Group className="mb-3">
-            <Form.Label>Budget Allocation</Form.Label>
+          <h3 className="SectionHeading">Budget Allocation</h3>
+            <Form.Label >Budget Allocation</Form.Label>
             <Form.Control
               type="text"
               style={{ color: "black", fontSize: "18px" }}
@@ -585,6 +586,6 @@ export default function ProjectCreationForm() {
       
       
 
-    </>
+    </div>
   );
 }

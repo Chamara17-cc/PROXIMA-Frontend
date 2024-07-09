@@ -6,8 +6,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import './RateUpdateStyles.css'
+
+
 
 export default function PopupForm() {
+
+
   const [open, setOpen] = useState(false);
   const [Date, setDate] = useState('');
   const [Rate, setRate] = useState(null);
@@ -75,9 +80,10 @@ export default function PopupForm() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} style={{ backgroundColor: '#3D97ED', color: 'white' }}>Developer rate</Button>
-      <div className="developer_rate">
-        <Dialog open={open} onClose={handleClose}>
+      <Button onClick={handleClickOpen} style={{ backgroundColor: '#20C997', color: 'white' }}><b>Developer rate</b></Button>
+      <div className="developerrate" >
+        <Dialog open={open} onClose={handleClose} >
+          <div className="rate">
           <DialogTitle className='Rateheader'>Hourly Rate</DialogTitle>
           <DialogContent>
             {error && <div style={{ color: 'red' }}>{error}</div>}
@@ -89,6 +95,7 @@ export default function PopupForm() {
               fullWidth
               value={Date}
               onChange={(e) => setDate(e.target.value)}
+              
             />
             <TextField
               margin="dense"
@@ -109,12 +116,16 @@ export default function PopupForm() {
               onChange={(e) => setRate(e.target.value)}
             />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Close</Button>
-            <Button onClick={handleSubmit}>Update</Button>
-          </DialogActions>
+          <div className="actionbutton">
+            <DialogActions>
+              <Button onClick={handleClose} className="dialog-action-button"> Close</Button>
+              <Button onClick={handleSubmit} className="dialog-action-button">Update</Button>
+            </DialogActions>
+            </div>
+          </div>
         </Dialog>
       </div>
     </div>
+
   );
 }

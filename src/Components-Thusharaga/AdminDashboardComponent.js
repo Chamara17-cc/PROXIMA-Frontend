@@ -1,60 +1,136 @@
 import React, { useEffect, useState } from 'react';
 import RateUpdatePage from '../Pages-Chamara/RateUpdatePage';
 import './styles/AdminDashboardStyles.css';
-import { BarChart } from '@mui/x-charts/BarChart';
 import axios from 'axios';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 function AdminDashboardComponent({ showRateUpdate }) {
-  const [monthlyincome,setIncome] = useState('');
-  const [monthlyexpense,setExpence] = useState('');
-  const [totaladmins,setTotalAdmins]=useState(0);
-  const [totalmanagers,setTotalManagers]=useState(0);
-  const [totaldevelopers,setTotaldevelopers]=useState(0);
-  const [totalprojects,setTotalProjects]=useState(0);
-  useEffect(()=>{
-     fetchDashboardData();
-  },[])
+  const [monthlyIncome, setIncome] = useState('');
+  const [monthlyExpense, setExpense] = useState('');
+  const [totalAdmins, setTotalAdmins] = useState(0);
+  const [totalManagers, setTotalManagers] = useState(0);
+  const [totalDevelopers, setTotalDevelopers] = useState(0);
+  const [totalProjects, setTotalProjects] = useState(0);
 
-  const fetchDashboardData= async()=>{
-    try{
-       const response = await axios.get(`https://localhost:44339/api/AdminDashboard`);
-       console.log(response.data);
-       setTotalAdmins(response.data.totalAdmins);
-       setTotaldevelopers(response.data.totalDevelopers)
-       setTotalManagers(response.data.totalManagers)
-       setIncome(response.data.totalIncome)
-       setExpence(response.data.totalExpense)
-       setTotalProjects(response.data.totalProjects)
-    }catch(error){
-      console.error('Error fetching diagram data:', error);
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const response = await axios.get(`https://localhost:44339/api/AdminDashboard`);
+      console.log(response.data);
+      setTotalAdmins(response.data.totalAdmins);
+      setTotalDevelopers(response.data.totalDevelopers);
+      setTotalManagers(response.data.totalManagers);
+      setIncome(response.data.totalIncome);
+      setExpense(response.data.totalExpense);
+      setTotalProjects(response.data.totalProjects);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
     }
   };
-
+  const data = [
+    { name: 'Monthly Income', value: monthlyIncome, fill: '#4CAF50' }, // Green for income
+    { name: 'Monthly Expense', value: monthlyExpense, fill: '#FF5722' }  // Orange for expense
+  ];
   return (
-    <div>
-    <div className='column1'>Hi, Welcome Back 
-    {showRateUpdate && (
-          <div className='Developerrate'>
-            <RateUpdatePage />
+    <div className="maincontent">
+
+      <div className="header-dashboard">
+        <div className="welcome">Hi! Welcome Back</div>
+        <button className="developerRateButton">
+          {showRateUpdate && (
+            <div >
+              <RateUpdatePage />
+            </div>
+          )}
+        </button>
+      </div>
+      
+
+      <div className="body-dashboard">
+        <div className="description-dashboard" >
+
+        <h3 > <b>
+            Our company thrives with a robust team. Here's a quick overview of our dynamic workforce and the projects we handle:
+            </b>
+        </h3>
+          
+        </div>
+        <div className="column2">
+          <div className="box">
+            <h3>Admins</h3>
+            <p>{totalAdmins}</p>
           </div>
-        )}
+          <div className="box">
+            <h3>Project Managers</h3>
+            <p>{totalManagers}</p>
+          </div>
+          <div className="box">
+            <h3>Developers</h3>
+            <p>{totalDevelopers}</p>
+          </div>
+          <div className="box">
+            <h3> Projects</h3>
+            <p>{totalProjects}</p>
+          </div>
+        </div>
+        <div className='description1' style={{
+              fontSize: '12px', 
+              color: '#6c757d', 
+              margin: '10px 0', 
+              lineHeight: '1.5',
+              textAlign: 'center'
+           }}>
+        <p>
+            <strong>Admins:</strong> The backbone of our operations, ensuring everything runs smoothly.
+          </p>
+          <p>
+            <strong>Project Managers:</strong> The strategic minds driving our projects to success.
+          </p>
+          <p>
+            <strong>Developers:</strong> The creative force behind our innovative solutions.
+          </p>
+          <p>
+            <strong>Projects:</strong> The diverse array of initiatives we are currently managing.
+          </p>
+        </div>
+        <br/>
+
+        <div className="description-dashboard" >
+
+          <h3> <b>This bar chart illustrates the current monthly income and expense:</b></h3>
+          <p style={{
+              fontSize: '12px', 
+              color: '#6c757d', 
+              margin: '10px 0', 
+              lineHeight: '1.5'
+           }}>
+               Stay informed about the financial health of our company with a clear view of our monthly revenue and expenditures.
+          </p>
+        </div>
+
+        <div className="column3">
+        <BarChart
+        width={400}
+        height={300}
+        data={data}
+        margin={{
+          top: 20, right: 30, left: 20, bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="value" />
+      </BarChart>
+        </div>
+      </div>
     </div>
-    <div className="column2">
-      <div className="box">Total Admins<br/>{totaladmins}</div>
-      <div className="box">Total Project Managers<br/>{totalmanagers}</div>
-      <div className="box">Total Developers <br/>{totaldevelopers}</div>
-      <div className="box">Total Projects<br/>{totalprojects}</div>
-    </div>
-    <div className='column3'>
-    <BarChart
-      xAxis={[{ scaleType: 'band', data: ['Monthly Income', 'Monthly Expence'] }]}
-      series={[{ data: [monthlyincome,monthlyexpense ] }]}
-      width={400}
-      height={300}
-    />
-    </div>
-    </div>
-  )
+  );
 }
 
-export default AdminDashboardComponent
+export default AdminDashboardComponent;
