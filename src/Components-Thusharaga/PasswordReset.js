@@ -65,7 +65,7 @@ function PasswordReset() {
   };
 
   return (
-    <div className="content">
+    <div className="content-component">
       <div className="form_group">
         <div>
           <h3>Reset Password</h3>
