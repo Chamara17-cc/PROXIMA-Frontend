@@ -90,7 +90,7 @@ function DeveloperPayment() {
     }
     const userid = getLoggedUserId();
     try {
-      const rateResponse = await axios.get(`https://localhost:44339/api/DeveloperRate/register`);
+      const rateResponse = await axios.get(`https://localhost:44339/api/Developer_Finance/Monthlyrate?month=${month}&year=${year}`);
       setRate(rateResponse.data.currentRate);
 
       const paymentResponse = await axios.get(`https://localhost:44339/api/Developer_Finance/Payment/${userid}/register?month=${month}&year=${year}`);
@@ -152,12 +152,19 @@ function DeveloperPayment() {
                 </tbody>
                 <thead>
                   <tr className='details'>
+                  <th scope="col">Month Hourly Rate</th>
                     <th scope="col">Total Worked Hours</th>
                     <th scope="col">Total Payment</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                  <td>
+                      <div className="form-control" style={{ backgroundColor: '#f0f0f0', border: '1px solid #ced4da',
+                         padding: '.375rem .75rem', borderRadius: '.25rem', color: '#000000' }}>
+                        Rs.{rate} 
+                      </div>
+                    </td>
                     <td>
                       <div className="form-control" style={{ backgroundColor: '#f0f0f0', border: '1px solid #ced4da',
                          padding: '.375rem .75rem', borderRadius: '.25rem', color: '#000000' }}>
