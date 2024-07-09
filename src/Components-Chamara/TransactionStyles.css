@@ -18,6 +18,13 @@
     left: 70%;
     margin-left: 900px;
 }
-.addbutton{
+.addbtn1{
     left: 40%;
+}
+
+.t1{
+    height: 40px;
+}
+.Invoicename{
+    height: 20px;
 }
