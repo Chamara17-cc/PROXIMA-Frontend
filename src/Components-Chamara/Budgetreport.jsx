@@ -61,7 +61,7 @@ export default function ProjectCreationForm() {
   };
 
   const gotoEditpage = (projectid)=>{
-    navigate('/budgetformedit', { state:  {projectId  : selectedProject  }});
+    navigate('/budgetcreation', { state:  {projectId  : selectedProject  }});
   };
   const deletebudget =async (selectedProject)=>{
     try{

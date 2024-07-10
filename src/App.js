@@ -83,7 +83,7 @@ function App() {
               <Route path="/usercreation" element={<UserCreation/>}></Route>
               <Route path="/budget" element ={<Budgetplan/>}></Route>
               <Route path="/transaction" element ={<TransactionPage/>}></Route>
-              <Route path="/budgetformedit" element={<BudgetEditPage/>}></Route>
+             
 
 
               <Route path="/clientCreation" element={<ClientCreation/>}></Route>
@@ -160,7 +160,7 @@ function App() {
 
           <Route path="/updateProjectPage" element={<UpdateProjectPage/>}></Route>
           <Route path="/updateTaskPage" element={<UpdateTaskPage/>}></Route>
-
+          <Route path="/budgetcreation" element={<BudgetEditPage/>}></Route>
 
       </Routes>
         <Routes>         
