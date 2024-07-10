@@ -176,6 +176,9 @@ export default function ProjectCreationForm() {
             </Row>
           )}
           <div className="yearfinance">
+            <div className="digram-description">
+              <h3><b>This bar chart illustrates the current year monthly income and expense:</b></h3>
+            </div>
             <TotalFinanceDigram/>
           </div>
         </div>
