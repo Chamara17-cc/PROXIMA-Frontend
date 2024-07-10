@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import './styles/UserDetailView.css';
 import UpdateUserRoleComponent from './UpdateUserRole';
+import { getLoggedUserId } from '../Auth/ApiService';
 
 const UserDetailView = () => {
   const { userId } = useParams();
@@ -12,6 +13,7 @@ const UserDetailView = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isActive, setIsActive] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [loggedInUserId, setLoggedInUserId] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -28,6 +30,19 @@ const UserDetailView = () => {
 
     fetchUserData();
   }, [userId]);
+
+  useEffect(() => {
+    const fetchLoggedUserId = () => {
+      try {
+        const id = getLoggedUserId();
+        setLoggedInUserId(id);
+      } catch (error) {
+        console.error('Error fetching logged-in user ID:', error);
+      }
+    };
+
+    fetchLoggedUserId();
+  }, []);
 
   const deactivateUser = async () => {
     const confirmDeactivation = window.confirm("Are you sure you want to deactivate the user?");
@@ -142,9 +157,10 @@ const UserDetailView = () => {
       </div>
       <div className="bottom-buttons">
         <Link to="/userManagement" className="btn btn-secondary">Back</Link>
-        {isActive ? (
+        {isActive && loggedInUserId !== userId && (
           <button className="btn btn-danger" onClick={deactivateUser}>Deactivate</button>
-        ) : (
+        )}
+        {!isActive && (
           <button className="btn btn-danger" onClick={reactivateUser}>Reactivate</button>
         )}
         {isActive && userData.userCategoryType !== "ADMIN" && (
