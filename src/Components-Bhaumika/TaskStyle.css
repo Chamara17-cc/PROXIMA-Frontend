@@ -49,6 +49,21 @@
     margin-top: 50px;
 
 }
+
+.files{
+    padding-left: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 200px;
+    background-color: #B39DDB;
+    border-radius: 10px;
+    border: 2px solid #311B92;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
 /* .Tik{
     margin-top: 0px;
     margin-left: 50px;

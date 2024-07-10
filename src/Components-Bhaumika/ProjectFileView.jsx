@@ -3,6 +3,7 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import './TaskStyle.css';
 
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -122,13 +123,18 @@ const download = async (filePath, fileName) => {
 
   return (
     <div>
+
+<div className='fileBox' style={{ display: 'flex' , gap: '30px' }}>
+
+<div className='files'>
       <Form.Group as={Col} className="mb-3">
-        <Form.Label>Task Info Files: </Form.Label>
+      
+        <Form.Label>Project Info Files: </Form.Label>
         {basicNames ? (
           basicNames.map((file, index) => (
             <ul key={file.fileId}>
               <li>
-                <button onClick={() => download(file.localStoragePath, file.fileName)} style={{ borderRadius: "7px", padding: "0.5px" }}>
+                <button onClick={() => download(file.localStoragePath, file.fileName)} style={{ borderRadius: "7px", padding: "1px" }}>
                   {file.fileName}
                 </button>
               </li>
@@ -138,46 +144,55 @@ const download = async (filePath, fileName) => {
           <p>Loading files...</p> // Or any loading indicator
         )}
       </Form.Group>
-
-
+</div>
+<div className='files'>
 
 
       <Form.Group as={Col} className="mb-3">
-              <Form.Label>Images: </Form.Label>
+              <Form.Label>Project Images: </Form.Label>
               {imgNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"1px"}}>{file.fileName}</button></li>
               </ul>
               ))}
                 
              
             </Form.Group>
 
+            </div>
+            </div>
 
+<div className='fileBox' style={{ display: 'flex' , gap: '30px' }}>
+<div className='files'>
 
             <Form.Group as={Col} className="mb-3">
-              <Form.Label>Audios: </Form.Label>
+              <Form.Label>Project Audios: </Form.Label>
 
               {audioNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"1px"}}>{file.fileName}</button></li>
               </ul>
               ))}
              
             </Form.Group>
 
-
+            </div>
+            <div className='files'>
 
             <Form.Group as={Col} className="mb-3">
-              <Form.Label>Zip Files: </Form.Label>
+              <Form.Label>Project Zip Files: </Form.Label>
 
               {zipNames.map((file, index) => (
                 <ul>
-                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"0.5px"}}>{file.fileName}</button></li>
+                <li key={file.fileId}><button onClick={() => download(file.localStoragePath, file.fileName)} style={{borderRadius:"7px", padding:"1px"}}>{file.fileName}</button></li>
               </ul>
               ))}
              
             </Form.Group>
+
+            </div>
+            </div>
+
 
     </div>
   );
